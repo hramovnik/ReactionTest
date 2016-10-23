@@ -5,7 +5,6 @@ import android.graphics.Color;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-//Fucking Analizer
 
 public final class SessionSensomotoric implements Session {
     private SessionSensomotoric(){}
