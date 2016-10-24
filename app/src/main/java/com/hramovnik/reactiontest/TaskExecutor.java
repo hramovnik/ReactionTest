@@ -117,11 +117,8 @@ public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
             executeble = null;
             return;
         }
-
         print(executeble.getInterpretation());
         executeble = null;
         connection.executeNext();
-
-
     }
 }

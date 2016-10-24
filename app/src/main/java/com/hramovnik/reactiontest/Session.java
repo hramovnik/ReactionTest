@@ -7,5 +7,4 @@ package com.hramovnik.reactiontest;
 public interface Session {
     TaskExecute getNextTask();
     String analyze();
-
 }

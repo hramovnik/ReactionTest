@@ -11,7 +11,7 @@ public final class SessionSensomotoric implements Session {
     private Queue<TaskExecute> tasks = null;
     private CommandSensoGetResult redResult = null;
     private CommandSensoGetResult greenResult = null;
-    SessionSensomotoric(int serialLen){
+    public SessionSensomotoric(int serialLen){
         tasks = new LinkedBlockingQueue<>();
 
         tasks.add(new CommandSensomotoric(Color.RED, 10, serialLen, 1000));
