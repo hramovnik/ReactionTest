@@ -1,9 +1,5 @@
 package com.hramovnik.reactiontest;
 
-/**
- * Created by Hramovnik on 08.10.2016.
- */
-
 public final class CommandPing extends TaskObject {
     @Override
     public int[] getTask() {
@@ -19,7 +15,6 @@ public final class CommandPing extends TaskObject {
         if((answer.length > 0)&&(answer[0] == RSP_PING)){
             fail = false;
         }
-
         return !fail;
     }
 

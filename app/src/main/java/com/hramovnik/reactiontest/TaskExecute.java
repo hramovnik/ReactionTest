@@ -1,8 +1,5 @@
 package com.hramovnik.reactiontest;
 
-/**
- * Created by Hramovnik on 07.10.2016.
- */
 
 public interface TaskExecute {
 
