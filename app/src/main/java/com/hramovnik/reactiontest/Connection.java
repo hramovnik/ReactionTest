@@ -71,46 +71,66 @@ public class Connection implements Closeable{
         }
     }
 
-    private void sendTask(TaskExecute task){
-        if ((socket == null)||(socket.isClosed())){
-            Log.d("Connection","Creating socket");
-            try {
-                socket = new Socket(InetAddress.getByName(IPAddress), port);
-            }catch (UnknownHostException e){
-                Log.d("Connection","Unknown host fail");
-                e.printStackTrace();
-                print("Ошибка - некорректный IP адрес");
+    private void sendTask(final TaskExecute task){
 
-                try {
-                    socket.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+        final Connection connection = this;
+        final AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... voids) {
+                if ((socket == null)||(socket.isClosed())){
+                    Log.d("Connection","Creating socket");
+                    try {
+                        socket = new Socket(InetAddress.getByName(IPAddress), port);
+                    }catch (UnknownHostException e){
+                        Log.d("Connection","Unknown host fail");
+                        e.printStackTrace();
+                        print("Ошибка - некорректный IP адрес");
+
+                        try {
+                            socket.close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        working = false;
+                        return null;
+                    }catch (IOException e) {
+                        Log.d("Connection","Socket failed");
+                        e.printStackTrace();
+                        print("Ошибка соединения");
+                        try {
+                            socket.close();
+                        } catch (IOException e1) {
+                            e1.printStackTrace();
+                        }
+                        working = false;
+                        return null;
+                    }
+                    Log.d("Connection","Socket created");
                 }
-                working = false;
-                return;
-            }catch (IOException e) {
-                Log.d("Connection","Socket failed");
-                e.printStackTrace();
-                print("Ошибка соединения");
-                try {
-                    socket.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+
+                if (socket.isClosed()){
+                    Log.d("Connection","Socket failed");
+                    print("Ошибка соединения");
+                    working = false;
+                    return null;
                 }
-                working = false;
-                return;
+
+
+                return null;
             }
-            Log.d("Connection","Socket created");
-        }
 
-        if (socket.isClosed()){
-            Log.d("Connection","Socket failed");
-            print("Ошибка соединения");
-            working = false;
-            return;
-        }
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                new TaskExecutor(task,socket,status,connection);
+                super.onPostExecute(aVoid);
+            }
 
-        new TaskExecutor(task,socket,status,this);
+        };
+
+        asyncTask.execute((Void[]) null);
+
+
+
     }
 
     @Override

@@ -21,7 +21,6 @@ public class PrefActivity extends Activity{
         setContentView(R.layout.activity_pref);
         Log.d("Pref", "Pref Create");
 
-        //addPreferencesFromResource(R.xml.pref);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
 
         textIP = (EditText)findViewById(R.id.teIP);
@@ -32,7 +31,6 @@ public class PrefActivity extends Activity{
     public void onResume(){
         super.onResume();
             try {
-
                 textPort.setText(String.valueOf(sp.getInt("port", 8080)));
                 textIP.setText(sp.getString("ip_address", "192.168.0.10"));
             }catch (Exception e){
