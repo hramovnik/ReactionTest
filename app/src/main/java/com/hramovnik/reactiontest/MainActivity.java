@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +22,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
     TextView tvResult;
     TextView tvDescription;
     Button buttonStartStop;
-
+    TabHost tabs;
     RadioButton rbSensomotor;
     RadioButton rbKChSM;
     RadioButton rbKChSM2;
@@ -38,40 +39,54 @@ public class MainActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
         tvResult = (TextView)findViewById(R.id.tvResult);
         tvDescription = (TextView)findViewById(R.id.tvDescription);
-        buttonStartStop = (Button) findViewById(R.id.buttonStartStopTest);;
+        buttonStartStop = (Button) findViewById(R.id.buttonStartStopTest);
         buttonStartStop.setOnClickListener(this);
 
-        rbSensomotor = (RadioButton) findViewById(R.id.radioButton1);
-        rbSensomotor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvDescription.setText("Описание Сенсомоторного теста");
-                task = 0;
+
+        tabs = (TabHost) findViewById(R.id.tabHost);
+        //tabs.clearAllTabs();
+        tabs.setup();
+
+        TabHost.TabSpec spec1 = tabs.newTabSpec("tag1");
+        spec1.setIndicator("Сенсомоторный тест");
+        spec1.setContent(R.id.tab1);
+        tabs.addTab(spec1);
+
+        TabHost.TabSpec spec2 = tabs.newTabSpec("tag2");
+        spec2.setIndicator("Тест КЧСМ");
+        spec2.setContent(R.id.tab2);
+        tabs.addTab(spec2);
+
+        TabHost.TabSpec spec3 = tabs.newTabSpec("tag3");
+        spec3.setIndicator("Тест КЧСМ - 2");
+        spec3.setContent(R.id.tab3);
+        tabs.addTab(spec3);
+
+        tabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            public void onTabChanged(String tabId) {
+                switch (tabs.getCurrentTab()) {
+                    case 0:
+                        tvDescription.setText("Описание Сенсомоторного теста");
+                        task = 0;
+                        break;
+                    case 1:
+                        tvDescription.setText("Описание теста КЧСМ");
+                        task = 1;
+                        break;
+                    case 2:
+                        tvDescription.setText("Описание теста КЧСМ - 2");
+                        task = 2;
+                        break;
+                    default:
+                        break;
+                }
             }
         });
-        rbKChSM = (RadioButton) findViewById(R.id.radioButton2);
-        rbKChSM.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvDescription.setText("Описание теста КЧСМ");
-                task = 1;
-            }
-        });
-        rbKChSM2 = (RadioButton) findViewById(R.id.radioButton3);
-        rbKChSM2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tvDescription.setText("Описание теста КЧСМ - 2");
-                task = 2;
-            }
-        });
-        rbSensomotor.callOnClick();
-        Log.d("Tag", "onCreate");
+
+        tvDescription.setText("Описание Сенсомоторного теста");
+        task = 0;
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-
-
-
     }
 
     @Override

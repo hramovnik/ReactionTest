@@ -21,14 +21,14 @@ import java.util.concurrent.TimeUnit;
 public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
 
     private boolean isOk = true;
-    private TaskExecute executeble = null;
+    private Session session = null;
     private TextView status = null;
-    Socket socket = null;
-    Connection connection;
+    private Socket socket = null;
+    private Connection connection;
     private TaskExecutor(){};
-    public TaskExecutor(TaskExecute task, Socket socket, TextView status, Connection connection){
+    public TaskExecutor(Session session, Socket socket, TextView status, Connection connection){
         super();
-        executeble = task;
+        this.session = session;
         this.status = status;
         this.socket = socket;
         this.connection = connection;
@@ -48,64 +48,70 @@ public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
     @Override
     protected Void doInBackground(Void... params) {
         Log.d("Tread","Begin");
+        TaskExecute executeble = null;
+        while ((executeble = session.getNextTask()) != null) {
+            if (executeble.getSleeping() != 0){
+                try {
+                    TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    isOk = false;
+                    return null;
+                }
+            }
 
-        if (executeble.getSleeping() != 0){
             try {
-                TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
-            } catch (InterruptedException e) {
+                if ((socket == null)||(socket.isClosed())){
+                    isOk = false;
+                    Log.d("Tread","Socket failed");
+                    return null;
+                }
+
+                Log.d("Tread","Creation streams");
+                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                DataInputStream in = new DataInputStream(socket.getInputStream());
+
+                ByteBuffer byteBuffer = ByteBuffer.allocate(executeble.getTask().length * 4);
+                byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
+                for (int value : executeble.getTask()) {
+                    byteBuffer.putInt(value);
+                }
+                out.write(byteBuffer.array());
+                out.flush();
+
+                for(int i = 0; i < 100; i++){
+                    Log.d("Tread","Sending byte array");
+                    byte [] buffer = new byte [in.available()];
+                    IntBuffer intBuf = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
+                    int[] array = new int[intBuf.remaining()];
+                    intBuf.get(array);
+
+                    if (executeble.setResult(array)){
+                        break;
+                    }else{
+                        try {
+                            wait(executeble.getTimeOut());
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                            isOk = false;
+                            return null;
+                        }
+                    }
+                }
+
+            }
+            catch (UnknownHostException e){
+                Log.d("Tread","Unknown host fail");
+                e.printStackTrace();
+                isOk = false;
+                return null;
+            }catch (IOException e) {
+                Log.d("Tread","Socket failed");
                 e.printStackTrace();
                 isOk = false;
                 return null;
             }
-        }
 
-        try {
-            if ((socket == null)||(socket.isClosed())){
-                isOk = false;
-                Log.d("Tread","Socket failed");
-                return null;
-            }
-
-            Log.d("Tread","Creation streams");
-            DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-            DataInputStream in = new DataInputStream(socket.getInputStream());
-
-            ByteBuffer byteBuffer = ByteBuffer.allocate(executeble.getTask().length * 4);
-            byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-            for (int value : executeble.getTask()) {
-                byteBuffer.putInt(value);
-            }
-            out.write(byteBuffer.array());
-            out.flush();
-
-            for(int i = 0; i < 100; i++){
-                Log.d("Tread","Sending byte array");
-                byte [] buffer = new byte [in.available()];
-                IntBuffer intBuf = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
-                int[] array = new int[intBuf.remaining()];
-                intBuf.get(array);
-
-                if (executeble.setResult(array)){
-                    break;
-                }else{
-                    try {
-                        wait(executeble.getTimeOut());
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                        isOk = false;
-                    }
-                }
-            }
-
-        }
-        catch (UnknownHostException e){
-            Log.d("Tread","Unknown host fail");
-            e.printStackTrace();
-            isOk = false;
-        }catch (IOException e) {
-            Log.d("Tread","Socket failed");
-            e.printStackTrace();
-            isOk = false;
         }
         return null;
     }
@@ -114,11 +120,10 @@ public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
     protected void onPostExecute(Void unused) {
         if (!isOk) {
             print("Проблемы с соединением");
-            executeble = null;
+            session = null;
             return;
         }
-        print(executeble.getInterpretation());
-        executeble = null;
-        connection.executeNext();
+        print(session.analyze());
+        session = null;
     }
 }

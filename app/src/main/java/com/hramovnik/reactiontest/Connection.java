@@ -34,7 +34,6 @@ public class Connection implements Closeable{
     private boolean working = false;
     public Session session = null;
 
-
     Connection(String ip, int port, TextView status){
         super();
         IPAddress = ip;
@@ -84,7 +83,7 @@ public class Connection implements Closeable{
                     }catch (UnknownHostException e){
                         Log.d("Connection","Unknown host fail");
                         e.printStackTrace();
-                        print("Ошибка - некорректный IP адрес");
+                        //print("Ошибка - некорректный IP адрес");
 
                         try {
                             socket.close();
@@ -96,7 +95,7 @@ public class Connection implements Closeable{
                     }catch (IOException e) {
                         Log.d("Connection","Socket failed");
                         e.printStackTrace();
-                        print("Ошибка соединения");
+                        //print("Ошибка соединения");
                         try {
                             socket.close();
                         } catch (IOException e1) {
@@ -110,7 +109,7 @@ public class Connection implements Closeable{
 
                 if (socket.isClosed()){
                     Log.d("Connection","Socket failed");
-                    print("Ошибка соединения");
+                    //print("Ошибка соединения");
                     working = false;
                     return null;
                 }
@@ -121,8 +120,7 @@ public class Connection implements Closeable{
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                new TaskExecutor(task,socket,status,connection);
-                super.onPostExecute(aVoid);
+                final TaskExecutor taskExecutor = new TaskExecutor(session, socket, status, connection);
             }
 
         };
@@ -154,6 +152,4 @@ public class Connection implements Closeable{
         }
         super.finalize();
     }
-
-
 }
