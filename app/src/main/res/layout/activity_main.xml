@@ -85,20 +85,10 @@
         android:text="Результат"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
         android:id="@+id/tvResult"
         android:gravity="center"
-        android:textSize="18sp" />
-
-    <TextView
-        android:text="Описание"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvDescription"
         android:textSize="18sp"
-        android:layout_weight="1"
-        android:layout_above="@+id/tvResult"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/tabHost"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

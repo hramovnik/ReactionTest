@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RadioButton;
+import android.widget.ProgressBar;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,12 +20,10 @@ import java.io.IOException;
 public class MainActivity extends Activity implements View.OnClickListener{
 
     TextView tvResult;
-    TextView tvDescription;
     Button buttonStartStop;
     TabHost tabs;
-    RadioButton rbSensomotor;
-    RadioButton rbKChSM;
-    RadioButton rbKChSM2;
+    ProgressBar progressBar;
+
 
     Connection connection = null;
     int task = 0;
@@ -37,53 +35,39 @@ public class MainActivity extends Activity implements View.OnClickListener{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         tvResult = (TextView)findViewById(R.id.tvResult);
-        tvDescription = (TextView)findViewById(R.id.tvDescription);
         buttonStartStop = (Button) findViewById(R.id.buttonStartStopTest);
         buttonStartStop.setOnClickListener(this);
+        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
         tabs = (TabHost) findViewById(R.id.tabHost);
-        //tabs.clearAllTabs();
         tabs.setup();
 
         TabHost.TabSpec spec1 = tabs.newTabSpec("tag1");
         spec1.setIndicator("Сенсомоторный тест");
-        spec1.setContent(R.id.tab1);
+        //spec1.setContent(R.id.tab1);
+        spec1.setContent(new Intent(this, TabOneActivity.class));
         tabs.addTab(spec1);
 
         TabHost.TabSpec spec2 = tabs.newTabSpec("tag2");
         spec2.setIndicator("Тест КЧСМ");
-        spec2.setContent(R.id.tab2);
+        //spec2.setContent(R.id.tab2);
+        spec2.setContent(new Intent(this, TabTwoActivity.class));
         tabs.addTab(spec2);
 
         TabHost.TabSpec spec3 = tabs.newTabSpec("tag3");
         spec3.setIndicator("Тест КЧСМ - 2");
-        spec3.setContent(R.id.tab3);
+        //spec3.setContent(R.id.tab3);
+        spec3.setContent(new Intent(this, TabThreeActivity.class));
         tabs.addTab(spec3);
 
         tabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             public void onTabChanged(String tabId) {
-                switch (tabs.getCurrentTab()) {
-                    case 0:
-                        tvDescription.setText("Описание Сенсомоторного теста");
-                        task = 0;
-                        break;
-                    case 1:
-                        tvDescription.setText("Описание теста КЧСМ");
-                        task = 1;
-                        break;
-                    case 2:
-                        tvDescription.setText("Описание теста КЧСМ - 2");
-                        task = 2;
-                        break;
-                    default:
-                        break;
-                }
+                task = tabs.getCurrentTab();
             }
         });
-
-        tvDescription.setText("Описание Сенсомоторного теста");
         task = 0;
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -107,7 +91,7 @@ public class MainActivity extends Activity implements View.OnClickListener{
         }
 
 
-        if(connection == null) {connection = new Connection(ipAddress, port, tvResult);}
+        if(connection == null) {connection = new Connection(ipAddress, port, tvResult, progressBar);}
 
     }
 

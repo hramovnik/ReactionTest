@@ -2,6 +2,7 @@ package com.hramovnik.reactiontest;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.Closeable;
@@ -32,13 +33,15 @@ public class Connection implements Closeable{
     private Socket socket = null;
     private TextView status = null;
     private boolean working = false;
+    private ProgressBar progressBar;
     public Session session = null;
 
-    Connection(String ip, int port, TextView status){
+    Connection(String ip, int port, TextView status, ProgressBar progressBar){
         super();
         IPAddress = ip;
         this.port = port;
         this.status = status;
+        this.progressBar = progressBar;
 
     }
     private void print(String string){
@@ -72,7 +75,6 @@ public class Connection implements Closeable{
 
     private void sendTask(final TaskExecute task){
 
-        final Connection connection = this;
         final AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... voids) {
@@ -120,14 +122,12 @@ public class Connection implements Closeable{
 
             @Override
             protected void onPostExecute(Void aVoid) {
-                final TaskExecutor taskExecutor = new TaskExecutor(session, socket, status, connection);
+                final TaskExecutor taskExecutor = new TaskExecutor(session, socket, status, progressBar);
             }
 
         };
 
         asyncTask.execute((Void[]) null);
-
-
 
     }
 

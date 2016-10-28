@@ -2,6 +2,8 @@ package com.hramovnik.reactiontest;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.util.Pair;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.DataInputStream;
@@ -18,35 +20,34 @@ import java.util.concurrent.TimeUnit;
  * Created by Hramovnik on 23.10.2016.
  */
 
-public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
+public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
 
-    private boolean isOk = true;
     private Session session = null;
     private TextView status = null;
     private Socket socket = null;
-    private Connection connection;
+    private ProgressBar progressBar = null;
     private TaskExecutor(){};
-    public TaskExecutor(Session session, Socket socket, TextView status, Connection connection){
+
+    public TaskExecutor(Session session, Socket socket, TextView status, ProgressBar progressBar){
         super();
         this.session = session;
         this.status = status;
         this.socket = socket;
-        this.connection = connection;
+        this.progressBar = progressBar;
         execute();
     }
 
     private void print(String string){
-        if(status != null) status.setText(string);
+        if( status != null) status.setText(string);
     }
 
-    @Override
-    protected void onPreExecute(){
-        isOk = true;
+    private void setProgressBar(Integer value){
+        if (progressBar != null) progressBar.setProgress(value);
     }
 
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected String doInBackground(Void... params) {
         Log.d("Tread","Begin");
         TaskExecute executeble = null;
         while ((executeble = session.getNextTask()) != null) {
@@ -55,16 +56,14 @@ public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
                     TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    isOk = false;
-                    return null;
+                    return "Ошибка потока: Sleep failed";
                 }
             }
 
             try {
                 if ((socket == null)||(socket.isClosed())){
-                    isOk = false;
                     Log.d("Tread","Socket failed");
-                    return null;
+                    return "Ошибка соединения: Socket failed";
                 }
 
                 Log.d("Tread","Creation streams");
@@ -93,8 +92,7 @@ public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
                             wait(executeble.getTimeOut());
                         } catch (InterruptedException e) {
                             e.printStackTrace();
-                            isOk = false;
-                            return null;
+                            return "Ошибка потока: Waiting failed";
                         }
                     }
                 }
@@ -103,13 +101,11 @@ public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
             catch (UnknownHostException e){
                 Log.d("Tread","Unknown host fail");
                 e.printStackTrace();
-                isOk = false;
-                return null;
+                return "Ошибка сети: неизвестный ip адрес хоста";
             }catch (IOException e) {
                 Log.d("Tread","Socket failed");
                 e.printStackTrace();
-                isOk = false;
-                return null;
+                return "Ошибка ввода-вывода: проблемы с соединением";
             }
 
         }
@@ -117,13 +113,20 @@ public class TaskExecutor extends AsyncTask<Void,Integer,Void> {
     }
 
     @Override
-    protected void onPostExecute(Void unused) {
-        if (!isOk) {
-            print("Проблемы с соединением");
-            session = null;
-            return;
+    protected void onProgressUpdate(Pair<String,Integer> ... values){
+        if ((values == null)||(values.length < 1)) return;
+        if (values[0].first != null){print(values[0].first);}
+        if (values[0].second != null){setProgressBar(values[0].second);}
+
+    }
+
+    @Override
+    protected void onPostExecute(String message) {
+        if (message != null) {
+            print(message);
+        }else{
+            print(session.analyze());
         }
-        print(session.analyze());
         session = null;
     }
 }
