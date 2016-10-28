@@ -1,13 +1,23 @@
 package com.hramovnik.reactiontest;
 
-import android.app.TabActivity;
+import android.support.v4.app.Fragment;
+
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
-public class TabTwoActivity extends TabActivity implements TaskActivityInterface {
-
+public class TabTwoActivity extends Fragment implements TaskActivityInterface {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tab_two);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.activity_tab_two, container, false);
     }
+
+ /*   @Override
+    public void onResume(){
+        Log.d("Tag", "Tab2 on resume");
+        super.onResume();
+    }*/
 }

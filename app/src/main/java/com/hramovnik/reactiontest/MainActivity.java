@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,13 +19,12 @@ import android.widget.Toast;
 
 import java.io.IOException;
 
-public class MainActivity extends Activity implements View.OnClickListener{
+public class MainActivity extends FragmentActivity implements View.OnClickListener{
 
     TextView tvResult;
     Button buttonStartStop;
-    TabHost tabs;
+    FragmentTabHost tabs;
     ProgressBar progressBar;
-
 
     Connection connection = null;
     int task = 0;
@@ -42,32 +43,21 @@ public class MainActivity extends Activity implements View.OnClickListener{
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
 
-        tabs = (TabHost) findViewById(R.id.tabHost);
-        tabs.setup();
+        tabs = (FragmentTabHost) findViewById(R.id.tabHost);
+        tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        TabHost.TabSpec spec1 = tabs.newTabSpec("tag1");
-        spec1.setIndicator("Сенсомоторный тест");
-        //spec1.setContent(R.id.tab1);
-        spec1.setContent(new Intent(this, TabOneActivity.class));
-        tabs.addTab(spec1);
+        tabs.addTab(tabs.newTabSpec("tab1").setIndicator("Сенсомоторный тест"),TabOneActivity.class, null);
+        tabs.addTab(tabs.newTabSpec("tab2").setIndicator("Тест КЧСМ"),TabTwoActivity.class, null);
+        tabs.addTab(tabs.newTabSpec("tab3").setIndicator("Тест КЧСМ - 2"),TabThreeActivity.class, null);
 
-        TabHost.TabSpec spec2 = tabs.newTabSpec("tag2");
-        spec2.setIndicator("Тест КЧСМ");
-        //spec2.setContent(R.id.tab2);
-        spec2.setContent(new Intent(this, TabTwoActivity.class));
-        tabs.addTab(spec2);
-
-        TabHost.TabSpec spec3 = tabs.newTabSpec("tag3");
-        spec3.setIndicator("Тест КЧСМ - 2");
-        //spec3.setContent(R.id.tab3);
-        spec3.setContent(new Intent(this, TabThreeActivity.class));
-        tabs.addTab(spec3);
-
+/*
         tabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             public void onTabChanged(String tabId) {
                 task = tabs.getCurrentTab();
             }
         });
+
+        */
         task = 0;
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
