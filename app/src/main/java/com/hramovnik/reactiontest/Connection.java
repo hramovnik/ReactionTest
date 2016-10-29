@@ -23,18 +23,18 @@ import java.util.concurrent.TimeUnit;
 
 import android.os.NetworkOnMainThreadException;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by Hramovnik on 07.10.2016.
  */
 
-public class Connection implements Closeable{
+public class Connection{
     private String IPAddress;
     private int port;
-    private Socket socket = null;
     private TextView status = null;
     private boolean working = false;
     private ProgressBar progressBar;
-    public Session session = null;
 
     Connection(String ip, int port, TextView status, ProgressBar progressBar){
         super();
@@ -51,105 +51,33 @@ public class Connection implements Closeable{
         return working;
     }
 
-    public void sendSession(Session sess){
+    public void sendSession(Session session){
         if (isWorking()) return;
-
-        print("Отправка команды");
-        session = sess;
         working = true;
-        Log.d("Connection","Opening socket");
+        print("Отправка команды");
 
-        executeNext();
+        TaskExecutor taskExecutor = new TaskExecutor(session, this);
     }
 
-    public synchronized void executeNext(){
-        TaskExecute task = session.getNextTask();
-        if (task != null){
-            sendTask(task);
-        }else{
-            print(session.analyze());
-            working = false;
-            session = null;
-        }
+    public int getPort() {
+        return port;
     }
 
-    private void sendTask(final TaskExecute task){
-
-        final AsyncTask<Void, Void, Void> asyncTask = new AsyncTask<Void, Void, Void>() {
-            @Override
-            protected Void doInBackground(Void... voids) {
-                if ((socket == null)||(socket.isClosed())){
-                    Log.d("Connection","Creating socket");
-                    try {
-                        socket = new Socket(InetAddress.getByName(IPAddress), port);
-                    }catch (UnknownHostException e){
-                        Log.d("Connection","Unknown host fail");
-                        e.printStackTrace();
-                        //print("Ошибка - некорректный IP адрес");
-
-                        try {
-                            socket.close();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                        working = false;
-                        return null;
-                    }catch (IOException e) {
-                        Log.d("Connection","Socket failed");
-                        e.printStackTrace();
-                        //print("Ошибка соединения");
-                        try {
-                            socket.close();
-                        } catch (IOException e1) {
-                            e1.printStackTrace();
-                        }
-                        working = false;
-                        return null;
-                    }
-                    Log.d("Connection","Socket created");
-                }
-
-                if (socket.isClosed()){
-                    Log.d("Connection","Socket failed");
-                    //print("Ошибка соединения");
-                    working = false;
-                    return null;
-                }
-
-
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                final TaskExecutor taskExecutor = new TaskExecutor(session, socket, status, progressBar);
-            }
-
-        };
-
-        asyncTask.execute((Void[]) null);
-
+    String getAddress(){
+        return IPAddress;
     }
 
-    @Override
-    public void close() throws IOException {
-        if (socket != null) {
-            try {
-                socket.close();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-            socket = null;
-        }
+    TextView getStatus(){
+        return status;
     }
 
-    @Override
-    protected void finalize() throws Throwable {
-        try{
-            close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        super.finalize();
+    ProgressBar getProgressBar(){
+        return progressBar;
     }
+
+    void workingEnds(){
+        working = false;
+    }
+
+
 }

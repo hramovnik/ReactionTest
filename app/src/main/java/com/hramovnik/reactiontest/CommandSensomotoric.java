@@ -43,5 +43,7 @@ public final class CommandSensomotoric extends TaskObject {
     }
 
     @Override
-    public int getSleeping(){return 2000;}
+    public int getSleeping(){
+        return 2000;
+    }
 }

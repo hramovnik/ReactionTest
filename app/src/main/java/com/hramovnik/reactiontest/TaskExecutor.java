@@ -9,6 +9,7 @@ import android.widget.TextView;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
@@ -23,47 +24,36 @@ import java.util.concurrent.TimeUnit;
 public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
 
     private Session session = null;
-    private TextView status = null;
-    private Socket socket = null;
-    private ProgressBar progressBar = null;
-    private TaskExecutor(){};
+    private Connection connection = null;
+    private TaskExecutor(){}
 
-    public TaskExecutor(Session session, Socket socket, TextView status, ProgressBar progressBar){
+    public TaskExecutor(Session session, Connection connection){
         super();
         this.session = session;
-        this.status = status;
-        this.socket = socket;
-        this.progressBar = progressBar;
+        this.connection = connection;
         execute();
     }
 
     private void print(String string){
-        if( status != null) status.setText(string);
+        if(connection.getStatus() != null) connection.getStatus().setText(string);
     }
 
     private void setProgressBar(Integer value){
-        if (progressBar != null) progressBar.setProgress(value);
+        if (connection.getProgressBar() != null) connection.getProgressBar().setProgress(value);
     }
 
 
     @Override
     protected String doInBackground(Void... params) {
-        Log.d("Tread","Begin");
-        TaskExecute executeble = null;
-        while ((executeble = session.getNextTask()) != null) {
-            if (executeble.getSleeping() != 0){
-                try {
-                    TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    return "Ошибка потока: Sleep failed";
-                }
-            }
+        Log.d("Thread","Begin");
 
-            try {
-                if ((socket == null)||(socket.isClosed())){
-                    Log.d("Tread","Socket failed");
-                    return "Ошибка соединения: Socket failed";
+        try(Socket socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort())) {
+            if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение";
+
+            TaskExecute executeble = null;
+            while ((executeble = session.getNextTask()) != null) {
+                if (executeble.getSleeping() != 0){
+                    TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
                 }
 
                 Log.d("Tread","Creation streams");
@@ -79,7 +69,6 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                 out.flush();
 
                 for(int i = 0; i < 100; i++){
-                    Log.d("Tread","Sending byte array");
                     byte [] buffer = new byte [in.available()];
                     IntBuffer intBuf = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
                     int[] array = new int[intBuf.remaining()];
@@ -88,27 +77,22 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                     if (executeble.setResult(array)){
                         break;
                     }else{
-                        try {
-                            wait(executeble.getTimeOut());
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                            return "Ошибка потока: Waiting failed";
-                        }
+                        wait(executeble.getTimeOut());
                     }
                 }
-
-            }
-            catch (UnknownHostException e){
-                Log.d("Tread","Unknown host fail");
-                e.printStackTrace();
-                return "Ошибка сети: неизвестный ip адрес хоста";
-            }catch (IOException e) {
-                Log.d("Tread","Socket failed");
-                e.printStackTrace();
-                return "Ошибка ввода-вывода: проблемы с соединением";
             }
 
+        }catch (UnknownHostException e){
+            e.printStackTrace();
+            return "Ошибка сети: неизвестный ip адрес хоста";
+        }catch (IOException e) {
+            e.printStackTrace();
+            return "Ошибка ввода-вывода: проблемы с соединением";
+        }catch (InterruptedException e) {
+            e.printStackTrace();
+            return "Ошибка потока: Waiting failed";
         }
+
         return null;
     }
 

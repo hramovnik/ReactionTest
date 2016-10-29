@@ -49,6 +49,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tabs.addTab(tabs.newTabSpec("tab1").setIndicator("Сенсомоторный тест"),TabOneActivity.class, null);
         tabs.addTab(tabs.newTabSpec("tab2").setIndicator("Тест КЧСМ"),TabTwoActivity.class, null);
         tabs.addTab(tabs.newTabSpec("tab3").setIndicator("Тест КЧСМ - 2"),TabThreeActivity.class, null);
+        for(int i = 0; i < 3; i++){
+            ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(8);
+        }
 
 /*
         tabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
@@ -71,7 +74,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             ipAddress = sp.getString("ip_address", "192.168.0.10");
             port = sp.getInt("port", 8080);
             if ((port > 0xffff)||(port < 1024)) port = 8080;
-
 
             Log.d("Tag", ipAddress + " " + port);
         }catch (Exception e){
@@ -109,15 +111,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public void onDestroy(){
-
-        try {
-            if (connection != null){
-                connection.close();
-                connection=null;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
         super.onDestroy();
     }
 

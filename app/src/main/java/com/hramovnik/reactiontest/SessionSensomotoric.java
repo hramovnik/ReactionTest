@@ -66,6 +66,6 @@ public final class SessionSensomotoric implements Session {
         return builder.toString();
 
 */
-        return "Data is not ready";
+        return "Data is not ready  but loaded successfully";
     }
 }
