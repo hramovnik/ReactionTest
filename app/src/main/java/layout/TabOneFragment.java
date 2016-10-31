@@ -69,6 +69,7 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
             public void onStopTrackingTouch(SeekBar seekBar) {}
         });
         sbSizeChooser.setProgress(sp.getInt("SMT_Round_SIZE", 3));
+        teSizeChooser.setText(String.valueOf(sp.getInt("SMT_Round_SIZE", 3)));
 
         dialogChooseColorOne = new ColorChooser();
         dialogChooseColorTwo = new ColorChooser();
