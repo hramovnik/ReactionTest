@@ -1,6 +1,5 @@
 package com.hramovnik.reactiontest;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,11 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
+import layout.TabOneFragment;
+import layout.TabThreeFragment;
+import layout.TabTwoFragment;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener{
 
@@ -46,9 +46,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tabs = (FragmentTabHost) findViewById(R.id.tabHost);
         tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        tabs.addTab(tabs.newTabSpec("tab1").setIndicator("Сенсомоторный тест"),TabOneActivity.class, null);
-        tabs.addTab(tabs.newTabSpec("tab2").setIndicator("Тест КЧСМ"),TabTwoActivity.class, null);
-        tabs.addTab(tabs.newTabSpec("tab3").setIndicator("Тест КЧСМ - 2"),TabThreeActivity.class, null);
+        tabs.addTab(tabs.newTabSpec("tab1").setIndicator("Сенсомоторный тест"), TabOneFragment.class, null);
+        tabs.addTab(tabs.newTabSpec("tab2").setIndicator("Тест КЧСМ"), TabTwoFragment.class, null);
+        tabs.addTab(tabs.newTabSpec("tab3").setIndicator("Тест КЧСМ - 2"), TabThreeFragment.class, null);
         for(int i = 0; i < 3; i++){
             ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(8);
         }

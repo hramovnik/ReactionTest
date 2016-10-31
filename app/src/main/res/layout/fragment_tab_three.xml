@@ -7,13 +7,13 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="50dp"
-    tools:context="com.hramovnik.reactiontest.TabThreeActivity">
+    android:paddingTop="@dimen/tabs_vertical_offset"
+    tools:context="layout.TabThreeFragment">
 
     <TextView
         android:text="Описание теста КЧСМ-2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView3"
+        android:id="@+id/textView"
     />
 </LinearLayout>

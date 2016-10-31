@@ -56,7 +56,7 @@ public class PrefActivity extends Activity{
             SharedPreferences.Editor ed = sp.edit();
             ed.putInt("port", Integer.parseInt(textPort.getText().toString()));
             ed.putString("ip_address", textIP.getText().toString());
-            ed.commit();
+            ed.apply();
             Toast.makeText(this, "Настройки сохранены", Toast.LENGTH_SHORT).show();
         }catch (Exception e){
             Toast.makeText(this, "Настройки не сохранены", Toast.LENGTH_SHORT).show();
