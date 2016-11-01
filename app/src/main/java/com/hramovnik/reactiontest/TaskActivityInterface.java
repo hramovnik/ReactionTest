@@ -5,5 +5,5 @@ package com.hramovnik.reactiontest;
  */
 
 public interface TaskActivityInterface {
-
+    Session getSession();
 }

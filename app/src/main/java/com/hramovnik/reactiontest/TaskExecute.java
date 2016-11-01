@@ -11,4 +11,5 @@ public interface TaskExecute {
     public String getInterpretation();
     public int getTimeOut();
     public int getSleeping();
+    public boolean isError();
 }

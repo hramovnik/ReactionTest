@@ -1,5 +1,8 @@
 package com.hramovnik.reactiontest;
 
+
+import android.util.Pair;
+
 /**
  * Created by Hramovnik on 22.10.2016.
  */
@@ -7,4 +10,5 @@ package com.hramovnik.reactiontest;
 public interface Session {
     TaskExecute getNextTask();
     String analyze();
+    Pair<Integer, Integer> countTasks();
 }

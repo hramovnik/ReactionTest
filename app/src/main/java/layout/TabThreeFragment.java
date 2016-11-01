@@ -5,8 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.hramovnik.reactiontest.R;
+import com.hramovnik.reactiontest.Session;
 import com.hramovnik.reactiontest.TaskActivityInterface;
 
 public class TabThreeFragment extends Fragment implements TaskActivityInterface {
@@ -15,5 +17,11 @@ public class TabThreeFragment extends Fragment implements TaskActivityInterface 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_tab_three, container, false);
+    }
+
+    @Override
+    public Session getSession() {
+
+        return null;
     }
 }

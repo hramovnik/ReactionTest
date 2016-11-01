@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
@@ -41,7 +42,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         buttonStartStop = (Button) findViewById(R.id.buttonStartStopTest);
         buttonStartStop.setOnClickListener(this);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
-
 
         tabs = (FragmentTabHost) findViewById(R.id.tabHost);
         tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -89,23 +89,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
                 if (connection.isWorking()) {
                     return;
                 }
-                switch (task) {
-                    case 0:
-                        connection.sendSession(new SessionSensomotoric(5));
-                        break;
-                    case 1:
-                        break;
-                    case 2:
-                        break;
-                    default:
-                        break;
+                Fragment currentTab = getSupportFragmentManager().findFragmentByTag(tabs.getCurrentTabTag());
+                if (currentTab instanceof TaskActivityInterface){
+                    Session session = ((TaskActivityInterface) currentTab).getSession();
+                    if (session!=null){
+                        connection.sendSession(session);
+                    }else{
+                        Toast.makeText(this, "Нереализованное действие", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
                 }
-                break;
+                //
+
         }
     }
 

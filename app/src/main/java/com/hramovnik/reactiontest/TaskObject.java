@@ -45,6 +45,13 @@ public abstract class TaskObject implements TaskExecute {
         return 0;
     }
 
+    @Override
+    public boolean isError() {
+        if (answer == null) return false;
+        return !((answer.length > 0)&&((answer[0]==RSP_ERROR_IN_PROGRESS)||answer[0]==RSP_ERROR_UNAVAILABLE));
+    }
+
     protected int [] answer = null;
     protected boolean fail = false;
+    protected boolean error = false;
 }

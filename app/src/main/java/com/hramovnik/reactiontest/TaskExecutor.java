@@ -31,6 +31,7 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
         super();
         this.session = session;
         this.connection = connection;
+        setProgressBar(0);
         execute();
     }
 
@@ -45,55 +46,84 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        Log.d("Thread","Begin");
+        synchronized(this) {
+            Log.d("Thread", "Begin");
 
-        try(Socket socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort())) {
-            if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение";
+            try (Socket socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort())) {
+                if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение";
+                socket.setSoTimeout(0);
+                Integer iteration = 0;
 
-            TaskExecute executeble = null;
-            while ((executeble = session.getNextTask()) != null) {
-                if (executeble.getSleeping() != 0){
-                    TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
-                }
+                TaskExecute executeble = null;
+                while ((executeble = session.getNextTask()) != null) {
+                    if (executeble.getSleeping() != 0) {
+                        TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
+                    }
 
-                Log.d("Tread","Creation streams");
-                DataOutputStream out = new DataOutputStream(socket.getOutputStream());
-                DataInputStream in = new DataInputStream(socket.getInputStream());
+                    Log.d("Tread", "Creation streams");
+                    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                    DataInputStream in = new DataInputStream(socket.getInputStream());
 
-                ByteBuffer byteBuffer = ByteBuffer.allocate(executeble.getTask().length * 4);
-                byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
-                for (int value : executeble.getTask()) {
-                    byteBuffer.putInt(value);
-                }
-                out.write(byteBuffer.array());
-                out.flush();
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(executeble.getTask().length * 4);
+                    byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-                for(int i = 0; i < 100; i++){
-                    byte [] buffer = new byte [in.available()];
-                    IntBuffer intBuf = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
-                    int[] array = new int[intBuf.remaining()];
-                    intBuf.get(array);
+                    for (int value : executeble.getTask()) {
+                        byteBuffer.putInt(value);
+                    }
+                    out.write(byteBuffer.array());
+                    out.flush();
+                    wait(100);
 
-                    if (executeble.setResult(array)){
-                        break;
-                    }else{
-                        wait(executeble.getTimeOut());
+                    StringBuilder res = new StringBuilder();
+                    iteration++;
+                    Pair<Integer, Integer> taskSize = session.countTasks();
+                    publishProgress(new Pair<String,Integer>(null, (taskSize.second-taskSize.first)*100/taskSize.second));
+
+                    for (int i = 0; i < 20; i++) {
+                        out.write(byteBuffer.array());
+                        out.flush();
+                        wait(100);
+
+                        for(int t = 0; (t < 10) && (in.available() == 0); t++){
+                            TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
+                        }
+                        if (in.available() == 0){return "Таймаут принятия сообщений (" + String.valueOf(executeble.getTimeOut()*10) + "c)";}
+
+                        byte[] buffer = new byte[in.available()];
+                        in.read(buffer);
+                        IntBuffer intBuf = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
+                        int[] array = new int[intBuf.remaining()];
+                        intBuf.get(array);
+
+                        if (executeble.setResult(array)) {
+                            break;
+                        } else {
+                            if (executeble.isError()){
+                                return "Ошибка данных, или процессов в устрйостве";
+                            }else{
+                                if (i == 19) {return "Задача " + String.valueOf(iteration) + ": ошибка данных \n" + res.toString();}
+                                TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
+                            }
+
+                        }
                     }
                 }
+
+            } catch (UnknownHostException e) {
+                e.printStackTrace();
+                return "Ошибка сети: неизвестный ip адрес хоста";
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Ошибка ввода-вывода: проблемы с соединением";
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+                return "Ошибка приостановки потока";
+            } catch (Throwable e) {
+                return "Фатальная ошибка: " + e.getMessage();
             }
 
-        }catch (UnknownHostException e){
-            e.printStackTrace();
-            return "Ошибка сети: неизвестный ip адрес хоста";
-        }catch (IOException e) {
-            e.printStackTrace();
-            return "Ошибка ввода-вывода: проблемы с соединением";
-        }catch (InterruptedException e) {
-            e.printStackTrace();
-            return "Ошибка потока: Waiting failed";
+            return null;
         }
-
-        return null;
     }
 
     @Override
@@ -112,5 +142,6 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
             print(session.analyze());
         }
         session = null;
+        connection.workingEnds();
     }
 }

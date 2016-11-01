@@ -3,6 +3,7 @@ package layout;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,7 +56,7 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
         super.onActivityCreated(savedInstanceState);
 
 
-        TableLayout layout = (TableLayout) getView().findViewById(R.id.tableLayout);
+        TableLayout layout = (TableLayout) getView().findViewById(R.id.tableColorLayout);
 
         colorButtons = new Button[48];
         colorMap = new HashMap<>();
@@ -65,36 +66,46 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
             colorButtons[i].setOnClickListener(this);
         }
 
+        TableRow.LayoutParams rowParams = new TableRow.LayoutParams(80,80);
+        rowParams.setMargins(10,10,10,10);
+
         for (int i = 0; i < 8; i++){
             TableRow row = new TableRow(getContext());
 
             colorButtons[i*6].setBackgroundColor(Color.rgb(255, 0, i*32));
             colorMap.put(colorButtons[i*6], Color.rgb(255, 0, i*32));
+            row.addView(colorButtons[i*6],rowParams);
 
             colorButtons[i*6+1].setBackgroundColor(Color.rgb(255, i*32, 0));
             colorMap.put(colorButtons[i*6+1], Color.rgb(255, i*32, 0));
+            row.addView(colorButtons[i*6+1],rowParams);
 
             colorButtons[i*6+2].setBackgroundColor(Color.rgb(i*32, 255, 0));
             colorMap.put(colorButtons[i*6+2], Color.rgb(i*32, 255, 0));
+            row.addView(colorButtons[i*6+2],rowParams);
 
             colorButtons[i*6+3].setBackgroundColor(Color.rgb(0, 255, i*32));
             colorMap.put(colorButtons[i*6+3], Color.rgb(0, 255, i*32));
+            row.addView(colorButtons[i*6+3],rowParams);
 
             colorButtons[i*6+4].setBackgroundColor(Color.rgb(0, i*32, 255));
             colorMap.put(colorButtons[i*6+4], Color.rgb(0, i*32, 255));
+            row.addView(colorButtons[i*6+4],rowParams);
 
             colorButtons[i*6+5].setBackgroundColor(Color.rgb(i*32, 0, 255));
             colorMap.put(colorButtons[i*6+5], Color.rgb(i*32, 0, 255));
+            row.addView(colorButtons[i*6+5],rowParams);
 
             layout.addView(row);
+
         }
 
-        //layout.setLayoutParams(new TableLayout.LayoutParams(50,50));
+        layout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT));
 
         for(int i = 0 ; i < colorButtons.length; i++){
-            TableRow.LayoutParams params1 = new TableRow.LayoutParams(70,70);
-            params1.setMargins(10,10,10,10);
-            colorButtons[i].setLayoutParams(params1);
+            TableRow.LayoutParams params = new TableRow.LayoutParams(80,80);
+            params.setMargins(10,10,10,10);
+            colorButtons[i].setLayoutParams(params);
         }
 
 

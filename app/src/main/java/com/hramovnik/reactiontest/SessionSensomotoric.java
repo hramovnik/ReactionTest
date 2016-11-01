@@ -1,6 +1,6 @@
 package com.hramovnik.reactiontest;
 
-import android.graphics.Color;
+import android.util.Pair;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -11,18 +11,25 @@ public final class SessionSensomotoric implements Session {
     private Queue<TaskExecute> tasks = null;
     private CommandSensoGetResult redResult = null;
     private CommandSensoGetResult greenResult = null;
-    public SessionSensomotoric(int serialLen){
+    public SessionSensomotoric(int serialLen, int dotSize, int firstColor, int secondColor){
         tasks = new LinkedBlockingQueue<>();
 
-        tasks.add(new CommandSensomotoric(Color.RED, 10, serialLen, 1000));
+        int realDotSize = (int) ((float) dotSize / 0.219);
+
+        tasks.add(new CommandSensomotoric(firstColor, realDotSize, serialLen, 1000));
         redResult = new CommandSensoGetResult(serialLen, 1000);
         tasks.add(redResult);
 
-        tasks.add(new CommandSensomotoric(Color.GREEN, 10, serialLen, 1000));
+        tasks.add(new CommandSensomotoric(secondColor, realDotSize, serialLen, 1000));
         greenResult = new CommandSensoGetResult(serialLen, 1000);
         tasks.add(greenResult);
 
+        tasksInSession = tasks.size();
+        tasksElapsed = tasksInSession;
     }
+
+    private Integer tasksInSession;
+    private Integer tasksElapsed;
 
     @Override
     public TaskExecute getNextTask() {
@@ -66,6 +73,12 @@ public final class SessionSensomotoric implements Session {
         return builder.toString();
 
 */
-        return "Data is not ready  but loaded successfully";
+        return "Data is not ready but loaded successfully";
+    }
+
+    @Override
+    public Pair<Integer, Integer> countTasks() {
+        tasksElapsed = tasks.size();
+        return new Pair<Integer, Integer>(tasksElapsed, tasksInSession);
     }
 }

@@ -7,7 +7,6 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +14,9 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-
-
 import com.hramovnik.reactiontest.R;
+import com.hramovnik.reactiontest.Session;
+import com.hramovnik.reactiontest.SessionSensomotoric;
 import com.hramovnik.reactiontest.TaskActivityInterface;
 
 public class TabOneFragment extends Fragment implements TaskActivityInterface, View.OnClickListener {
@@ -28,7 +27,6 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
 
         return inflater.inflate(R.layout.fragment_tab_one, container, false);
     }
-
 
     private DialogFragment dialogChooseColorOne;
     private DialogFragment dialogChooseColorTwo;
@@ -41,6 +39,8 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
     private int colorTwo = Color.GREEN;
     private SeekBar sbSizeChooser;
     private TextView teSizeChooser;
+    private SeekBar sbQuantityRep;
+    private TextView teQuantityRep;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -71,6 +71,23 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
         sbSizeChooser.setProgress(sp.getInt("SMT_Round_SIZE", 3));
         teSizeChooser.setText(String.valueOf(sp.getInt("SMT_Round_SIZE", 3)));
 
+        teQuantityRep = (TextView) getView().findViewById(R.id.teQuantityRep);
+        sbQuantityRep = (SeekBar) getView().findViewById(R.id.sbQuantityRep);
+        sbQuantityRep.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                if (i < 1) sbQuantityRep.setProgress(1);
+                else teQuantityRep.setText(String.valueOf(i));
+
+            }
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {}
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {}
+        });
+        sbQuantityRep.setProgress(sp.getInt("SMT_QUANTITY_REP", 3));
+        teQuantityRep.setText(String.valueOf(sp.getInt("SMT_QUANTITY_REP", 3)));
+
         dialogChooseColorOne = new ColorChooser();
         dialogChooseColorTwo = new ColorChooser();
 
@@ -83,8 +100,6 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
 
         colorOne = sp.getInt("SMT_Color_ONE", Color.GREEN);
         colorTwo = sp.getInt("SMT_Color_TWO", Color.RED);
-
-
     }
 
     @Override
@@ -95,6 +110,7 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
             ed.putInt("SMT_Color_ONE", colorOne);
             ed.putInt("SMT_Color_TWO", colorTwo);
             ed.putInt("SMT_Round_SIZE", sbSizeChooser.getProgress());
+            ed.putInt("SMT_QUANTITY_REP", sbQuantityRep.getProgress());
 
             ed.apply();
 
@@ -105,8 +121,6 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
 
     @Override
     public void onResume(){
-
-
         super.onResume();
     }
 
@@ -136,13 +150,17 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
             case DIALOG_ONE:
                 colorOne = resultCode;
                 buttonChooseColorOne.setBackgroundColor(colorOne);
-
                 break;
             case DIALOG_TWO:
                 colorTwo = resultCode;
                 buttonChooseColorTwo.setBackgroundColor(colorTwo);
                 break;
         }
+    }
+
+    @Override
+    public Session getSession() {
+        return new SessionSensomotoric(sbQuantityRep.getProgress(), sbSizeChooser.getProgress(), colorOne, colorTwo);
     }
 }
 
