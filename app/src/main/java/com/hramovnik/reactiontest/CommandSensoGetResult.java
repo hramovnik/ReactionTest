@@ -7,17 +7,14 @@ package com.hramovnik.reactiontest;
 public final class CommandSensoGetResult extends TaskObject{
 
     private CommandSensoGetResult(){}
-    CommandSensoGetResult(int serialLen, int timeDelay){
+    CommandSensoGetResult(int serialLen){
         if ((serialLen < 21)&&(serialLen > 0)){
             this.serialLen = serialLen;
         }else{
             this.serialLen = 1;
         }
-        timeOut = timeDelay;
-
     }
     private int serialLen = 20;
-    private int timeOut = 1000;
     @Override
     public int[] getTask() {
         int [] task = new int[1];
@@ -56,6 +53,6 @@ public final class CommandSensoGetResult extends TaskObject{
 
     @Override
     public int getTimeOut() {
-        return timeOut;
+        return 2000;
     }
 }

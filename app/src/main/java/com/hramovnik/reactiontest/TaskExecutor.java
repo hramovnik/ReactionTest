@@ -48,6 +48,7 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
     protected String doInBackground(Void... params) {
         synchronized(this) {
             Log.d("Thread", "Begin");
+            StringBuilder res = new StringBuilder();
 
             try (Socket socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort())) {
                 if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение";
@@ -67,41 +68,46 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                     ByteBuffer byteBuffer = ByteBuffer.allocate(executeble.getTask().length * 4);
                     byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-                    for (int value : executeble.getTask()) {
-                        byteBuffer.putInt(value);
-                    }
-                    out.write(byteBuffer.array());
-                    out.flush();
-                    wait(100);
+                    for (int value : executeble.getTask()) {byteBuffer.putInt(value);}
 
-                    StringBuilder res = new StringBuilder();
                     iteration++;
                     Pair<Integer, Integer> taskSize = session.countTasks();
                     publishProgress(new Pair<String,Integer>(null, (taskSize.second-taskSize.first)*100/taskSize.second));
 
-                    for (int i = 0; i < 20; i++) {
+                    for (int i = 0; i < 200; i++) {
+                        res.append("s" + String.valueOf(byteBuffer.array()[0]) + " ");
                         out.write(byteBuffer.array());
                         out.flush();
-                        wait(100);
 
-                        for(int t = 0; (t < 10) && (in.available() == 0); t++){
+                        TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
+                        for(int t = 0; (t < 20) && (in.available() == 0); t++){
                             TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
                         }
-                        if (in.available() == 0){return "Таймаут принятия сообщений (" + String.valueOf(executeble.getTimeOut()*10) + "c)";}
+                        if (in.available() == 0){
+                            return "Задача " + String.valueOf(iteration) + " : таймаут принятия сообщений (" + String.valueOf(executeble.getTimeOut()*20) + "мc) \n" + res.toString();
+                        }else if(in.available() < 4){
+                            return "Задача " + String.valueOf(iteration) + " : ошибка количества принятых данных ( < 4 байт)";
+                        }
+
 
                         byte[] buffer = new byte[in.available()];
                         in.read(buffer);
+
                         IntBuffer intBuf = ByteBuffer.wrap(buffer).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
                         int[] array = new int[intBuf.remaining()];
                         intBuf.get(array);
 
+                        res.append(String.valueOf(array[0]) + " ");
+
                         if (executeble.setResult(array)) {
+                            if (array.length > 0) {publishProgress(new Pair<String,Integer>("Задача " + String.valueOf(iteration) + ": " + String.valueOf(array[0]), null));}
+                            res.append("\n");
                             break;
                         } else {
                             if (executeble.isError()){
-                                return "Ошибка данных, или процессов в устрйостве";
+                                return "Ошибка данных, или процессов в устройстве";
                             }else{
-                                if (i == 19) {return "Задача " + String.valueOf(iteration) + ": ошибка данных \n" + res.toString();}
+                                if (i == 199) {return "Задача " + String.valueOf(iteration) + ": ошибка данных \n" + res.toString();}
                                 TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
                             }
 

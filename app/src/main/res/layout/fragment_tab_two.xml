@@ -59,7 +59,7 @@
         <Button
             android:layout_width="@dimen/color_button_width"
             android:layout_height="@dimen/color_button_height"
-            android:id="@+id/buttonColorOneChooser"
+            android:id="@+id/buttonColor"
             android:text=""
 
             style="@style/AlertDialog.AppCompat"

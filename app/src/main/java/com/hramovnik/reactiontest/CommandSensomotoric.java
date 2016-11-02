@@ -39,7 +39,7 @@ public final class CommandSensomotoric extends TaskObject {
 
     @Override
     public int getTimeOut() {
-        return 100;
+        return 2000;
     }
 
     @Override

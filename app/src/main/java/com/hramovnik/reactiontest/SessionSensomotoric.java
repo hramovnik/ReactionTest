@@ -17,11 +17,11 @@ public final class SessionSensomotoric implements Session {
         int realDotSize = (int) ((float) dotSize / 0.219);
 
         tasks.add(new CommandSensomotoric(firstColor, realDotSize, serialLen, 1000));
-        redResult = new CommandSensoGetResult(serialLen, 1000);
+        redResult = new CommandSensoGetResult(serialLen);
         tasks.add(redResult);
 
         tasks.add(new CommandSensomotoric(secondColor, realDotSize, serialLen, 1000));
-        greenResult = new CommandSensoGetResult(serialLen, 1000);
+        greenResult = new CommandSensoGetResult(serialLen);
         tasks.add(greenResult);
 
         tasksInSession = tasks.size();
