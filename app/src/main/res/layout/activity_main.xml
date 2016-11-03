@@ -48,9 +48,12 @@
         android:id="@+id/buttonStartStopTest"
         style="@android:style/Widget.Button"
         />
-
+    <Space
+        android:layout_width="1dp"
+        android:layout_height="10dp"
+        />
     <TextView
-        android:text="Результат"
+        android:text="-"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvResult"

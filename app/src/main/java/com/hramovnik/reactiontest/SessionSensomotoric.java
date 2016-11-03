@@ -73,7 +73,19 @@ public final class SessionSensomotoric implements Session {
         return builder.toString();
 
 */
-        return "Data is not ready but loaded successfully";
+        int [] mass = redResult.getResult();
+        StringBuilder string = new StringBuilder();
+        string.append("First: ");
+        for(int i = 0 ; i < mass.length; i++){
+            string.append(String.valueOf(mass[i]) + " ");
+        }
+        string.append("\nSecond: ");
+        mass = greenResult.getResult();
+        for(int i = 0 ; i < mass.length; i++){
+            string.append(String.valueOf(mass[i]) + " ");
+        }
+
+        return string.toString();
     }
 
     @Override

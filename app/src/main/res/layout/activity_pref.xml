@@ -14,11 +14,14 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true">
 
-        <LinearLayout
-            android:orientation="horizontal"
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="match_parent" >
 
             <TextView
                 android:text="IP Address"
@@ -31,23 +34,20 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="IPAddress"
-                android:ems="10"
-                android:id="@+id/teIP"
-                android:inputType="text"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_weight="1" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="IPAddress"
+                    android:ems="10"
+                    android:id="@+id/teIP"
+                    android:inputType="text"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_weight="1" />
+        </TableRow>
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <TableRow
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="match_parent" >
 
             <TextView
                 android:text="Port"
@@ -66,9 +66,10 @@
                 android:id="@+id/tePort"
                 android:layout_weight="1"
                 android:layout_height="wrap_content" />
+        </TableRow>
 
-        </LinearLayout>
+    </TableLayout>
 
-    </LinearLayout>
+</LinearLayout>
 
 

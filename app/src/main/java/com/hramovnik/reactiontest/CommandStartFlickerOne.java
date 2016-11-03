@@ -1,22 +1,28 @@
 package com.hramovnik.reactiontest;
+
 import android.graphics.Color;
+
 /**
- * Created by Hramovnik on 09.10.2016.
+ * Created by gshabalev on 11/3/2016.
  */
 
-public final class CommandSensomotoric extends TaskObject {
+public class CommandStartFlickerOne extends TaskObject {
 
-    private int [] task = new int[7];
-    private CommandSensomotoric(){}
-    CommandSensomotoric(int color, int dotSize, int serialLen, int maxWaitMs){
+
+    private int [] task = new int[9];
+    private CommandStartFlickerOne(){}
+    public CommandStartFlickerOne(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
         super();
-        task[0] = CMD_START_SENSOMOTORIC;
+        task = new int[9];
+        task[0] = flickerOne?CMD_START_FLICKER1:CMD_START_FLICKER2;
         task[1] = Color.red(color);
         task[2] = Color.green(color);
         task[3] = Color.blue(color);
         task[4] = dotSize;
-        task[5] = serialLen;
-        task[6] = maxWaitMs;
+        task[5] = brightness;
+        task[6] = initialSpeed_Hz;
+        task[7] = maxSpeed_Hz;
+        task[8] = blackScreenDelay_ms;
     }
 
     @Override
@@ -38,13 +44,4 @@ public final class CommandSensomotoric extends TaskObject {
         else {return "Ощибка. Тест не запущен";}
     }
 
-    @Override
-    public int getTimeOut() {
-        return 2000;
-    }
-
-    @Override
-    public int getSleeping(){
-        return 2000;
-    }
 }

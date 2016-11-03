@@ -45,6 +45,12 @@ public abstract class TaskObject implements TaskExecute {
         return 0;
     }
 
+
+    @Override
+    public int getTimeOut() {
+        return 2000;
+    }
+
     @Override
     public boolean isError() {
         if (answer == null) return false;

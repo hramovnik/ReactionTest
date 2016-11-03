@@ -12,6 +12,7 @@ public final class CommandPing extends TaskObject {
     public boolean setResult(int[] result) {
         fail = true;
         answer = result;
+        if (result == null) return !fail;
         if((answer.length > 0)&&(answer[0] == RSP_PING)){
             fail = false;
         }
@@ -29,6 +30,6 @@ public final class CommandPing extends TaskObject {
 
     @Override
     public int getTimeOut() {
-        return 5;
+        return 1000;
     }
 }

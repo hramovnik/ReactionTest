@@ -19,7 +19,7 @@ import com.hramovnik.reactiontest.Session;
 import com.hramovnik.reactiontest.SessionSensomotoric;
 import com.hramovnik.reactiontest.TaskActivityInterface;
 
-public class TabOneFragment extends Fragment implements TaskActivityInterface, View.OnClickListener {
+public class TabOneFragment extends TabFragment implements TaskActivityInterface, View.OnClickListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,9 +34,10 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
     private Button buttonChooseColorTwo;
     public static final int DIALOG_ONE = 1;
     public static final int DIALOG_TWO = 2;
-    private SharedPreferences sp;
+
     private int colorOne = Color.GREEN;
     private int colorTwo = Color.GREEN;
+
     private SeekBar sbSizeChooser;
     private TextView teSizeChooser;
     private SeekBar sbQuantityRep;
@@ -55,38 +56,11 @@ public class TabOneFragment extends Fragment implements TaskActivityInterface, V
         buttonChooseColorTwo.setBackgroundColor(colorTwo);
 
         teSizeChooser = (TextView) getView().findViewById(R.id.teRoundSize);
-        sbSizeChooser = (SeekBar) getView().findViewById(R.id.sbRoundSize);
-        sbSizeChooser.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 1) sbSizeChooser.setProgress(1);
-                else teSizeChooser.setText(String.valueOf(i));
+        sbSizeChooser = getSb(teSizeChooser, R.id.sbRoundSize, 3, 20, "SMT_Round_SIZE");
 
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-        sbSizeChooser.setProgress(sp.getInt("SMT_Round_SIZE", 3));
-        teSizeChooser.setText(String.valueOf(sp.getInt("SMT_Round_SIZE", 3)));
 
         teQuantityRep = (TextView) getView().findViewById(R.id.teQuantityRep);
-        sbQuantityRep = (SeekBar) getView().findViewById(R.id.sbQuantityRep);
-        sbQuantityRep.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 1) sbQuantityRep.setProgress(1);
-                else teQuantityRep.setText(String.valueOf(i));
-
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-        sbQuantityRep.setProgress(sp.getInt("SMT_QUANTITY_REP", 3));
-        teQuantityRep.setText(String.valueOf(sp.getInt("SMT_QUANTITY_REP", 3)));
+        sbQuantityRep = getSb(teQuantityRep, R.id.sbQuantityRep, 1,20, "SMT_QUANTITY_REP");
 
         dialogChooseColorOne = new ColorChooser();
         dialogChooseColorTwo = new ColorChooser();

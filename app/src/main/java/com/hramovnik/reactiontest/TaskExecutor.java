@@ -72,7 +72,6 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
 
                     iteration++;
                     Pair<Integer, Integer> taskSize = session.countTasks();
-                    publishProgress(new Pair<String,Integer>(null, (taskSize.second-taskSize.first)*100/taskSize.second));
 
                     for (int i = 0; i < 200; i++) {
                         res.append("s" + String.valueOf(byteBuffer.array()[0]) + " ");
@@ -102,6 +101,7 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                         if (executeble.setResult(array)) {
                             if (array.length > 0) {publishProgress(new Pair<String,Integer>("Задача " + String.valueOf(iteration) + ": " + String.valueOf(array[0]), null));}
                             res.append("\n");
+                            publishProgress(new Pair<String,Integer>(null, (taskSize.second-taskSize.first)*100/taskSize.second));
                             break;
                         } else {
                             if (executeble.isError()){

@@ -17,10 +17,11 @@ import android.widget.TextView;
 
 import com.hramovnik.reactiontest.R;
 import com.hramovnik.reactiontest.Session;
-import com.hramovnik.reactiontest.SessionSensomotoric;
+
+import com.hramovnik.reactiontest.SessionFlicker;
 import com.hramovnik.reactiontest.TaskActivityInterface;
 
-public class TabTwoFragment extends Fragment implements TaskActivityInterface, View.OnClickListener {
+public class TabTwoFragment extends TabFragment implements TaskActivityInterface, View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,27 +30,30 @@ public class TabTwoFragment extends Fragment implements TaskActivityInterface, V
 
     @Override
     public Session getSession() {
-        return null;
+        return new SessionFlicker(true,color,sbRoundSize.getProgress(),sbBrightness.getProgress(),sbFrequency.getProgress(),75,2000);
     }
 
     private DialogFragment dialogChooseColor;
 
     private Button buttonChooseColor;
-
     public static final int DIALOG_ONE = 1;
 
-    private SharedPreferences sp;
+
 
     private int color = Color.GREEN;
+    String colorTag = "KCHSM_Color_ONE";
 
     private SeekBar sbBrightness;
     private TextView teBrightness;
+    private final String brightntssTag = "KCHSM_BRIGHTNESS";
 
     private SeekBar sbRoundSize;
     private TextView teRoundSize;
+    private final String roundSizeTag = "KCHSM_Round_SIZE";
 
     private SeekBar sbFrequency;
     private TextView teFrequency;
+    private final String frequencyTag = "KCHSM_FREQUENCY";
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -59,71 +63,25 @@ public class TabTwoFragment extends Fragment implements TaskActivityInterface, V
         buttonChooseColor.setOnClickListener(this);
         buttonChooseColor.setBackgroundColor(color);
 
-
         teRoundSize = (TextView) getView().findViewById(R.id.teRoundSize);
-        sbRoundSize = (SeekBar) getView().findViewById(R.id.sbRoundSize);
-        sbRoundSize.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 1) sbRoundSize.setProgress(1);
-                else teRoundSize.setText(String.valueOf(i));
-
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-        sbRoundSize.setProgress(sp.getInt("KCHSM_Round_SIZE", 3));
-        teRoundSize.setText(String.valueOf(sp.getInt("KCHSM_Round_SIZE", 3)));
-
+        sbRoundSize = getSb(teRoundSize, R.id.sbRoundSize,3,20,roundSizeTag);
 
         teBrightness = (TextView) getView().findViewById(R.id.teBrightness);
-        sbBrightness = (SeekBar) getView().findViewById(R.id.sbBrightness);
-        sbBrightness.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 1) sbBrightness.setProgress(1);
-                else teBrightness.setText(String.valueOf(i));
-
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-        sbBrightness.setProgress(sp.getInt("KCHSM_BRIGHTNESS", 3));
-        teBrightness.setText(String.valueOf(sp.getInt("KCHSM_BRIGHTNESS", 3)));
+        sbBrightness = getSb(teBrightness, R.id.sbBrightness, 1,12,brightntssTag);
 
         teFrequency = (TextView) getView().findViewById(R.id.teFrequency);
-        sbFrequency = (SeekBar) getView().findViewById(R.id.sbFrequency);
-        sbFrequency.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                if (i < 1) sbFrequency.setProgress(1);
-                else teFrequency.setText(String.valueOf(i));
-
-            }
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {}
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {}
-        });
-        sbFrequency.setProgress(sp.getInt("KCHSM_FREQUENCY", 3));
-        teFrequency.setText(String.valueOf(sp.getInt("KCHSM_FREQUENCY", 3)));
-
+        sbFrequency = getSb(teFrequency, R.id.sbFrequency, 10,75,frequencyTag);
 
         dialogChooseColor = new ColorChooser();
 
-
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
-        sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
-        super.onCreate(savedInstanceState);
 
-        color = sp.getInt("KCHSM_Color_ONE", Color.GREEN);
+        super.onCreate(savedInstanceState);
+        color = sp.getInt(colorTag, Color.GREEN);
 
     }
 
@@ -132,10 +90,10 @@ public class TabTwoFragment extends Fragment implements TaskActivityInterface, V
         super.onDestroy();
         try {
             SharedPreferences.Editor ed = sp.edit();
-            ed.putInt("SMT_Color_ONE", colorOne);
-            ed.putInt("SMT_Color_TWO", colorTwo);
-            ed.putInt("SMT_Round_SIZE", sbSizeChooser.getProgress());
-            ed.putInt("SMT_QUANTITY_REP", sbQuantityRep.getProgress());
+            ed.putInt(colorTag, color);
+            ed.putInt(frequencyTag, sbFrequency.getProgress());
+            ed.putInt(brightntssTag, sbBrightness.getProgress());
+            ed.putInt(roundSizeTag, sbRoundSize.getProgress());
 
             ed.apply();
 
@@ -156,30 +114,18 @@ public class TabTwoFragment extends Fragment implements TaskActivityInterface, V
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case (R.id.buttonColorOneChooser):
-                dialogChooseColorOne.setTargetFragment(this, DIALOG_ONE);
-                dialogChooseColorOne.show(getFragmentManager(), "Выберите цвет");
-                break;
-            case (R.id.buttonColorTwoChooser):
-                dialogChooseColorTwo.setTargetFragment(this, DIALOG_TWO);
-                dialogChooseColorTwo.show(getFragmentManager(), "Выберите цвет");
-                break;
+        if (R.id.buttonColor == view.getId()){
+                dialogChooseColor.setTargetFragment(this, DIALOG_ONE);
+                dialogChooseColor.show(getFragmentManager(), "Выберите цвет");
         }
 
     }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch(requestCode) {
-            case DIALOG_ONE:
-                colorOne = resultCode;
-                buttonChooseColorOne.setBackgroundColor(colorOne);
-                break;
-            case DIALOG_TWO:
-                colorTwo = resultCode;
-                buttonChooseColorTwo.setBackgroundColor(colorTwo);
-                break;
+        if(requestCode == DIALOG_ONE) {
+                color = resultCode;
+                buttonChooseColor.setBackgroundColor(color);
         }
     }
 

@@ -26,7 +26,7 @@ public final class CommandSensoGetResult extends TaskObject{
     public boolean setResult(int[] result) {
         fail = true;
         answer = result;
-
+        if (result == null) return !fail;
         if (answer.length > 0){
             switch (answer[0]){
                 case RSP_TEST_DATA_OK:

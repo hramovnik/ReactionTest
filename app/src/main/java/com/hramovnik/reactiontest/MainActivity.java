@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import layout.TabFourFragment;
 import layout.TabOneFragment;
 import layout.TabThreeFragment;
 import layout.TabTwoFragment;
@@ -46,31 +47,25 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         tabs = (FragmentTabHost) findViewById(R.id.tabHost);
         tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
 
-        tabs.addTab(tabs.newTabSpec("tab1").setIndicator("Сенсомоторный тест"), TabOneFragment.class, null);
-        tabs.addTab(tabs.newTabSpec("tab2").setIndicator("Тест КЧСМ"), TabTwoFragment.class, null);
-        tabs.addTab(tabs.newTabSpec("tab3").setIndicator("Тест КЧСМ - 2"), TabThreeFragment.class, null);
-        for(int i = 0; i < 3; i++){
+        tabs.addTab(tabs.newTabSpec("tab1").setIndicator("СМТ"), TabOneFragment.class, null);
+        tabs.addTab(tabs.newTabSpec("tab2").setIndicator("КЧСМ"), TabTwoFragment.class, null);
+        tabs.addTab(tabs.newTabSpec("tab3").setIndicator("КЧСМ Авто"), TabThreeFragment.class, null);
+        tabs.addTab(tabs.newTabSpec("tab4").setIndicator("ТТ"), TabFourFragment.class, null);
+
+        for(int i = 0; i < 4; i++){
             ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(8);
         }
 
-/*
-        tabs.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            public void onTabChanged(String tabId) {
-                task = tabs.getCurrentTab();
-            }
-        });
-
-        */
         task = 0;
-
         sp = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
     @Override
     public void onResume(){
         super.onResume();
-
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
         try {
+
             ipAddress = sp.getString("ip_address", "192.168.0.10");
             port = sp.getInt("port", 8080);
             if ((port > 0xffff)||(port < 1024)) port = 8080;
