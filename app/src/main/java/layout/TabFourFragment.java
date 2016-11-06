@@ -38,7 +38,6 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
     private TextView teInterval;
     private final String intervalTag = "TT_INTERVAL";
 
-
     private SeekBar sbSubInterval;
     private TextView teSubInterval;
     private final String subintervalTag = "TT_SUBINTERVAL";
