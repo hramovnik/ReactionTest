@@ -116,6 +116,8 @@ public class TabThreeFragment extends TabFragment implements TaskActivityInterfa
         if(requestCode == DIALOG_ONE) {
             color = resultCode;
             buttonChooseColor.setBackgroundColor(color);
+        }else{
+            super.onActivityResult(requestCode,resultCode,data);
         }
     }
 

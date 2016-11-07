@@ -126,6 +126,8 @@ public class TabTwoFragment extends TabFragment implements TaskActivityInterface
         if(requestCode == DIALOG_ONE) {
                 color = resultCode;
                 buttonChooseColor.setBackgroundColor(color);
+        }else{
+             super.onActivityResult(requestCode,resultCode,data);
         }
     }
 

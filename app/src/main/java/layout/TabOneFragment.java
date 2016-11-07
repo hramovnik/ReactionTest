@@ -129,6 +129,9 @@ public class TabOneFragment extends TabFragment implements TaskActivityInterface
                 colorTwo = resultCode;
                 buttonChooseColorTwo.setBackgroundColor(colorTwo);
                 break;
+            default:
+                super.onActivityResult(requestCode,resultCode,data);
+
         }
     }
 

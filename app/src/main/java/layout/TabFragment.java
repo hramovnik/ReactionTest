@@ -1,5 +1,6 @@
 package layout;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -14,11 +15,14 @@ import android.widget.TextView;
 
 public class TabFragment extends Fragment {
     protected SharedPreferences sp;
+    private ResultDisplay dialogResult;
+    final protected int DIALOG_RESULT = 0xfff;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         super.onCreate(savedInstanceState);
+        dialogResult = new ResultDisplay();
     }
 
 
@@ -40,6 +44,23 @@ public class TabFragment extends Fragment {
         result.setMax(maximumValue);
         textView.setText(String.valueOf(sp.getInt(tag, minimumValue)));
         return result;
+    }
+
+    public void setResult(String value){
+        dialogResult.setTargetFragment(this, DIALOG_RESULT);
+        dialogResult.setText(value);
+        dialogResult.show(getFragmentManager(), "Результат");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch(requestCode) {
+            case DIALOG_RESULT:
+
+                break;
+            default:
+
+        }
     }
 }
 

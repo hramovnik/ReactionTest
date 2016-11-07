@@ -7,12 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.hramovnik.reactiontest.R;
 
 
 public class ResultDisplay extends DialogFragment  implements View.OnClickListener {
 
+    TextView tvFrameResult;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,10 +27,14 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-
         super.onActivityCreated(savedInstanceState);
         ((Button) getView().findViewById(R.id.frameResultButtonSave)).setOnClickListener(this);
+        tvFrameResult = (TextView) getView().findViewById(R.id.tvFrameResult);
 
+    }
+
+    public void setText(String value){
+        tvFrameResult.setText(value);
     }
 
     @Override
@@ -36,6 +42,7 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
         super.onResume();
 
     }
+
 
 
     @Override
