@@ -56,11 +56,15 @@ public class TabFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch(requestCode) {
             case DIALOG_RESULT:
-
+                saveResult();
                 break;
             default:
 
         }
+    }
+
+    protected void saveResult(){
+
     }
 }
 

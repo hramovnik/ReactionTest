@@ -16,6 +16,7 @@ public abstract class TaskObject implements TaskExecute {
     protected final int CMD_GET_VBAT = 0x07;
     protected final int CMD_QUERY_PROGRESS = 0x08;
     protected final int CMD_GET_T = 0x09;
+    protected final int CMD_LOAD_IMAGE = 0x0A;
 
     protected final int RSP_PING = 0xFFAA0055;
     protected final int RSP_DATA_NOT_READY  = 0x01;
@@ -24,6 +25,8 @@ public abstract class TaskObject implements TaskExecute {
     protected final int RSP_OK = 0x04;
     protected final int RSP_ERROR_IN_PROGRESS = 0x05;
     protected final int RSP_PROGRESS_PECENT = 0x06;
+    protected final int RSP_IMAGE_OK = 0x07;
+    protected final int RSP_IMAGE_ERROR = 0x08;
 
     @Override
     public int[] getResult() {

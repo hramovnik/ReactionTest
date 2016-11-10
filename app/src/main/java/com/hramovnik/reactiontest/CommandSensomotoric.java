@@ -6,7 +6,7 @@ import android.graphics.Color;
 
 public final class CommandSensomotoric extends TaskObject {
 
-    private int [] task = new int[7];
+    private int [] task = new int[8];
     private CommandSensomotoric(){}
     CommandSensomotoric(int color, int dotSize, int serialLen, int maxWaitMs){
         super();
@@ -17,6 +17,7 @@ public final class CommandSensomotoric extends TaskObject {
         task[4] = dotSize;
         task[5] = serialLen;
         task[6] = maxWaitMs;
+        task[7] = 0;
     }
 
     @Override
