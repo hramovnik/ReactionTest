@@ -36,7 +36,7 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
     }
 
     private void print(String string){
-        if(connection.getStatus() != null) connection.getStatus().setText(string);
+        if (connection.getStatus() != null) connection.getStatus().setText(string);
     }
 
     private void setProgressBar(Integer value){
@@ -145,7 +145,8 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
         if (message != null) {
             print(message);
         }else{
-            print(session.analyze());
+            print("Тест успешно завершён");
+            session.analyze();
         }
         session = null;
         connection.workingEnds();

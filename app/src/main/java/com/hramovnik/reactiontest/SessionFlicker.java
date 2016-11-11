@@ -1,24 +1,22 @@
 package com.hramovnik.reactiontest;
 
-import android.util.Pair;
-
-import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+
 
 /**
  * Created by gshabalev on 11/3/2016.
  */
 
-public class SessionFlicker implements Session {
+public class SessionFlicker extends SessionObject {
 
     private SessionFlicker(){}
-    private Queue<TaskExecute> tasks = null;
     private CommandFlickerGetResult result = null;
 
-    public SessionFlicker(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
+    public SessionFlicker(ResultDisplayable display, boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
+        setDispalyable(display);
         tasks = new LinkedBlockingQueue<>();
 
-        int realDotSize = (int) ((float) dotSize / 0.219);
+        int realDotSize = (int) ((float) dotSize / 0.219 / 2);
 
         tasks.add(new CommandStartFlickerOne(flickerOne, color, realDotSize, brightness, initialSpeed_Hz, maxSpeed_Hz, blackScreenDelay_ms));
         result = new CommandFlickerGetResult();
@@ -28,8 +26,6 @@ public class SessionFlicker implements Session {
         tasksElapsed = tasksInSession;
     }
 
-    private Integer tasksInSession;
-    private Integer tasksElapsed;
 
     @Override
     public TaskExecute getNextTask() {
@@ -37,21 +33,17 @@ public class SessionFlicker implements Session {
     }
 
     @Override
-    public String analyze() {
+    public void analyze() {
         int [] mass = result.getResult();
         StringBuilder string = new StringBuilder();
         for(int i = 0 ; i < mass.length; i++){
             string.append(String.valueOf(mass[i]) + " ");
         }
 
-        return "Data: " + string.toString();
+        display.displayResult(string.toString());
     }
 
-    @Override
-    public Pair<Integer, Integer> countTasks() {
-        tasksElapsed = tasks.size();
-        return new Pair<Integer, Integer>(tasksElapsed, tasksInSession);
-    }
+
 
 
 }

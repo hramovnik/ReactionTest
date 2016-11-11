@@ -8,12 +8,14 @@ import android.support.v4.app.Fragment;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.hramovnik.reactiontest.ResultDisplayable;
+
 /**
  * Created by gshabalev on 11/3/2016.
  */
 
 
-public class TabFragment extends Fragment {
+public class TabFragment extends Fragment implements ResultDisplayable {
     protected SharedPreferences sp;
     private ResultDisplay dialogResult;
     final protected int DIALOG_RESULT = 0xfff;
@@ -46,7 +48,7 @@ public class TabFragment extends Fragment {
         return result;
     }
 
-    public void setResult(String value){
+    public void displayResult(String value){
         dialogResult.setTargetFragment(this, DIALOG_RESULT);
         dialogResult.setText(value);
         dialogResult.show(getFragmentManager(), "Результат");

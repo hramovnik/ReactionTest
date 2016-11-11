@@ -15,7 +15,7 @@
         android:layout_gravity="center_horizontal|center|fill" />
 
     <Button
-        android:text="Сохранить"
+        android:text="Ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/frameResultButtonSave"

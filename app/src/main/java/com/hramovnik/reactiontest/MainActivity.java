@@ -29,7 +29,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     ProgressBar progressBar;
 
     Connection connection = null;
-    int task = 0;
     private SharedPreferences sp;
     int port;
     String ipAddress;
@@ -56,7 +55,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(8);
         }
 
-        task = 0;
         sp = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
