@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import layout.ResultDisplay;
 import layout.TabFourFragment;
 import layout.TabOneFragment;
 import layout.TabThreeFragment;
@@ -82,6 +83,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+
+
         tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
@@ -90,12 +93,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }
                 Fragment currentTab = getSupportFragmentManager().findFragmentByTag(tabs.getCurrentTabTag());
                 if (currentTab instanceof TaskActivityInterface){
-                    Session session = ((TaskActivityInterface) currentTab).getSession();
+                 Session session = ((TaskActivityInterface) currentTab).getSession();
                     if (session!=null){
                         connection.sendSession(session);
                     }else{
                         Toast.makeText(this, "Нереализованное действие", Toast.LENGTH_SHORT).show();
-                    }
+                   }
                 }else{
                     Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
                 }

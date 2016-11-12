@@ -39,6 +39,7 @@ public final class SessionSensomotoric extends SessionObject {
 
     @Override
     public void analyze() {
+        resultInterpritation.clear();
 
         for (int col = 1; col <= 2; col++) {
             int [] result = (col == 1) ? redResult.getResult() : greenResult.getResult();
@@ -56,12 +57,11 @@ public final class SessionSensomotoric extends SessionObject {
 
             LinkedList< Pair<Integer, Integer> > inData = new LinkedList< Pair<Integer, Integer>>();
 
-            for (int i = 0; i < serialLen; i++) {
+            for (int i = 1; i < serialLen; i++) {
                 Pair<Integer, Integer> pair = new Pair<Integer, Integer>(result[1 + i], result[21 + i]);
                 if ((pair.first >= 0)&&(pair.second >=0)) {inData.add(pair);}
                 else{fuckedUpCounter++;}
             }
-
 
             for (Pair<Integer, Integer> pair : inData) {
                 if (pair.first < 100){rightPre++;}
@@ -73,66 +73,50 @@ public final class SessionSensomotoric extends SessionObject {
                 else {leftPost++;}
             }
 
-            double medRight = 0;
-            for (Integer value:rightCorrect) {medRight+=value;}
-            medRight /= (double) rightCorrect.size();
-
-            double medLeft = 0;
-            for (Integer value:leftCorrect) {medLeft+=value;}
-            medLeft /= (double) leftCorrect.size();
-
-
-            double standDeltaLeft = 0;
             double standDeltaRight = 0;
-
-            for (int i = 0; i < serialLen; i++) {
-                if (result[1 + i] >= 0) {
-                    standDeltaRight += Math.pow(result[1 + i] - medRight, 2);
+            double medRight = 0;
+            if (rightCorrect.size() != 0) {
+                for (Integer value : rightCorrect) {
+                    medRight += value;
                 }
-                if (result[21 + i] >= 0) {
-                    standDeltaLeft += Math.pow(result[21 + i] - medLeft, 2);
+                medRight /= (double) rightCorrect.size();
+                for (Integer value : rightCorrect) {
+                    medRight += Math.pow(value - medRight, 2);
                 }
+                standDeltaRight = Math.sqrt((standDeltaRight / rightCorrect.size()));
             }
 
-            standDeltaLeft = Math.sqrt((standDeltaLeft / (serialLen - leftFails - 1)));
-            standDeltaRight = Math.sqrt((standDeltaRight / (serialLen - rightFails - 1)));
+            double standDeltaLeft = 0;
+            double medLeft = 0;
+            if (leftCorrect.size() != 0) {
 
+                for (Integer value : leftCorrect) {
+                    medLeft += value;
+                }
+                medLeft /= (double) leftCorrect.size();
+                for (Integer value : leftCorrect) {
+                    standDeltaLeft += Math.pow(value - medLeft, 2);
+                }
+                standDeltaLeft = Math.sqrt((standDeltaLeft / leftCorrect.size()));
+            }
 
-            builder.append("Среднее время реакции левой руки " + medLeft + " мс\n");
-            builder.append("Среднее время реакции правой руки " + medRight + " мс\n");
-            builder.append("Стандартное отклонение времени реакции левой руки " + standDeltaLeft + " мс\n");
-            builder.append("Стандартное отклонение время реакции правой руки " + standDeltaRight + " мс\n");
+            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                    ": Среднее время реакции левой руки (мс)", medLeft));
+            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                    ": Среднее время реакции правой руки (мс)", medRight));
+            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                    ": Стандартное отклонение времени реакции левой руки (мс)", standDeltaLeft));
+            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                    ": Стандартное отклонение время реакции правой руки (мс)", standDeltaRight));
 
         }
-
-
-
-
-
-        resultInterpritation.clear();
-
 
 
         StringBuilder builder = new StringBuilder();
-
-
-
-        int [] mass = redResult.getResult();
-        StringBuilder string = new StringBuilder();
-        string.append("First: ");
-        for(int i = 0 ; i < mass.length; i++){
-            string.append(String.valueOf(mass[i]) + " ");
+        for (Pair<String, Double> value:resultInterpritation) {
+            builder.append(value.first + " - " + String.valueOf(value.second) + "\n");
         }
-        string.append("\nSecond: ");
-        mass = greenResult.getResult();
-        for(int i = 0 ; i < mass.length; i++){
-            string.append(String.valueOf(mass[i]) + " ");
-        }
-
-        display.displayResult(string.toString());
+        display.displayResult(builder.toString());
     }
-
-
-
 
 }

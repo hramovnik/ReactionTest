@@ -17,16 +17,20 @@ import com.hramovnik.reactiontest.ResultDisplayable;
 
 public class TabFragment extends Fragment implements ResultDisplayable {
     protected SharedPreferences sp;
-    private ResultDisplay dialogResult;
+    private ResultDisplay dialogResult = null;
     final protected int DIALOG_RESULT = 0xfff;
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         sp = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         super.onCreate(savedInstanceState);
-        dialogResult = new ResultDisplay();
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        dialogResult = new ResultDisplay();
+    }
 
     protected SeekBar getSb(final TextView textView, int sbID, final int minimumValue, final int maximumValue, final String tag){
         final SeekBar result = (SeekBar) getView().findViewById(sbID);
@@ -50,8 +54,8 @@ public class TabFragment extends Fragment implements ResultDisplayable {
 
     public void displayResult(String value){
         dialogResult.setTargetFragment(this, DIALOG_RESULT);
-        dialogResult.setText(value);
-        dialogResult.show(getFragmentManager(), "Результат");
+        dialogResult.show(getFragmentManager(), "Результат", value);
+
     }
 
     @Override
@@ -69,4 +73,3 @@ public class TabFragment extends Fragment implements ResultDisplayable {
 
     }
 }
-

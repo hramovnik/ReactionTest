@@ -43,10 +43,6 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
         getDialog().setTitle("Выбор цвета");
         setColor(Color.GREEN);
         View v = inflater.inflate(R.layout.fragment_color_chooser, null);
-        //v.findViewById(R.id.button).setOnClickListener(this);
-
-
-
         return v;
     }
 
@@ -54,8 +50,6 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
     public void onActivityCreated(Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-
-
         TableLayout layout = (TableLayout) getView().findViewById(R.id.tableColorLayout);
 
         colorButtons = new Button[48];

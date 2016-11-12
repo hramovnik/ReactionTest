@@ -3,6 +3,8 @@ package layout;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.FragmentManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,33 +16,41 @@ import com.hramovnik.reactiontest.R;
 
 public class ResultDisplay extends DialogFragment  implements View.OnClickListener {
 
-    TextView tvFrameResult;
+    TextView tvFrameResult = null;
+    String str ="Void";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         getDialog().setTitle("Результат");
-        View v = inflater.inflate(R.layout.fragment_result_display, null);
-
-        return v;
+        return inflater.inflate(R.layout.fragment_result_display, null);
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        ((Button) getView().findViewById(R.id.frameResultButtonSave)).setOnClickListener(this);
-        tvFrameResult = (TextView) getView().findViewById(R.id.tvFrameResult);
+         super.onActivityCreated(savedInstanceState);
+
+         Button buttonSave = ((Button) getView().findViewById(R.id.frameResultButtonSave));
+         buttonSave.setOnClickListener(this);
+
+        tvFrameResult = ((TextView) getView().findViewById(R.id.tvFrameResult));
+        tvFrameResult.setText(str);
 
     }
 
     public void setText(String value){
-        tvFrameResult.setText(value);
+        str = value;
     }
+
+    public void show(FragmentManager manager, String tag, String information){
+        super.show(manager,tag);
+        setText(information);
+    }
+
 
     @Override
     public void onResume(){
         super.onResume();
-
     }
 
 
