@@ -30,19 +30,20 @@ import org.w3c.dom.Text;
  */
 
 public class Connection{
-    private String IPAddress;
-    private int port;
+    private String IPAddress = null;
+    private int port = 0;
     private TextView status = null;
     private boolean working = false;
-    private ProgressBar progressBar;
+    private ProgressBar progressBar = null;
 
-    Connection(String ip, int port, TextView status, ProgressBar progressBar){
+    Connection(){
         super();
+    }
+    public void setControles(String ip, int port, TextView status, ProgressBar progressBar){
         IPAddress = ip;
         this.port = port;
         this.status = status;
         this.progressBar = progressBar;
-
     }
     private void print(String string){
         if(status != null) status.setText(string);

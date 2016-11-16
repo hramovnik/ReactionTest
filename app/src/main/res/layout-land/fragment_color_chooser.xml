@@ -1,0 +1,29 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="layout.ColorChooser"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:gravity="center_vertical|center_horizontal|center"
+    android:layout_gravity="center_vertical|center_horizontal|center">
+
+
+    <TableLayout
+        android:id="@+id/tableColorLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:columnWidth="@dimen/color_column"
+        android:stretchMode="columnWidth"
+
+        android:gravity="center"
+        android:layout_gravity="center_vertical|fill_vertical|center_horizontal|fill_horizontal|center">
+
+    </TableLayout>
+
+
+</LinearLayout>

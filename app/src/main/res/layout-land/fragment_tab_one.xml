@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_tab_one"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/landscape_activity_vertical_margin"
+    android:paddingLeft="@dimen/landscape_activity_horizontal_margin"
+    android:paddingRight="@dimen/landscape_activity_horizontal_margin"
+    android:paddingTop="@dimen/landscape_tabs_vertical_offset"
+    android:orientation="vertical"
+    tools:context="layout.TabOneFragment">
+
+    <TextView
+        android:text="Описание сенсомоторного теста"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        />
+
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Цвет первого кружка"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+             />
+
+            <Button
+                android:layout_width="@dimen/color_button_width"
+                android:layout_height="@dimen/color_button_height"
+                android:id="@+id/buttonColorOneChooser"
+                android:text=""
+
+                style="@style/AlertDialog.AppCompat"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Цвет второго кружка"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true" />
+
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
+
+            <Button
+                android:layout_width="@dimen/color_button_width"
+                android:layout_height="@dimen/color_button_height"
+                android:id="@+id/buttonColorTwoChooser"
+                android:text=""
+
+                style="@style/AlertDialog.AppCompat"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="10dp"
+                />
+        </TableRow>
+
+
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Диаметр кружка (мм)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView4" />
+
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:max="20"
+
+                android:progress="3"
+                android:id="@+id/sbRoundSize"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/textView4"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/teRoundSize"
+                android:elevation="1dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Количество повторений"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView5" />
+
+            <SeekBar
+                style="@style/Widget.AppCompat.SeekBar.Discrete"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:max="20"
+
+                android:progress="3"
+                android:id="@+id/sbQuantityRep"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@+id/textView5"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/teQuantityRep"
+                android:elevation="1dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+
+                />
+        </TableRow>
+    </TableLayout>
+
+
+
+
+</LinearLayout>

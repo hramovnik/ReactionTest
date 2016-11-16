@@ -16,7 +16,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import layout.ResultDisplay;
 import layout.TabFourFragment;
 import layout.TabOneFragment;
 import layout.TabThreeFragment;
@@ -29,7 +28,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     FragmentTabHost tabs;
     ProgressBar progressBar;
 
-    Connection connection = null;
+    public static Connection connection = new Connection();
     private SharedPreferences sp;
     int port;
     String ipAddress;
@@ -38,14 +37,33 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        sp = PreferenceManager.getDefaultSharedPreferences(this);
+    }
 
-        tvResult = (TextView)findViewById(R.id.tvResult);
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle inState){
+        super.onRestoreInstanceState(inState);
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        tvResult = (TextView) findViewById(R.id.tvResult);
         buttonStartStop = (Button) findViewById(R.id.buttonStartStopTest);
         buttonStartStop.setOnClickListener(this);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         tabs = (FragmentTabHost) findViewById(R.id.tabHost);
         tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
+        tabs.clearAllTabs();
 
         tabs.addTab(tabs.newTabSpec("tab1").setIndicator("СМТ"), TabOneFragment.class, null);
         tabs.addTab(tabs.newTabSpec("tab2").setIndicator("КЧСМ"), TabTwoFragment.class, null);
@@ -56,12 +74,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(8);
         }
 
-        sp = PreferenceManager.getDefaultSharedPreferences(this);
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         try {
 
@@ -76,9 +88,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
             port = 8080;
         }
 
-
-        if(connection == null) {connection = new Connection(ipAddress, port, tvResult, progressBar);}
-
+        connection.setControles(ipAddress, port, tvResult, progressBar);
     }
 
     @Override
@@ -102,8 +112,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
                 }else{
                     Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
                 }
-                //
-
         }
     }
 

@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:context="layout.ResultDisplay">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvFrameResult"
+        android:text="Результат"
+        android:gravity="center_horizontal|fill_horizontal|center"
+        android:foregroundGravity="center_horizontal|fill_horizontal"
+        android:layout_gravity="center_horizontal|center|fill" />
+
+    <Button
+        android:text="Ok"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/frameResultButtonSave"
+        android:layout_weight="1"
+        android:elevation="1dp"
+        style="@android:style/Widget.DeviceDefault.Light.Button.Borderless.Small"
+        android:foregroundGravity="center_horizontal|center"
+        android:layout_gravity="center_horizontal|center" />
+
+</LinearLayout>
