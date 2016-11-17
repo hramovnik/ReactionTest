@@ -58,7 +58,6 @@ public class TabOneFragment extends TabFragment implements TaskActivityInterface
         teSizeChooser = (TextView) getView().findViewById(R.id.teRoundSize);
         sbSizeChooser = getSb(teSizeChooser, R.id.sbRoundSize, 3, 20, "SMT_Round_SIZE");
 
-
         teQuantityRep = (TextView) getView().findViewById(R.id.teQuantityRep);
         sbQuantityRep = getSb(teQuantityRep, R.id.sbQuantityRep, 1,20, "SMT_QUANTITY_REP");
 

@@ -37,6 +37,7 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
     Map<Button,Integer> colorMap;
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -63,36 +64,77 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
         TableRow.LayoutParams rowParams = new TableRow.LayoutParams(80,80);
         rowParams.setMargins(10,10,10,10);
 
-        for (int i = 0; i < 8; i++){
-            TableRow row = new TableRow(getContext());
+        /*boolean portrait = false;
+        if (portrait) {
 
-            colorButtons[i*6].setBackgroundColor(Color.rgb(255, 0, i*32));
-            colorMap.put(colorButtons[i*6], Color.rgb(255, 0, i*32));
-            row.addView(colorButtons[i*6],rowParams);
+            for (int i = 0; i < 8; i++) {
+                TableRow row = new TableRow(getContext());
 
-            colorButtons[i*6+1].setBackgroundColor(Color.rgb(255, i*32, 0));
-            colorMap.put(colorButtons[i*6+1], Color.rgb(255, i*32, 0));
-            row.addView(colorButtons[i*6+1],rowParams);
+                colorButtons[i * 6].setBackgroundColor(Color.rgb(255, 0, i * 32));
+                colorMap.put(colorButtons[i * 6], Color.rgb(255, 0, i * 32));
+                row.addView(colorButtons[i * 6], rowParams);
 
-            colorButtons[i*6+2].setBackgroundColor(Color.rgb(i*32, 255, 0));
-            colorMap.put(colorButtons[i*6+2], Color.rgb(i*32, 255, 0));
-            row.addView(colorButtons[i*6+2],rowParams);
+                colorButtons[i * 6 + 1].setBackgroundColor(Color.rgb(255, i * 32, 0));
+                colorMap.put(colorButtons[i * 6 + 1], Color.rgb(255, i * 32, 0));
+                row.addView(colorButtons[i * 6 + 1], rowParams);
 
-            colorButtons[i*6+3].setBackgroundColor(Color.rgb(0, 255, i*32));
-            colorMap.put(colorButtons[i*6+3], Color.rgb(0, 255, i*32));
-            row.addView(colorButtons[i*6+3],rowParams);
+                colorButtons[i * 6 + 2].setBackgroundColor(Color.rgb(i * 32, 255, 0));
+                colorMap.put(colorButtons[i * 6 + 2], Color.rgb(i * 32, 255, 0));
+                row.addView(colorButtons[i * 6 + 2], rowParams);
 
-            colorButtons[i*6+4].setBackgroundColor(Color.rgb(0, i*32, 255));
-            colorMap.put(colorButtons[i*6+4], Color.rgb(0, i*32, 255));
-            row.addView(colorButtons[i*6+4],rowParams);
+                colorButtons[i * 6 + 3].setBackgroundColor(Color.rgb(0, 255, i * 32));
+                colorMap.put(colorButtons[i * 6 + 3], Color.rgb(0, 255, i * 32));
+                row.addView(colorButtons[i * 6 + 3], rowParams);
 
-            colorButtons[i*6+5].setBackgroundColor(Color.rgb(i*32, 0, 255));
-            colorMap.put(colorButtons[i*6+5], Color.rgb(i*32, 0, 255));
-            row.addView(colorButtons[i*6+5],rowParams);
+                colorButtons[i * 6 + 4].setBackgroundColor(Color.rgb(0, i * 32, 255));
+                colorMap.put(colorButtons[i * 6 + 4], Color.rgb(0, i * 32, 255));
+                row.addView(colorButtons[i * 6 + 4], rowParams);
 
-            layout.addView(row);
+                colorButtons[i * 6 + 5].setBackgroundColor(Color.rgb(i * 32, 0, 255));
+                colorMap.put(colorButtons[i * 6 + 5], Color.rgb(i * 32, 0, 255));
+                row.addView(colorButtons[i * 6 + 5], rowParams);
 
-        }
+                layout.addView(row);
+
+            }
+        }else{*/
+            TableRow [] row = new TableRow[6];
+
+            for (int i = 0; i < 6; i++){
+                row[i] = new TableRow(getContext());
+            }
+
+            for (int i = 0; i < 8; i++){
+                colorButtons[i*6].setBackgroundColor(Color.rgb(255, 0, i*32));
+                colorMap.put(colorButtons[i*6], Color.rgb(255, 0, i*32));
+                row[0].addView(colorButtons[i*6],rowParams);
+
+                colorButtons[i*6+1].setBackgroundColor(Color.rgb(255, i*32, 255-i*32));
+                colorMap.put(colorButtons[i*6+1], Color.rgb(255, i*32, 255-i*32));
+                row[1].addView(colorButtons[i*6+1],rowParams);
+
+                colorButtons[i*6+2].setBackgroundColor(Color.rgb(i*32, 255, 0));
+                colorMap.put(colorButtons[i*6+2], Color.rgb(i*32, 255, 0));
+                row[2].addView(colorButtons[i*6+2],rowParams);
+
+                colorButtons[i*6+3].setBackgroundColor(Color.rgb(255-i*32, 255, i*32));
+                colorMap.put(colorButtons[i*6+3], Color.rgb(255-i*32, 255, i*32));
+                row[3].addView(colorButtons[i*6+3],rowParams);
+
+                colorButtons[i*6+4].setBackgroundColor(Color.rgb(0, i*32, 255));
+                colorMap.put(colorButtons[i*6+4], Color.rgb(0, i*32, 255));
+                row[4].addView(colorButtons[i*6+4],rowParams);
+
+                colorButtons[i*6+5].setBackgroundColor(Color.rgb(i*32, 255-i*32, 255));
+                colorMap.put(colorButtons[i*6+5], Color.rgb(i*32, 255-i*32, 255));
+                row[5].addView(colorButtons[i*6+5],rowParams);
+
+            }
+
+            for (int i = 0; i < 6; i++){
+                layout.addView(row[i]);
+            }
+        //}
 
         layout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT));
 

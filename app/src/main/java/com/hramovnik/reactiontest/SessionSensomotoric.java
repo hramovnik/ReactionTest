@@ -37,22 +37,18 @@ public final class SessionSensomotoric extends SessionObject {
         return tasks.poll();
     }
 
+
     @Override
     public void analyze() {
         resultInterpritation.clear();
-
         for (int col = 1; col <= 2; col++) {
             int [] result = (col == 1) ? redResult.getResult() : greenResult.getResult();
 
-            int leftPre = 0;
-            int rightPre = 0;
-            int leftPost = 0;
-            int rightPost = 0;
-            LinkedList<Integer> leftCorrect = new LinkedList<Integer>();
-            LinkedList<Integer> rightCorrect = new LinkedList<Integer>();
+            Hand [] hands = new Hand[2];
+            hands[0] = new Hand("правой");
+            hands[1] = new Hand("левой");
 
             int fuckedUpCounter = 0;
-
             //первая половина массива для правой, вторая для левой руки
 
             LinkedList< Pair<Integer, Integer> > inData = new LinkedList< Pair<Integer, Integer>>();
@@ -64,50 +60,44 @@ public final class SessionSensomotoric extends SessionObject {
             }
 
             for (Pair<Integer, Integer> pair : inData) {
-                if (pair.first < 100){rightPre++;}
-                else if(pair.first < 500){rightCorrect.add(pair.first);}
-                else {rightPost++;}
+                if (pair.first < 100){hands[0].pre++;}
+                else if(pair.first < 500){hands[0].correct.add(pair.first);}
+                else {hands[0].post++;}
 
-                if (pair.second < 100){leftPre++;}
-                else if(pair.second < 500){leftCorrect.add(pair.second);}
-                else {leftPost++;}
-            }
-
-            double standDeltaRight = 0;
-            double medRight = 0;
-            if (rightCorrect.size() != 0) {
-                for (Integer value : rightCorrect) {
-                    medRight += value;
-                }
-                medRight /= (double) rightCorrect.size();
-                for (Integer value : rightCorrect) {
-                    medRight += Math.pow(value - medRight, 2);
-                }
-                standDeltaRight = Math.sqrt((standDeltaRight / rightCorrect.size()));
-            }
-
-            double standDeltaLeft = 0;
-            double medLeft = 0;
-            if (leftCorrect.size() != 0) {
-
-                for (Integer value : leftCorrect) {
-                    medLeft += value;
-                }
-                medLeft /= (double) leftCorrect.size();
-                for (Integer value : leftCorrect) {
-                    standDeltaLeft += Math.pow(value - medLeft, 2);
-                }
-                standDeltaLeft = Math.sqrt((standDeltaLeft / leftCorrect.size()));
+                if (pair.second < 100){hands[1].pre++;}
+                else if(pair.second < 500){hands[1].correct.add(pair.second);}
+                else {hands[1].post++;}
             }
 
             resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                    ": Среднее время реакции левой руки (мс)", medLeft));
-            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                    ": Среднее время реакции правой руки (мс)", medRight));
-            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                    ": Стандартное отклонение времени реакции левой руки (мс)", standDeltaLeft));
-            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                    ": Стандартное отклонение время реакции правой руки (мс)", standDeltaRight));
+                    ": количество валидных представлений", (double)inData.size()));
+
+
+            for(int hnumber = 0; hnumber <= 1; hnumber++) {
+                resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                        ": Количество верных реакций " + hands[hnumber].text + " руки", (double)hands[hnumber].correct.size()));
+                if (hands[hnumber].correct.size() != 0) {
+                    double standDelta = 0;
+                    double med = 0;
+                    double weeple = 0;
+                    for (Integer value : hands[hnumber].correct) {med += value;}
+                    med /= (double) hands[hnumber].correct.size();
+                    for (Integer value : hands[hnumber].correct) {
+                        med += Math.pow(value - med, 2);
+                    }
+                    standDelta = Math.sqrt((standDelta / hands[hnumber].correct.size()));
+
+                    weeple = ((double) (resultInterpritation.size() - hands[hnumber].correct.size())) / (resultInterpritation.size() + hands[hnumber].post + hands[hnumber].pre);
+                    resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                            ": Среднее время реакции " + hands[hnumber].text + " руки (мс)", med));
+
+                    resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                            ": Стандартное отклонение времени реакции " + hands[hnumber].text + " руки (мс)", standDelta));
+                    resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
+                            ": Коэффициент точности Уиппла для " + hands[hnumber].text + " руки", weeple));
+                }
+
+            }
 
         }
 
