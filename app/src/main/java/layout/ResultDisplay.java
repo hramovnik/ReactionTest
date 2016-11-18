@@ -18,7 +18,7 @@ import com.hramovnik.reactiontest.Session;
 public class ResultDisplay extends DialogFragment  implements View.OnClickListener {
 
     TextView tvFrameResult = null;
-    String str ="Void";
+    static String str ="Void";
     Session currentSession = null;
 
     @Override
@@ -60,19 +60,19 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-
         dismiss();
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-
+        str ="Void";
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
+        str ="Void";
     }
 
 }

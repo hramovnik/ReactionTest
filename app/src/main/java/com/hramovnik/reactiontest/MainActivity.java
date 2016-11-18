@@ -39,6 +39,8 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
+
+        Log.d("Tag", "Main activity created");
     }
 
 
@@ -97,7 +99,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     public void onClick(View v) {
-//        displayResult("Bum-bum!",null);
+        //displayResult("Bum-bum!",null);
 
         tvResult.clearComposingText();
         switch (v.getId()){
@@ -121,7 +123,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     public void onPause(){
-
+        super.onPause();
     }
 
     @Override
