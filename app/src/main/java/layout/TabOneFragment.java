@@ -136,7 +136,7 @@ public class TabOneFragment extends TabFragment implements TaskActivityInterface
 
     @Override
     public Session getSession() {
-        return new SessionSensomotoric(this, sbQuantityRep.getProgress(), sbSizeChooser.getProgress(), colorOne, colorTwo);
+        return new SessionSensomotoric(sbQuantityRep.getProgress(), sbSizeChooser.getProgress(), colorOne, colorTwo);
     }
 }
 

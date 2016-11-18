@@ -16,12 +16,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import layout.ResultDisplay;
 import layout.TabFourFragment;
 import layout.TabOneFragment;
 import layout.TabThreeFragment;
 import layout.TabTwoFragment;
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener{
+public class MainActivity extends FragmentActivity implements ResultDisplayable, View.OnClickListener{
 
     TextView tvResult;
     Button buttonStartStop;
@@ -89,11 +90,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
         connection.setControles(ipAddress, port, tvResult, progressBar);
+        dialogResult = new ResultDisplay();
+        SessionObject.setDispalyable(this);
     }
+
 
     @Override
     public void onClick(View v) {
-
+//        displayResult("Bum-bum!",null);
 
         tvResult.clearComposingText();
         switch (v.getId()){
@@ -116,7 +120,13 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     }
 
     @Override
+    public void onPause(){
+
+    }
+
+    @Override
     public void onDestroy(){
+        connection.setControles(ipAddress, port, null, null);
         super.onDestroy();
     }
 
@@ -126,4 +136,14 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         item.setIntent(new Intent(this, PrefActivity.class));
         return super.onCreateOptionsMenu(menu);
     }
+
+    private ResultDisplay dialogResult = null;
+
+
+    public void displayResult(String value, Session session){
+        dialogResult.show(getSupportFragmentManager(), "Результат", value, session);
+
+    }
+
+
 }

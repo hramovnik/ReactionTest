@@ -12,8 +12,7 @@ public class SessionFlicker extends SessionObject {
     private SessionFlicker(){}
     private CommandFlickerGetResult result = null;
 
-    public SessionFlicker(ResultDisplayable display, boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
-        setDispalyable(display);
+    public SessionFlicker(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
         tasks = new LinkedBlockingQueue<>();
 
         int realDotSize = (int) ((float) dotSize / 0.219 / 2);
@@ -40,7 +39,7 @@ public class SessionFlicker extends SessionObject {
             string.append(String.valueOf(mass[i]) + " ");
         }
 
-        display.displayResult(string.toString());
+        display.displayResult(string.toString(),this);
     }
 
 

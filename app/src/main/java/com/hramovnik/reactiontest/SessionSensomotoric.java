@@ -1,9 +1,10 @@
 package com.hramovnik.reactiontest;
 
+import android.support.v4.app.FragmentController;
+import android.support.v4.app.FragmentManager;
 import android.util.Pair;
 
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -11,8 +12,9 @@ public final class SessionSensomotoric extends SessionObject {
     private SessionSensomotoric(){}
     private CommandSensoGetResult redResult = null;
     private CommandSensoGetResult greenResult = null;
-    public SessionSensomotoric(ResultDisplayable display, int serialLen, int dotSize, int firstColor, int secondColor){
-        setDispalyable(display);
+    public SessionSensomotoric(int serialLen, int dotSize, int firstColor, int secondColor){
+
+
         this.serialLen = serialLen;
         tasks = new LinkedBlockingQueue<>();
 
@@ -30,7 +32,7 @@ public final class SessionSensomotoric extends SessionObject {
         tasksElapsed = tasksInSession;
     }
 
-    int serialLen = 0;
+    protected int serialLen = 0;
 
     @Override
     public TaskExecute getNextTask() {
@@ -106,7 +108,7 @@ public final class SessionSensomotoric extends SessionObject {
         for (Pair<String, Double> value:resultInterpritation) {
             builder.append(value.first + " - " + String.valueOf(value.second) + "\n");
         }
-        display.displayResult(builder.toString());
+        display.displayResult(builder.toString(),this);
     }
 
 }

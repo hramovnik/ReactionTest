@@ -11,12 +11,11 @@ import java.util.Queue;
 
 public abstract class SessionObject implements Session {
 
-    @Override
-    public void setDispalyable(ResultDisplayable display) {
-        this.display = display;
+    public static void setDispalyable(ResultDisplayable newDisplay) {
+        display = newDisplay;
     }
 
-    protected ResultDisplayable display = null;
+    protected static ResultDisplayable display = null;
     protected Integer tasksInSession;
     protected Integer tasksElapsed;
     protected Queue<TaskExecute> tasks = null;

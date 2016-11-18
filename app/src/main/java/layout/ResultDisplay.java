@@ -12,12 +12,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.hramovnik.reactiontest.R;
+import com.hramovnik.reactiontest.Session;
 
 
 public class ResultDisplay extends DialogFragment  implements View.OnClickListener {
 
     TextView tvFrameResult = null;
     String str ="Void";
+    Session currentSession = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +44,8 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
         str = value;
     }
 
-    public void show(FragmentManager manager, String tag, String information){
+    public void show(FragmentManager manager, String tag, String information, Session session){
+        currentSession = session;
         super.show(manager,tag);
         setText(information);
     }
@@ -57,7 +60,7 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        getTargetFragment().onActivityResult(getTargetRequestCode(), 1, getActivity().getIntent());
+
         dismiss();
     }
 

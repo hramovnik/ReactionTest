@@ -5,5 +5,5 @@ package com.hramovnik.reactiontest;
  */
 
 public interface ResultDisplayable {
-    public void displayResult(String value);
+    public void displayResult(String value, Session session);
 }

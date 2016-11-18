@@ -12,6 +12,5 @@ public interface Session {
     public TaskExecute getNextTask();
     public void analyze();
     public Pair<Integer, Integer> countTasks();
-    public void setDispalyable(ResultDisplayable display);
 
 }
