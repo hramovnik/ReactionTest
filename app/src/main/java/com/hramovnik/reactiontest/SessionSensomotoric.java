@@ -71,13 +71,13 @@ public final class SessionSensomotoric extends SessionObject {
                 else {hands[1].post++;}
             }
 
-            resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                    ": количество валидных представлений", (double)inData.size()));
+            resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                    ": количество валидных представлений", String.valueOf(inData.size())));
 
 
             for(int hnumber = 0; hnumber <= 1; hnumber++) {
-                resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                        ": Количество верных реакций " + hands[hnumber].text + " руки", (double)hands[hnumber].correct.size()));
+                resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                        ": Количество верных реакций " + hands[hnumber].text + " руки", String.valueOf(hands[hnumber].correct.size())));
                 if (hands[hnumber].correct.size() != 0) {
                     double standDelta = 0;
                     double med = 0;
@@ -90,13 +90,13 @@ public final class SessionSensomotoric extends SessionObject {
                     standDelta = Math.sqrt((standDelta / hands[hnumber].correct.size()));
 
                     weeple = ((double) (resultInterpritation.size() - hands[hnumber].correct.size())) / (resultInterpritation.size() + hands[hnumber].post + hands[hnumber].pre);
-                    resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                            ": Среднее время реакции " + hands[hnumber].text + " руки (мс)", med));
+                    resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                            ": Среднее время реакции " + hands[hnumber].text + " руки (мс)", String.valueOf(med)));
 
-                    resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                            ": Стандартное отклонение времени реакции " + hands[hnumber].text + " руки (мс)", standDelta));
-                    resultInterpritation.add(new Pair<String, Double>("Цвет " + String.valueOf(col) +
-                            ": Коэффициент точности Уиппла для " + hands[hnumber].text + " руки", weeple));
+                    resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                            ": Стандартное отклонение времени реакции " + hands[hnumber].text + " руки (мс)", String.valueOf(standDelta)));
+                    resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                            ": Коэффициент точности Уиппла для " + hands[hnumber].text + " руки", String.valueOf(weeple)));
                 }
 
             }
@@ -105,10 +105,10 @@ public final class SessionSensomotoric extends SessionObject {
 
 
         StringBuilder builder = new StringBuilder();
-        for (Pair<String, Double> value:resultInterpritation) {
-            builder.append(value.first + " - " + String.valueOf(value.second) + "\n");
+        for (Pair<String, String> value:resultInterpritation) {
+            builder.append(value.first + " - " + value.second + "\n");
         }
-        display.displayResult(builder.toString(),this);
+        if(display!=null) display.displayResult(builder.toString(),this);
     }
 
 }

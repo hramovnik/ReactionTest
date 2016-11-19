@@ -38,8 +38,9 @@ public class Connection{
 
     Connection(){
         super();
+        Log.d("Tag", "Connection created");
     }
-    public void setControles(String ip, int port, TextView status, ProgressBar progressBar){
+    public void setControls(String ip, int port, TextView status, ProgressBar progressBar){
         IPAddress = ip;
         this.port = port;
         this.status = status;

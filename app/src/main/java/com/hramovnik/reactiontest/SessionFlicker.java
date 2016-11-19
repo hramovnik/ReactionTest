@@ -39,7 +39,7 @@ public class SessionFlicker extends SessionObject {
             string.append(String.valueOf(mass[i]) + " ");
         }
 
-        display.displayResult(string.toString(),this);
+        if(display!=null) display.displayResult(string.toString(),this);
     }
 
 

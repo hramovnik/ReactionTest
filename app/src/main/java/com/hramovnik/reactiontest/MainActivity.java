@@ -34,6 +34,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     int port;
     String ipAddress;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +92,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
             port = 8080;
         }
 
-        connection.setControles(ipAddress, port, tvResult, progressBar);
+        connection.setControls(ipAddress, port, tvResult, progressBar);
         dialogResult = new ResultDisplay();
         SessionObject.setDispalyable(this);
     }
@@ -99,9 +100,9 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     public void onClick(View v) {
-        //displayResult("Bum-bum!",null);
+        displayResult("Bum-bum!",null);
 
-        tvResult.clearComposingText();
+/*        tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
                 if (connection.isWorking()) {
@@ -118,7 +119,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                 }else{
                     Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
                 }
-        }
+        }*/
     }
 
     @Override
@@ -128,7 +129,8 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     public void onDestroy(){
-        connection.setControles(ipAddress, port, null, null);
+        connection.setControls(ipAddress, port, null, null);
+        SessionObject.setDispalyable(null);
         super.onDestroy();
     }
 
