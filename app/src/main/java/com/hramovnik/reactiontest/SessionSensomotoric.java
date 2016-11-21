@@ -1,10 +1,9 @@
 package com.hramovnik.reactiontest;
 
-import android.support.v4.app.FragmentController;
-import android.support.v4.app.FragmentManager;
 import android.util.Pair;
 
 import java.util.LinkedList;
+import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -13,7 +12,6 @@ public final class SessionSensomotoric extends SessionObject {
     private CommandSensoGetResult redResult = null;
     private CommandSensoGetResult greenResult = null;
     public SessionSensomotoric(int serialLen, int dotSize, int firstColor, int secondColor){
-
 
         this.serialLen = serialLen;
         tasks = new LinkedBlockingQueue<>();
@@ -32,7 +30,7 @@ public final class SessionSensomotoric extends SessionObject {
         tasksElapsed = tasksInSession;
     }
 
-    protected int serialLen = 0;
+    int serialLen = 0;
 
     @Override
     public TaskExecute getNextTask() {
@@ -75,7 +73,7 @@ public final class SessionSensomotoric extends SessionObject {
                     ": количество валидных представлений", String.valueOf(inData.size())));
 
 
-            for(int hnumber = 0; hnumber <= 1; hnumber++) {
+            for(int hnumber = 0; hnumber <= 1; hnumber++) { //hnumber - номер руки
                 resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
                         ": Количество верных реакций " + hands[hnumber].text + " руки", String.valueOf(hands[hnumber].correct.size())));
                 if (hands[hnumber].correct.size() != 0) {
@@ -101,14 +99,16 @@ public final class SessionSensomotoric extends SessionObject {
 
             }
 
+
+
         }
 
 
         StringBuilder builder = new StringBuilder();
         for (Pair<String, String> value:resultInterpritation) {
-            builder.append(value.first + " - " + value.second + "\n");
-        }
-        if(display!=null) display.displayResult(builder.toString(),this);
+            builder.append(value.first + " - " + value.second + "\n");}
+
+        display.displayResult(builder.toString(), this);
     }
 
 }
