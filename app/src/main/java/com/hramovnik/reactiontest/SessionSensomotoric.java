@@ -3,7 +3,6 @@ package com.hramovnik.reactiontest;
 import android.util.Pair;
 
 import java.util.LinkedList;
-import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -30,7 +29,7 @@ public final class SessionSensomotoric extends SessionObject {
         tasksElapsed = tasksInSession;
     }
 
-    int serialLen = 0;
+    private int serialLen = 0;
 
     @Override
     public TaskExecute getNextTask() {
@@ -76,6 +75,12 @@ public final class SessionSensomotoric extends SessionObject {
             for(int hnumber = 0; hnumber <= 1; hnumber++) { //hnumber - номер руки
                 resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
                         ": Количество верных реакций " + hands[hnumber].text + " руки", String.valueOf(hands[hnumber].correct.size())));
+                resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                        ": Количество преждевременных реакций " + hands[hnumber].text + " руки", String.valueOf(hands[hnumber].pre)));
+                resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                        ": Количество запаздывающих реакций " + hands[hnumber].text + " руки", String.valueOf(hands[hnumber].post)));
+                resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                        ": Общее число ошибочных реакций " + hands[hnumber].text + " руки", String.valueOf(hands[hnumber].pre + hands[hnumber].post)));
                 if (hands[hnumber].correct.size() != 0) {
                     double standDelta = 0;
                     double med = 0;
@@ -90,7 +95,6 @@ public final class SessionSensomotoric extends SessionObject {
                     weeple = ((double) (resultInterpritation.size() - hands[hnumber].correct.size())) / (resultInterpritation.size() + hands[hnumber].post + hands[hnumber].pre);
                     resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
                             ": Среднее время реакции " + hands[hnumber].text + " руки (мс)", String.valueOf(med)));
-
                     resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
                             ": Стандартное отклонение времени реакции " + hands[hnumber].text + " руки (мс)", String.valueOf(standDelta)));
                     resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
