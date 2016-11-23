@@ -40,9 +40,16 @@ public final class SessionSensomotoric extends SessionObject {
     @Override
     public void analyze() {
         resultInterpritation.clear();
+        LinkedList< Pair<Integer, Integer> > allPairs = new LinkedList<Pair<Integer, Integer>>();
+
+        double [] colorAsymm = new double[4];
+
         for (int col = 1; col <= 2; col++) {
             int [] result = (col == 1) ? redResult.getResult() : greenResult.getResult();
-
+            if (result == null) {
+                if (display!=null) display.displayResult("Ошибка анализа - не получено нужное количество достоверных результатов", this);
+                return;
+            }
             Hand [] hands = new Hand[2];
             hands[0] = new Hand("правой");
             hands[1] = new Hand("левой");
@@ -62,11 +69,16 @@ public final class SessionSensomotoric extends SessionObject {
                 if (pair.first < 100){hands[0].pre++;}
                 else if(pair.first < 500){hands[0].correct.add(pair.first);}
                 else {hands[0].post++;}
+                colorAsymm[2*col] += pair.first;
 
                 if (pair.second < 100){hands[1].pre++;}
                 else if(pair.second < 500){hands[1].correct.add(pair.second);}
                 else {hands[1].post++;}
+                colorAsymm[2*col + 1] += pair.second;
             }
+
+            colorAsymm[2*col] /= inData.size();
+            colorAsymm[2*col+1] /= inData.size();
 
             resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
                     ": количество валидных представлений", String.valueOf(inData.size())));
@@ -84,7 +96,7 @@ public final class SessionSensomotoric extends SessionObject {
                 if (hands[hnumber].correct.size() != 0) {
                     double standDelta = 0;
                     double med = 0;
-                    double weeple = 0;
+
                     for (Integer value : hands[hnumber].correct) {med += value;}
                     med /= (double) hands[hnumber].correct.size();
                     for (Integer value : hands[hnumber].correct) {
@@ -92,7 +104,7 @@ public final class SessionSensomotoric extends SessionObject {
                     }
                     standDelta = Math.sqrt((standDelta / hands[hnumber].correct.size()));
 
-                    weeple = ((double) (resultInterpritation.size() - hands[hnumber].correct.size())) / (resultInterpritation.size() + hands[hnumber].post + hands[hnumber].pre);
+                    double weeple = ((double) (resultInterpritation.size() - hands[hnumber].correct.size())) / (resultInterpritation.size() + hands[hnumber].post + hands[hnumber].pre);
                     resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
                             ": Среднее время реакции " + hands[hnumber].text + " руки (мс)", String.valueOf(med)));
                     resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
@@ -103,16 +115,53 @@ public final class SessionSensomotoric extends SessionObject {
 
             }
 
+            int iter = 0;
+            for (Pair<Integer, Integer> value :inData){
+                resultInterpritation.add(new Pair<String, String>("Цвет " + String.valueOf(col) +
+                        ": коэффициент асимметрии для предъявления №" + String.valueOf(iter),
+                        String.valueOf((value.second.doubleValue() - value.first.doubleValue())/(value.second.doubleValue() + value.first.doubleValue()))));
+                iter++;
+            }
 
+            for (Pair<Integer, Integer> value :inData) {allPairs.add(value);}
 
         }
+
+        double medAsymmRight = 0;
+        double medAsymmLeft = 0;
+
+        int stableAsymmetryRight = 0;
+        int stableAsymmetryLeft = 0;
+
+        for (Pair<Integer, Integer> value :allPairs){
+            medAsymmRight += value.first;
+            medAsymmLeft += value.second;
+
+            if (value.first > value.second){stableAsymmetryRight++;}
+            else{stableAsymmetryLeft++;}
+        }
+
+        medAsymmRight /= allPairs.size();
+        medAsymmLeft /= allPairs.size();
+
+        resultInterpritation.add(new Pair<String, String>("Средний коэффициент асимметрии",
+                String.valueOf((medAsymmLeft - medAsymmRight)/(medAsymmLeft + medAsymmRight))));
+
+        resultInterpritation.add(new Pair<String, String>("Коэффициент устойчивой асимметрии",
+                String.valueOf(((double)(stableAsymmetryLeft-stableAsymmetryRight)*100.)/allPairs.size())));
+
+        resultInterpritation.add(new Pair<String, String>("Цветовой показатель правой руки",
+                String.valueOf(((colorAsymm[0] - colorAsymm[2])/(colorAsymm[0] + colorAsymm[2])))));
+
+        resultInterpritation.add(new Pair<String, String>("Цветовой показатель левой руки",
+                String.valueOf(((colorAsymm[0] - colorAsymm[2])/(colorAsymm[1] + colorAsymm[3])))));
 
 
         StringBuilder builder = new StringBuilder();
         for (Pair<String, String> value:resultInterpritation) {
             builder.append(value.first + " - " + value.second + "\n");}
 
-        display.displayResult(builder.toString(), this);
+        if (display!=null) display.displayResult(builder.toString(), this);
     }
 
 }
