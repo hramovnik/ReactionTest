@@ -100,9 +100,9 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     public void onClick(View v) {
-        displayResult("Bum-bum!",null);
+//        displayResult("Bum-bum!",null);
 
-/*        tvResult.clearComposingText();
+        tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
                 if (connection.isWorking()) {
@@ -119,7 +119,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                 }else{
                     Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
                 }
-        }*/
+        }
     }
 
     @Override
@@ -148,6 +148,4 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         dialogResult.show(getSupportFragmentManager(), "Результат", value, session);
 
     }
-
-
 }

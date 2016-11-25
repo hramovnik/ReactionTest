@@ -35,8 +35,8 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
          Button buttonSave = ((Button) getView().findViewById(R.id.frameResultButtonSave));
          buttonSave.setOnClickListener(this);
 
-        tvFrameResult = ((TextView) getView().findViewById(R.id.tvFrameResult));
-        tvFrameResult.setText(str);
+         tvFrameResult = ((TextView) getView().findViewById(R.id.tvFrameResult));
+         tvFrameResult.setText(str);
 
     }
 
@@ -56,23 +56,20 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
         super.onResume();
     }
 
-
-
     @Override
     public void onClick(View v) {
         dismiss();
+        str ="Void";
     }
 
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        str ="Void";
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        str ="Void";
     }
 
 }
