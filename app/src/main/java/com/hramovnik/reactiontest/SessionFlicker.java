@@ -1,5 +1,7 @@
 package com.hramovnik.reactiontest;
 
+import android.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -11,7 +13,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class SessionFlicker extends SessionObject {
 
     private SessionFlicker(){}
-    private ArrayList<CommandFlickerGetResult> result = new ArrayList<>();
+    private ArrayList<CommandFlickerGetResult> resultOne;
+    private ArrayList<CommandFlickerGetResult> resultTwo;
     private boolean flickerOne;
 
     public SessionFlicker(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
@@ -20,10 +23,18 @@ public class SessionFlicker extends SessionObject {
 
         int realDotSize = (int) ((float) dotSize / 0.219 / 2);
 
-        for (int i = flickerOne? 1:brightness; i <= brightness; i++) {
+        for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
+            tasks.add(new CommandStartFlickerOne(flickerOne, Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz, blackScreenDelay_ms));
+            CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
+            resultOne.add(tempResult);
+            tasks.add(tempResult);
+        }
+
+
+        for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
             tasks.add(new CommandStartFlickerOne(flickerOne, color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz, blackScreenDelay_ms));
             CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
-            result.add(tempResult);
+            resultTwo.add(tempResult);
             tasks.add(tempResult);
         }
 
@@ -46,6 +57,7 @@ public class SessionFlicker extends SessionObject {
         }
 
         if(display!=null) display.displayResult(string.toString(),this);*/
+
     }
 
 
