@@ -100,7 +100,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     public void onClick(View v) {
-//        displayResult("Bum-bum!",null);
+
 
         tvResult.clearComposingText();
         switch (v.getId()){

@@ -13,9 +13,9 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class SessionFlicker extends SessionObject {
 
     private SessionFlicker(){}
-    private ArrayList<CommandFlickerGetResult> resultOne;
-    private ArrayList<CommandFlickerGetResult> resultTwo;
-    private boolean flickerOne;
+    private ArrayList<CommandFlickerGetResult> resultOne = new ArrayList<>();
+    private ArrayList<CommandFlickerGetResult> resultTwo = new ArrayList<>();
+    private boolean flickerOne = true;
 
     public SessionFlicker(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
         tasks = new LinkedBlockingQueue<>();
@@ -30,7 +30,6 @@ public class SessionFlicker extends SessionObject {
             tasks.add(tempResult);
         }
 
-
         for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
             tasks.add(new CommandStartFlickerOne(flickerOne, color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz, blackScreenDelay_ms));
             CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
@@ -41,7 +40,6 @@ public class SessionFlicker extends SessionObject {
         tasksInSession = tasks.size();
         tasksElapsed = tasksInSession;
     }
-
 
     @Override
     public TaskExecute getNextTask() {

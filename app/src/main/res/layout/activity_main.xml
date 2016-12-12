@@ -15,8 +15,7 @@
     <android.support.v4.app.FragmentTabHost
         android:layout_width="match_parent"
         android:id="@+id/tabHost"
-        android:layout_height="350dip"
-
+        android:layout_height="200dip"
         >
 
         <FrameLayout
@@ -47,10 +46,12 @@
         android:gravity="center_horizontal"
         android:id="@+id/buttonStartStopTest"
         style="@android:style/Widget.Button"
+        android:height="10dp"
+
         />
     <Space
         android:layout_width="1dp"
-        android:layout_height="10dp"
+        android:layout_height="1dp"
         />
     <TextView
         android:text="-"
@@ -58,7 +59,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvResult"
         android:gravity="center"
-        android:textSize="14sp"
+        android:textSize="10sp"
     />
 
 

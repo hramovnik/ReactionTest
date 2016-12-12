@@ -8,7 +8,6 @@ import android.graphics.Color;
 
 public class CommandStartFlickerOne extends TaskObject {
 
-
     private int [] task = new int[10];
     private CommandStartFlickerOne(){}
     public CommandStartFlickerOne(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
