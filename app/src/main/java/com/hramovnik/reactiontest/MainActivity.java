@@ -21,6 +21,7 @@ import layout.TabFourFragment;
 import layout.TabOneFragment;
 import layout.TabThreeFragment;
 import layout.TabTwoFragment;
+import layout.TabFiveFragment;
 
 public class MainActivity extends FragmentActivity implements ResultDisplayable, View.OnClickListener{
 
@@ -73,9 +74,10 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         tabs.addTab(tabs.newTabSpec("tab2").setIndicator("КЧСМ"), TabTwoFragment.class, null);
         tabs.addTab(tabs.newTabSpec("tab3").setIndicator("КЧСМ Авто"), TabThreeFragment.class, null);
         tabs.addTab(tabs.newTabSpec("tab4").setIndicator("ТТ"), TabFourFragment.class, null);
+        tabs.addTab(tabs.newTabSpec("tab5").setIndicator("ТИ"), TabFiveFragment.class, null);
 
-        for(int i = 0; i < 4; i++){
-            ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(8);
+        for(int i = 0; i < 5; i++){
+            ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(10);
         }
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -101,8 +103,10 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     @Override
     public void onClick(View v) {
 
+        dialogResult.show(getSupportFragmentManager(), "Результат", "Bada-bum!");
 
-        tvResult.clearComposingText();
+
+        /*tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
                 if (connection.isWorking()) {
@@ -119,7 +123,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                 }else{
                     Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
                 }
-        }
+        }*/
     }
 
     @Override

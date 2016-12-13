@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_tab_four"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/landscape_activity_vertical_margin"
+    android:paddingLeft="@dimen/landscape_activity_horizontal_margin"
+    android:paddingRight="@dimen/landscape_activity_horizontal_margin"
+    android:paddingTop="@dimen/landscape_tabs_vertical_offset"
+    android:orientation="vertical"
+    tools:context="layout.TabFiveFragment">
+
+    <TextView
+        android:text="Здесь мог быть тест изображениями"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView"
+        />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TableRow
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <Space
+        android:layout_width="1dp"
+        android:layout_height="@dimen/space_between_buttons_and_seek_bars"
+        />
+    </TableRow>
+    </TableLayout>
+
+
+</LinearLayout>

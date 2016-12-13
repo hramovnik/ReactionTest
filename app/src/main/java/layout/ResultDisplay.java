@@ -49,6 +49,10 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
         setText(information);
     }
 
+    public void show(FragmentManager manager, String tag, String information){
+        super.show(manager,tag);
+        setText(information);
+    }
 
     @Override
     public void onResume(){

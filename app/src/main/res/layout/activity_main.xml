@@ -38,32 +38,25 @@
         android:layout_height="wrap_content"
         android:id="@+id/progressBar"
     />
-
-    <Button
-        android:text="Начать тест"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:id="@+id/buttonStartStopTest"
-        style="@android:style/Widget.Button"
-        android:height="10dp"
-
-        />
-    <Space
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        />
     <TextView
         android:text="-"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/tvResult"
         android:gravity="center"
-        android:textSize="10sp"
-    />
+        android:textSize="8dp"
+        />
+    <Button
+        android:text="Начать тест"
+        style="@android:style/Widget.Button"
+        android:layout_width="match_parent"
+        android:layout_height="36sp"
+        android:layout_margin="1sp"
+        android:gravity="center_horizontal"
+        android:id="@+id/buttonStartStopTest"
+        android:textSize="12dp"
 
 
-
-
+        />
 
 </LinearLayout>
