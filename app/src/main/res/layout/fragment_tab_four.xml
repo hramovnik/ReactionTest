@@ -46,7 +46,7 @@
                 android:progress="8"
                 android:id="@+id/sbInterval"
                 android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/textView4"
+                android:layout_toEndOf="@id/textView3"
                 android:padding="1dip"
                 android:layout_margin="1dip"
                 android:layout_weight="1"
@@ -110,6 +110,14 @@
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:textSize="@dimen/text_view_size"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_buttons_and_seek_bars"
                 />
         </TableRow>
     </TableLayout>

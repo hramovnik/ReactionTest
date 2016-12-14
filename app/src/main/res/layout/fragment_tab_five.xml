@@ -11,23 +11,34 @@
     android:orientation="vertical"
     tools:context="layout.TabFiveFragment">
 
-    <TextView
-        android:text="Здесь мог быть тест изображениями"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView"
-        />
+
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    <TableRow
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-        <Space
-        android:layout_width="1dp"
-        android:layout_height="@dimen/space_between_buttons_and_seek_bars"
-        />
-    </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_buttons_and_seek_bars"
+                />
+        </TableRow>
+        <TextView
+            android:text="Здесь мог быть тест изображениями"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_buttons_and_seek_bars"
+            />
+        </TableRow>
+
+
     </TableLayout>
 
 

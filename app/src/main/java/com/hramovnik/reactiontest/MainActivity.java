@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -30,7 +31,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     FragmentTabHost tabs;
     ProgressBar progressBar;
 
-    public static Connection connection = new Connection();
+    public Connection connection = null;
     private SharedPreferences sp;
     int port;
     String ipAddress;
@@ -38,6 +39,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
@@ -82,7 +84,6 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         try {
-
             ipAddress = sp.getString("ip_address", "192.168.0.10");
             port = sp.getInt("port", 8080);
             if ((port > 0xffff)||(port < 1024)) port = 8080;
@@ -93,7 +94,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
             ipAddress = "192.168.0.10";
             port = 8080;
         }
-
+        connection = new Connection();
         connection.setControls(ipAddress, port, tvResult, progressBar);
         dialogResult = new ResultDisplay();
         SessionObject.setDispalyable(this);
@@ -140,8 +141,8 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        MenuItem item = menu.add(0,1,0, "Настройки");
-        item.setIntent(new Intent(this, PrefActivity.class));
+        /*MenuItem item = menu.add(0,1,0, "Настройки");
+        item.setIntent(new Intent(this, PrefActivity.class));*/
         return super.onCreateOptionsMenu(menu);
     }
 

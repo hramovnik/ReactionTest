@@ -205,6 +205,14 @@
             android:textSize="@dimen/text_view_size"
             />
     </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="@dimen/space_between_buttons_and_seek_bars"
+            />
+    </TableRow>
 </TableLayout>
 
 
