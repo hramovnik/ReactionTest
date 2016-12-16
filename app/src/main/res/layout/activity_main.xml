@@ -44,19 +44,32 @@
         android:layout_height="wrap_content"
         android:id="@+id/tvResult"
         android:gravity="center"
-        android:textSize="8dp"
-        />
-    <Button
-        android:text="Начать тест"
-        style="@android:style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="36sp"
-        android:layout_margin="1sp"
-        android:gravity="center_horizontal"
-        android:id="@+id/buttonStartStopTest"
         android:textSize="12dp"
-
-
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".20"
+            android:id="@+id/buttonOpenProfile"
+            android:text="Профили"
+            android:textSize="12dp"/>
+        <Button
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".80"
+            android:id="@+id/buttonStartStopTest"
+            android:text="Начать тест"
+            android:textSize="12dp"/>
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

@@ -9,7 +9,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.hramovnik.reactiontest.PrefActivity"
+        tools:context="com.hramovnik.reactiontest.layout.PrefActivity"
         android:orientation="horizontal"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true">
@@ -24,10 +24,9 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="IP Address"
+                android:text="Фамилия"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView6"
                 android:layout_weight="1"
                 android:textAllCaps="false"
                 android:textStyle="normal|bold"
@@ -36,9 +35,9 @@
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="IPAddress"
+                    android:text=""
                     android:ems="10"
-                    android:id="@+id/teIP"
+                    android:id="@+id/tePersonSurname"
                     android:inputType="text"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentEnd="true"
@@ -50,23 +49,102 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Port"
+                android:text="Имя"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/Port"
                 android:layout_weight="1"
-                android:textSize="18sp"
-                android:textStyle="normal|bold" />
+                android:textAllCaps="false"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
 
             <EditText
                 android:layout_width="match_parent"
-                android:inputType="textPersonName"
-                android:text="Port"
+                android:layout_height="wrap_content"
+                android:text=""
                 android:ems="10"
-                android:id="@+id/tePort"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
+                android:id="@+id/tePersonName"
+                android:inputType="text"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1" />
         </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Отчество"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/tePersonSecondName"
+                android:inputType="text"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Дата рождения"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAllCaps="false"
+                android:textStyle="normal|bold"
+                android:textSize="18sp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/tePersonDate"
+                android:inputType="date"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_weight="1"
+                android:editable="false" />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="50sp"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Space
+                android:layout_width="1sp"
+                android:layout_height="1sp"
+                />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ok"
+                android:id="@+id/buttonProfileOk"
+                android:layout_weight="1"
+                style="@android:style/Widget.Button" />
+        </TableRow>
+
+
 
     </TableLayout>
 

@@ -4,12 +4,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -17,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import layout.PrefActivity;
 import layout.ResultDisplay;
 import layout.TabFourFragment;
 import layout.TabOneFragment;
@@ -30,6 +29,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     Button buttonStartStop;
     FragmentTabHost tabs;
     ProgressBar progressBar;
+    Button buttonProfiles;
 
     public Connection connection = null;
     private SharedPreferences sp;
@@ -67,6 +67,8 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         buttonStartStop = (Button) findViewById(R.id.buttonStartStopTest);
         buttonStartStop.setOnClickListener(this);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        buttonProfiles = (Button) findViewById(R.id.buttonOpenProfile);
+        buttonProfiles.setOnClickListener(this);
 
         tabs = (FragmentTabHost) findViewById(R.id.tabHost);
         tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -81,36 +83,26 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         for(int i = 0; i < 5; i++){
             ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(10);
         }
-
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        try {
-            ipAddress = sp.getString("ip_address", "192.168.0.10");
-            port = sp.getInt("port", 8080);
-            if ((port > 0xffff)||(port < 1024)) port = 8080;
+        ipAddress = "192.168.0.10";
+        port = 8080;
 
-            Log.d("Tag", ipAddress + " " + port);
-        }catch (Exception e){
-            Toast.makeText(this, "Ошибка загрузки настроек", Toast.LENGTH_SHORT).show();
-            ipAddress = "192.168.0.10";
-            port = 8080;
-        }
         connection = new Connection();
         connection.setControls(ipAddress, port, tvResult, progressBar);
         dialogResult = new ResultDisplay();
         SessionObject.setDispalyable(this);
+
+        tvResult.setText(PrefActivity.getProfileResult());
     }
 
 
     @Override
     public void onClick(View v) {
-
-        dialogResult.show(getSupportFragmentManager(), "Результат", "Bada-bum!");
-
-
-        /*tvResult.clearComposingText();
+        tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
-                if (connection.isWorking()) {
+                dialogResult.show(getSupportFragmentManager(), "Результат", "Bada-bum!");
+                /*if (connection.isWorking()) {
                     return;
                 }
                 Fragment currentTab = getSupportFragmentManager().findFragmentByTag(tabs.getCurrentTabTag());
@@ -123,8 +115,14 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                    }
                 }else{
                     Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
-                }
-        }*/
+                }*/
+                break;
+            case R.id.buttonOpenProfile:
+                startActivity(new Intent(this, PrefActivity.class));
+                break;
+            default:
+                Toast.makeText(this, "Случилось что-то странное", Toast.LENGTH_LONG);
+        }
     }
 
     @Override
