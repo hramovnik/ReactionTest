@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import layout.ParametersActivity;
 import layout.PrefActivity;
 import layout.ResultDisplay;
 import layout.TabFourFragment;
@@ -30,6 +31,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     FragmentTabHost tabs;
     ProgressBar progressBar;
     Button buttonProfiles;
+    Button buttonParameters;
 
     public Connection connection = null;
     private SharedPreferences sp;
@@ -43,7 +45,9 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-
+        connection = new Connection();
+        ParametersActivity.loadStaticData(this);
+        PrefActivity.loadStaticData(this);
         Log.d("Tag", "Main activity created");
     }
 
@@ -69,6 +73,8 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         buttonProfiles = (Button) findViewById(R.id.buttonOpenProfile);
         buttonProfiles.setOnClickListener(this);
+        buttonParameters = (Button) findViewById(R.id.buttonOpenParameters);
+        buttonParameters.setOnClickListener(this);
 
         tabs = (FragmentTabHost) findViewById(R.id.tabHost);
         tabs.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -81,13 +87,13 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         tabs.addTab(tabs.newTabSpec("tab5").setIndicator("ТИ"), TabFiveFragment.class, null);
 
         for(int i = 0; i < 5; i++){
-            ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(10);
+            ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(12);
         }
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         ipAddress = "192.168.0.10";
         port = 8080;
 
-        connection = new Connection();
+
         connection.setControls(ipAddress, port, tvResult, progressBar);
         dialogResult = new ResultDisplay();
         SessionObject.setDispalyable(this);
@@ -119,6 +125,9 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                 break;
             case R.id.buttonOpenProfile:
                 startActivity(new Intent(this, PrefActivity.class));
+                break;
+            case R.id.buttonOpenParameters:
+                startActivity(new Intent(this, ParametersActivity.class));
                 break;
             default:
                 Toast.makeText(this, "Случилось что-то странное", Toast.LENGTH_LONG);

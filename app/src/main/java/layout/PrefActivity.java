@@ -2,6 +2,7 @@ package layout;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -80,6 +81,20 @@ public class PrefActivity extends Activity implements View.OnClickListener, View
                 sp.edit().clear().apply();
             }
 
+    }
+
+    public static void loadStaticData(Context context){
+        SharedPreferences sharPref = PreferenceManager.getDefaultSharedPreferences(context);
+
+        StringBuilder builder = new StringBuilder();
+        builder.append(sharPref.getString("PersonSurname", ""));
+        builder.append(" ");
+        builder.append(sharPref.getString("PersonName", ""));
+        builder.append(" ");
+        builder.append(sharPref.getString("PersonSecondName", ""));
+        builder.append(" ");
+        builder.append(sharPref.getString("PersonDate", ""));
+        profileResult = builder.toString();
     }
 
     @Override

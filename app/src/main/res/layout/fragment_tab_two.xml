@@ -11,211 +11,207 @@
     android:orientation="vertical"
     tools:context="layout.TabTwoFragment">
 
-
-<TableLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TableRow
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="@dimen/space_between_buttons_and_seek_bars"
-            />
-    </TableRow>
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_buttons_and_seek_bars"
+                />
+        </TableRow>
 
-        <TextView
-            android:text="Цвет кружка"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:layout_centerVertical="true"
-            android:layout_alignParentStart="true"
-            android:textSize="@dimen/text_view_size"
-            />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-        <Space
-            android:layout_width="20dp"
-            android:layout_height="@dimen/vertical_space_of_color_chooser"
+            <TextView
+                android:text="Цвет кружка"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:textSize="@dimen/text_view_size"
+                />
 
-            android:padding="1dip"
-            android:layout_margin="1dip"
-            android:layout_weight="1"
-            />
+            <Space
+                android:layout_width="20dp"
+                android:layout_height="@dimen/vertical_space_of_color_chooser"
 
-        <Button
-            android:layout_width="@dimen/color_button_width"
-            android:layout_height="@dimen/color_button_height"
-            android:id="@+id/buttonColor"
-            android:text=""
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
 
-            style="@style/AlertDialog.AppCompat"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true" />
+            <Button
+                android:layout_width="@dimen/color_button_width"
+                android:layout_height="@dimen/color_button_height"
+                android:id="@+id/buttonColor"
+                android:text=""
 
-    </TableRow>
+                style="@style/AlertDialog.AppCompat"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
 
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="@dimen/space_between_buttons_and_seek_bars"
-            />
-    </TableRow>
+        </TableRow>
 
-
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:text="Яркость"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:id="@+id/textView3"
-            android:textSize="@dimen/text_view_size"
-            />
-
-        <SeekBar
-            style="@style/CustomSeekBar"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:max="12"
-
-            android:progress="8"
-            android:id="@+id/sbBrightness"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@id/textView4"
-            android:padding="1dip"
-            android:layout_margin="1dip"
-            android:layout_weight="1"
-            />
-
-        <TextView
-            android:text="0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/teBrightness"
-            android:elevation="1dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="@dimen/text_view_size"
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="@dimen/space_between_seek_bars"
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:text="Диаметр (мм)"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:id="@+id/textView4"
-            android:textSize="@dimen/text_view_size"
-            />
-
-        <SeekBar
-            style="@style/CustomSeekBar"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:max="20"
-
-            android:progress="3"
-            android:id="@+id/sbRoundSize"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@id/textView4"
-            android:padding="1dip"
-            android:layout_margin="1dip"
-            android:layout_weight="1"
-            />
-
-        <TextView
-            android:text="0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/teRoundSize"
-            android:elevation="1dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:textSize="@dimen/text_view_size"
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="@dimen/space_between_seek_bars"
-            />
-    </TableRow>
-
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <TextView
-            android:text="Частота мелькания (Гц)"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:id="@+id/textView5"
-            android:textSize="@dimen/text_view_size"
-            />
-
-        <SeekBar
-            style="@style/CustomSeekBar"
-            android:layout_width="120dp"
-            android:layout_height="wrap_content"
-            android:max="75"
-            android:progress="10"
-            android:id="@+id/sbFrequency"
-            android:layout_alignParentTop="true"
-            android:layout_toEndOf="@id/textView5"
-            android:padding="1dip"
-            android:layout_margin="1dip"
-            android:layout_weight="1"
-            />
-
-        <TextView
-            android:text="0"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/teFrequency"
-            android:elevation="1dp"
-            android:textSize="@dimen/text_view_size"
-            />
-    </TableRow>
-    <TableRow
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="@dimen/space_between_buttons_and_seek_bars"
-            />
-    </TableRow>
-</TableLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_buttons_and_seek_bars"
+                />
+        </TableRow>
 
 
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Яркость"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView3"
+                android:textSize="@dimen/text_view_size"
+                />
+
+            <SeekBar
+                style="@style/CustomSeekBar"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:max="12"
+
+                android:progress="8"
+                android:id="@+id/sbBrightness"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/textView4"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/teBrightness"
+                android:elevation="1dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/text_view_size"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_seek_bars"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Диаметр (мм)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView4"
+                android:textSize="@dimen/text_view_size"
+                />
+
+            <SeekBar
+                style="@style/CustomSeekBar"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:max="20"
+
+                android:progress="3"
+                android:id="@+id/sbRoundSize"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/textView4"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/teRoundSize"
+                android:elevation="1dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/text_view_size"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_seek_bars"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Частота мелькания (Гц)"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView5"
+                android:textSize="@dimen/text_view_size"
+                />
+
+            <SeekBar
+                style="@style/CustomSeekBar"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:max="75"
+                android:progress="10"
+                android:id="@+id/sbFrequency"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/textView5"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/teFrequency"
+                android:elevation="1dp"
+                android:textSize="@dimen/text_view_size"
+                />
+        </TableRow>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_buttons_and_seek_bars"
+                />
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>

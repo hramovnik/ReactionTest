@@ -63,9 +63,17 @@
             style="@android:style/Widget.Button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight=".80"
+            android:layout_weight=".60"
             android:id="@+id/buttonStartStopTest"
             android:text="Начать тест"
+            android:textSize="12dp"/>
+        <Button
+            style="@android:style/Widget.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".20"
+            android:id="@+id/buttonOpenParameters"
+            android:text="Параметры изображения"
             android:textSize="12dp"/>
 
     </LinearLayout>
