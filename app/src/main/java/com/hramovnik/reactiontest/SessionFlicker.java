@@ -21,7 +21,7 @@ public class SessionFlicker extends SessionObject {
         tasks = new LinkedBlockingQueue<>();
         this.flickerOne = flickerOne;
 
-        int realDotSize = (int) ((float) dotSize / 0.219 / 2);
+        int realDotSize = dotSize;
 
         for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
             tasks.add(new CommandFlicker(Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));

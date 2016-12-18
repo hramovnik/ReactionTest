@@ -15,7 +15,7 @@ public final class SessionSensomotoric extends SessionObject {
         this.serialLen = serialLen;
         tasks = new LinkedBlockingQueue<>();
 
-        int realDotSize = (int) ((float) dotSize / 0.219 / 2);
+        int realDotSize = dotSize;
 
         tasks.add(new CommandSensomotoric(firstColor, realDotSize, serialLen, 1000));
         redResult = new CommandSensoGetResult(serialLen);
