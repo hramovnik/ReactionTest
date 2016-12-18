@@ -65,16 +65,6 @@ public abstract class TaskObject implements TaskExecute {
     }
 
     @Override
-    public void setFailed() {
-        fail = true;
-    }
-
-    @Override
-    public boolean isFailed(){
-        return fail;
-    }
-
-    @Override
     public int getSleeping(){
         return 0;
     }
@@ -85,12 +75,12 @@ public abstract class TaskObject implements TaskExecute {
         return 2000;
     }
 
-    @Override
+/*    @Override
     public boolean isError() {
         if (answer == null) return false;
         return ((answer.length > 0)&&((answer[0]==RSP_TEST_PROGRESS)||answer[0]==RSP_DATA_NOT_READY));
     }
-
+*/
     protected int [] answer = null;
     protected boolean fail = false;
 }

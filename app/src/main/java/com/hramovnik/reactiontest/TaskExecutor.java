@@ -48,42 +48,39 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
     protected String doInBackground(Void... params) {
         synchronized(this) {
             Log.d("Thread", "Begin");
-            StringBuilder res = new StringBuilder();
 
             try (Socket socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort())) {
                 if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение";
                 socket.setSoTimeout(0);
                 Integer iteration = 0;
 
-                TaskExecute executeble = null;
-                while ((executeble = session.getNextTask()) != null) {
-                    if (executeble.getSleeping() != 0) {
-                        TimeUnit.MILLISECONDS.sleep(executeble.getSleeping());
+                TaskExecute executable = null;
+                while ((executable = session.getNextTask()) != null) {
+                    if (executable.getSleeping() != 0) {
+                        TimeUnit.MILLISECONDS.sleep(executable.getSleeping());
                     }
 
-                    Log.d("Tread", "Creation streams");
                     DataOutputStream out = new DataOutputStream(socket.getOutputStream());
                     DataInputStream in = new DataInputStream(socket.getInputStream());
 
-                    ByteBuffer byteBuffer = ByteBuffer.allocate(executeble.getTask().length * 4);
+                    ByteBuffer byteBuffer = ByteBuffer.allocate(executable.getTask().length * 4);
                     byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
 
-                    for (int value : executeble.getTask()) {byteBuffer.putInt(value);}
+                    for (int value : executable.getTask()) {byteBuffer.putInt(value);}
 
                     iteration++;
                     Pair<Integer, Integer> taskSize = session.countTasks();
 
                     for (int i = 0; i < 200; i++) {
-                        res.append("s" + String.valueOf(byteBuffer.array()[0]) + " ");
                         out.write(byteBuffer.array());
                         out.flush();
 
-                        TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
+                        TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
                         for(int t = 0; (t < 20) && (in.available() == 0); t++){
-                            TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
+                            TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
                         }
                         if (in.available() == 0){
-                            return "Задача " + String.valueOf(iteration) + " : таймаут принятия сообщений (" + String.valueOf(executeble.getTimeOut()*20) + "мc) \n" + res.toString();
+                            return "Задача " + String.valueOf(iteration) + " : таймаут принятия сообщений (" + String.valueOf(executable.getTimeOut()*20) + "мc)";
                         }else if(in.available() < 4){
                             return "Задача " + String.valueOf(iteration) + " : ошибка количества принятых данных ( < 4 байт)";
                         }
@@ -96,21 +93,18 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                         int[] array = new int[intBuf.remaining()];
                         intBuf.get(array);
 
-                        res.append(String.valueOf(array[0]) + " ");
 
-                        if (executeble.setResult(array)) {
+                        if (executable.setResult(array)) {
                             if (array.length > 0) {publishProgress(new Pair<String,Integer>("Задача " + String.valueOf(iteration) + ": " + String.valueOf(array[0]), null));}
-                            res.append("\n");
                             publishProgress(new Pair<String,Integer>(null, (taskSize.second-taskSize.first)*100/taskSize.second));
                             break;
                         } else {
-                            if (executeble.isError()){
+                            if (executable.isError()){
                                 return "Ошибка данных, или процессов в устройстве";
                             }else{
-                                if (i == 199) {return "Задача " + String.valueOf(iteration) + ": ошибка данных \n" + res.toString();}
-                                TimeUnit.MILLISECONDS.sleep(executeble.getTimeOut());
+                                if (i == 199) {return "Задача " + String.valueOf(iteration) +": ошибка данных";}
+                                TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
                             }
-
                         }
                     }
                 }

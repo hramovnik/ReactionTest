@@ -23,19 +23,33 @@ public class SessionFlicker extends SessionObject {
 
         int realDotSize = dotSize;
 
-        for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
-            tasks.add(new CommandFlicker(Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
+        if (flickerOne){
+            tasks.add(new CommandFlicker(Color.RED, realDotSize, brightness, initialSpeed_Hz, maxSpeed_Hz));
             CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
             resultOne.add(tempResult);
             tasks.add(tempResult);
+
+            tasks.add(new CommandFlicker(color, realDotSize, brightness, initialSpeed_Hz, maxSpeed_Hz));
+            CommandFlickerGetResult tempResult2 = new CommandFlickerGetResult();
+            resultTwo.add(tempResult2);
+            tasks.add(tempResult2);
+        }else{
+
+            for (int i = 2; i <= brightness; i+=2) {
+                tasks.add(new CommandFlicker(Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
+                CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
+                resultOne.add(tempResult);
+                tasks.add(tempResult);
+            }
+
+            for (int i = 2; i <= brightness; i+=2) {
+                tasks.add(new CommandFlicker(color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
+                CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
+                resultTwo.add(tempResult);
+                tasks.add(tempResult);
+            }
         }
 
-        for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
-            tasks.add(new CommandFlicker(color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
-            CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
-            resultTwo.add(tempResult);
-            tasks.add(tempResult);
-        }
 
         tasksInSession = tasks.size();
         tasksElapsed = tasksInSession;
