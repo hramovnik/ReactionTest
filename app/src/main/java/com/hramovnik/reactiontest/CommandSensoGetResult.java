@@ -18,7 +18,7 @@ public final class CommandSensoGetResult extends TaskObject{
     @Override
     public int[] getTask() {
         int [] task = new int[1];
-        task[0] = CMD_REQUEST_SENSOMOTORIC_RESULT;
+        task[0] = CMD_REQUEST_SENSOMOTORIC_DATA;
         return task;
     }
 
@@ -29,7 +29,7 @@ public final class CommandSensoGetResult extends TaskObject{
         if (result == null) return !fail;
         if (answer.length > 0){
             switch (answer[0]){
-                case RSP_TEST_DATA_OK:
+                case RSP_DATA_SENSOMOTORIC:
                     fail = false;
                     break;
                 case RSP_DATA_NOT_READY:

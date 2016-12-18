@@ -30,7 +30,7 @@ public class TabTwoFragment extends TabFragment implements TaskActivityInterface
 
     @Override
     public Session getSession() {
-        return new SessionFlicker(true,color,sbRoundSize.getProgress(),sbBrightness.getProgress(),sbFrequency.getProgress(),75,7000);
+        return new SessionFlicker(true,color,sbRoundSize.getProgress(),sbBrightness.getProgress(),sbFrequency.getProgress(),75);
     }
 
     private DialogFragment dialogChooseColor;

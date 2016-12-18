@@ -17,21 +17,21 @@ public class SessionFlicker extends SessionObject {
     private ArrayList<CommandFlickerGetResult> resultTwo = new ArrayList<>();
     private boolean flickerOne = true;
 
-    public SessionFlicker(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz, int blackScreenDelay_ms){
+    public SessionFlicker(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz){
         tasks = new LinkedBlockingQueue<>();
         this.flickerOne = flickerOne;
 
         int realDotSize = (int) ((float) dotSize / 0.219 / 2);
 
         for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
-            tasks.add(new CommandStartFlickerOne(flickerOne, Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz, blackScreenDelay_ms));
+            tasks.add(new CommandFlicker(Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
             CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
             resultOne.add(tempResult);
             tasks.add(tempResult);
         }
 
         for (int i = /*flickerOne? 1:brightness*/2; i <= brightness; i+=2) {
-            tasks.add(new CommandStartFlickerOne(flickerOne, color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz, blackScreenDelay_ms));
+            tasks.add(new CommandFlicker(color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
             CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
             resultTwo.add(tempResult);
             tasks.add(tempResult);

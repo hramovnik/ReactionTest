@@ -9,7 +9,7 @@ public class CommandFlickerGetResult extends TaskObject {
     @Override
     public int[] getTask() {
         int[] task = new int[1];
-        task[0] = CMD_REQUEST_FLICKER_RESULT;
+        task[0] = CMD_REQUEST_FREQSWEEP_DATA;
         return task;
     }
 
@@ -20,7 +20,7 @@ public class CommandFlickerGetResult extends TaskObject {
         if (result == null) return !fail;
         if (answer.length > 0){
             switch (answer[0]){
-                case RSP_TEST_DATA_OK:
+                case RSP_DATA_FREQSWEEP:
                     fail = false;
                     break;
                 case RSP_DATA_NOT_READY:
