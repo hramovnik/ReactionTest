@@ -29,8 +29,6 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
     }
 
     @Override
@@ -39,7 +37,6 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
         try {
             SharedPreferences.Editor ed = sp.edit();
             ed.apply();
-
         }catch (Exception e){
 
         }
@@ -54,7 +51,5 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
     public  void onPause(){
         super.onPause();
     }
-
-
 
 }

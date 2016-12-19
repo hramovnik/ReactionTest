@@ -29,7 +29,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Длительность\nинтервала(мин)"
+                android:text="Количество\nинтервалов\nпо 10 секунд"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -65,53 +65,7 @@
         </TableRow>
 
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <Space
-                android:layout_width="1dp"
-                android:layout_height="@dimen/space_between_seek_bars"
-                />
-        </TableRow>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:text="Длительность\nподинтервала (с)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:id="@+id/textView5"
-                android:textSize="@dimen/text_view_size"
-                />
-
-            <SeekBar
-                style="@style/CustomSeekBar"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:max="75"
-                android:progress="10"
-                android:id="@+id/sbSubInterval"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/textView5"
-                android:padding="1dip"
-                android:layout_margin="1dip"
-                android:layout_weight="1"
-                />
-
-            <TextView
-                android:text="0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/teSubInterval"
-                android:elevation="1dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:textSize="@dimen/text_view_size"
-                />
-        </TableRow>
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">

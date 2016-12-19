@@ -19,7 +19,6 @@ public abstract class SessionObject implements Session {
     protected Integer tasksInSession;
     protected Integer tasksElapsed;
     protected Queue<TaskExecute> tasks = null;
-    protected LinkedList< Pair<String, String> >resultInterpritation = new LinkedList<Pair<String, String> >();
 
     @Override
     public Pair<Integer, Integer> countTasks() {

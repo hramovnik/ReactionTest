@@ -84,7 +84,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         tabs.addTab(tabs.newTabSpec("tab2").setIndicator("КЧСМ"), TabTwoFragment.class, null);
         tabs.addTab(tabs.newTabSpec("tab3").setIndicator("КЧСМ Авто"), TabThreeFragment.class, null);
         tabs.addTab(tabs.newTabSpec("tab4").setIndicator("ТТ"), TabFourFragment.class, null);
-        tabs.addTab(tabs.newTabSpec("tab5").setIndicator("ТИ"), TabFiveFragment.class, null);
+        tabs.addTab(tabs.newTabSpec("tab5").setIndicator("ОДПГМ"), TabFiveFragment.class, null);
 
         for(int i = 0; i < 5; i++){
             ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(12);

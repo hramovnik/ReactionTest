@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.hramovnik.reactiontest.R;
 import com.hramovnik.reactiontest.Session;
+import com.hramovnik.reactiontest.SessionTapping;
 import com.hramovnik.reactiontest.TaskActivityInterface;
 
 
@@ -29,29 +30,16 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
         return inflater.inflate(R.layout.fragment_tab_four, container, false);
     }
 
-    @Override
-    public Session getSession() {
-        return null;
-    }
-
     private SeekBar sbInterval;
     private TextView teInterval;
     private final String intervalTag = "TT_INTERVAL";
-
-    private SeekBar sbSubInterval;
-    private TextView teSubInterval;
-    private final String subintervalTag = "TT_SUBINTERVAL";
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         teInterval = (TextView) getView().findViewById(R.id.teInterval);
-        sbInterval = getSb(teInterval, R.id.sbInterval, 1,5,intervalTag);
-
-        teSubInterval = (TextView) getView().findViewById(R.id.teSubInterval);
-        sbSubInterval = getSb(teSubInterval, R.id.sbSubInterval, 10,30,subintervalTag);
-
+        sbInterval = getSb(teInterval, R.id.sbInterval, 1,12,intervalTag);
 
     }
 
@@ -61,8 +49,6 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
         try {
             SharedPreferences.Editor ed = sp.edit();
             ed.putInt(intervalTag, sbInterval.getProgress());
-            ed.putInt(subintervalTag, sbSubInterval.getProgress());
-
             ed.apply();
 
         }catch (Exception e){
@@ -80,6 +66,10 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
         super.onPause();
     }
 
+    @Override
+    public Session getSession() {
+        return new SessionTapping(sbInterval.getProgress());
+    }
 
 
 }

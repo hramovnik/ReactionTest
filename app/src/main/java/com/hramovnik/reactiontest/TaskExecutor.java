@@ -99,10 +99,13 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                             publishProgress(new Pair<String,Integer>(null, (taskSize.second-taskSize.first)*100/taskSize.second));
                             break;
                         } else {
-                            if (executable.isError()){
-                                return "Ошибка данных, или процессов в устройстве";
+                            if (executable.isCriticalError()){
+                                return "Ошибка: невозможно совершить данное действие";
                             }else{
-                                if (i == 199) {return "Задача " + String.valueOf(iteration) +": ошибка данных";}
+                                if (i == 199) {
+                                    if (executable.isInProgress()){ return "Ошибка: превышено время ожидания завершения процесса " + String.valueOf(iteration) ;}
+                                    return "Задача " + String.valueOf(iteration) +": ошибка данных";
+                                }
                                 TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
                             }
                         }
@@ -117,7 +120,7 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                 return "Ошибка ввода-вывода: проблемы с соединением";
             } catch (InterruptedException e) {
                 e.printStackTrace();
-                return "Ошибка приостановки потока";
+                return "Ошибка прерывания потока";
             } catch (Throwable e) {
                 return "Фатальная ошибка: " + e.getMessage();
             }

@@ -39,7 +39,6 @@ public final class SessionSensomotoric extends SessionObject {
 
     @Override
     public void analyze() {
-        resultInterpritation.clear();
         LinkedList<Pair<Integer, Integer>> allPairs = new LinkedList<Pair<Integer, Integer>>();
 
         for (int col = 1; col <= 2; col++) {

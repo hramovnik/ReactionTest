@@ -10,23 +10,13 @@ public final class CommandPing extends TaskObject {
 
     @Override
     public boolean setResult(int[] result) {
-        fail = true;
         answer = result;
-        if (result == null) return !fail;
-        if((answer.length > 0)&&(answer[0] == RSP_PING)){
-            fail = false;
-        }
-        return !fail;
+        if (result == null) return false;
+        if (answer.length > 0){response = answer[0];}
+        else {return false;}
+        return response == RSP_PING;
     }
 
-    @Override
-    public String getInterpretation() {
-        if (!fail){
-            return "Подключение к прибору активно";
-        }else{
-            return "Не удаётся установить подключение к прибору";
-        }
-    }
 
     @Override
     public int getTimeOut() {

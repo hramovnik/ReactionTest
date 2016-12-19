@@ -11,5 +11,5 @@ public interface TaskExecute {
 
 
     public boolean isCriticalError();
-
+    public boolean isInProgress();
 }

@@ -33,18 +33,5 @@ public class CommandFlicker extends TaskObject {
         return task;
     }
 
-    @Override
-    public boolean setResult(int[] result) {
-        answer = result;
-        if (result == null) return !fail;
-        fail = !((answer.length > 0)&&(answer[0]==RSP_TEST_START_OK));
-        return !fail;
-    }
-
-    @Override
-    public String getInterpretation() {
-        if(!fail){return "Запущен тест";}
-        else {return "Ощибка. Тест не запущен";}
-    }
 
 }

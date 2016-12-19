@@ -81,6 +81,35 @@ public abstract class TaskObject implements TaskExecute {
         return ((answer.length > 0)&&((answer[0]==RSP_TEST_PROGRESS)||answer[0]==RSP_DATA_NOT_READY));
     }
 */
+
+    @Override
+    public boolean setResult(int[] result) {
+        answer = result;
+        if (result == null) return false;
+        if (answer.length > 0){response = answer[0];}
+        else {return false;}
+        return response==RSP_TEST_START_OK;
+    }
+
+
+    @Override
+    public boolean isCriticalError(){
+        switch (response){
+            case 0xDEADBEEF:                    return true;
+            case RSP_TEST_START_FAIL:           return true;
+            case RSP_OTHER_TEST_IN_PROGRESS:    return true;
+            case RSP_UNKNOWN_COMMAND:           return true;
+            default:                            return false;
+        }
+    }
+
+    @Override
+    public boolean isInProgress(){
+        if (response == RSP_TEST_PROGRESS) return true;
+        return false;
+    }
+
+
     protected int [] answer = null;
-    protected boolean fail = false;
+    protected int response = 0xDEADBEEF;
 }
