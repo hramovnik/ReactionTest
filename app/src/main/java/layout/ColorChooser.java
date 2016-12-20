@@ -97,10 +97,7 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
 
         }
 
-        for (int i = 0; i < 6; i++){
-            layout.addView(row[i]);
-        }
-
+        for (int i = 0; i < 6; i++){layout.addView(row[i]);}
 
         layout.setLayoutParams(new TableLayout.LayoutParams(TableLayout.LayoutParams.WRAP_CONTENT,TableLayout.LayoutParams.WRAP_CONTENT));
 
@@ -109,7 +106,6 @@ public class ColorChooser extends DialogFragment implements View.OnClickListener
             params.setMargins(5,5,5,5);
             colorButtons[i].setLayoutParams(params);
         }
-
 
     }
 
