@@ -39,8 +39,12 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
         Button buttonSave = ((Button) getView().findViewById(R.id.frameResultButtonSave));
         buttonSave.setOnClickListener(this);
 
-        tvFrameResult = ((TextView) getView().findViewById(R.id.tvFrameResult));
-        tvFrameResult.setText(str);
+        try {
+            tvFrameResult = ((TextView) getView().findViewById(R.id.tvFrameResult));
+            tvFrameResult.setText(str);
+        }catch (Exception e){
+
+        }
 
     }
 
