@@ -93,16 +93,6 @@ public class TabThreeFragment extends TabFragment implements TaskActivityInterfa
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-    }
-
-    @Override
-    public  void onPause(){
-        super.onPause();
-    }
-
-    @Override
     public void onClick(View view) {
         if (R.id.buttonColor == view.getId()){
             dialogChooseColor.setTargetFragment(this, DIALOG_ONE);

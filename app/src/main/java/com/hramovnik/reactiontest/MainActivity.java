@@ -18,6 +18,7 @@ import android.widget.Toast;
 import layout.ParametersActivity;
 import layout.PrefActivity;
 import layout.ResultDisplay;
+import layout.ResultDisplayDiagram;
 import layout.TabFourFragment;
 import layout.TabOneFragment;
 import layout.TabThreeFragment;
@@ -99,15 +100,18 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         SessionObject.setDispalyable(this);
 
         tvResult.setText(PrefActivity.getProfileResult());
+        dialogResultGraph = new ResultDisplayDiagram();
     }
-
+    ResultDisplayDiagram dialogResultGraph;
 
     @Override
     public void onClick(View v) {
         tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
-                dialogResult.show(getSupportFragmentManager(), "Результат", "Bada-bum!");
+                //dialogResult.show(getSupportFragmentManager(), "Результат", "Bada-bum!");
+                dialogResultGraph.show(getSupportFragmentManager(), "Arrr");
+
                 /*if (connection.isWorking()) {
                     return;
                 }
@@ -156,8 +160,8 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     private ResultDisplay dialogResult = null;
 
 
-    public void displayResult(String value, Session session){
-        dialogResult.show(getSupportFragmentManager(), "Результат", value, session);
+    public void displayResult(String value){
+        dialogResult.show(getSupportFragmentManager(), "Результат", value);
 
     }
 }

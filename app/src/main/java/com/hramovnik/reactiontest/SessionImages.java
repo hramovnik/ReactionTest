@@ -1,28 +1,22 @@
 package com.hramovnik.reactiontest;
 
-import android.util.Pair;
-
-import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
-public final class SessionTapping extends SessionObject {
-    private SessionTapping(){}
-    private CommandTappingGetResult result = null;
+public final class SessionImages extends SessionObject {
+    private SessionImages(){}
+    private CommandImagesGetResult result = null;
 
-    public SessionTapping(int serialLen){
-        this.serialLen = serialLen;
+    public SessionImages(int indexImageRight, int indexImageLeft){
         tasks = new LinkedBlockingQueue<>();
 
-        tasks.add(new CommandTapping(serialLen, 2000));
-        result = new CommandTappingGetResult(serialLen);
+        tasks.add(new CommandImages(indexImageRight, indexImageLeft, 10000));
+        result = new CommandImagesGetResult();
         tasks.add(result);
 
         tasksInSession = tasks.size();
         tasksElapsed = tasksInSession;
     }
-
-    private int serialLen = 0;
 
     @Override
     public TaskExecute getNextTask() {
@@ -32,8 +26,6 @@ public final class SessionTapping extends SessionObject {
 
     @Override
     public void analyze() {
-
-
         if (display != null) display.displayResult("Готово");
     }
 

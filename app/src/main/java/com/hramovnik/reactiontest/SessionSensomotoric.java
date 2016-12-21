@@ -45,7 +45,7 @@ public final class SessionSensomotoric extends SessionObject {
             int[] result = (col == 1) ? redResult.getResult() : greenResult.getResult();
             if (result == null) {
                 if (display != null)
-                    display.displayResult("Ошибка анализа - не получено нужное количество достоверных результатов", this);
+                    display.displayResult("Ошибка анализа - не получено нужное количество достоверных результатов");
                 return;
             }
             Hand[] hands = new Hand[2];
@@ -85,7 +85,7 @@ public final class SessionSensomotoric extends SessionObject {
             }
 
 
-            if (display != null) display.displayResult("Готово", this);
+            if (display != null) display.displayResult("Готово");
         }
     }
 

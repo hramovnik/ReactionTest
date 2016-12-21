@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.hramovnik.reactiontest.R;
 import com.hramovnik.reactiontest.Session;
+import com.hramovnik.reactiontest.SessionImages;
+import com.hramovnik.reactiontest.SessionTapping;
 import com.hramovnik.reactiontest.TaskActivityInterface;
 
 
@@ -28,11 +30,6 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
     }
 
     @Override
-    public Session getSession() {
-        return null;
-    }
-
-    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         imageButton[0] = (ImageButton) getView().findViewById(R.id.fragmentFiveImageButtonL);
@@ -42,7 +39,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
             imageButton[i].setOnClickListener(this);
             choosedIndex[i] = sp.getInt("PICTEST_IMAGE_" + String.valueOf(i), 0);
             if ((choosedIndex[i] > 25)||(choosedIndex[i] < 0)) choosedIndex[i] = 0;
-            imageButton[i].setImageResource(ImageChooser.imageId[choosedIndex[0]]);
+            imageButton[i].setImageResource(ImageChooser.imageId[choosedIndex[i]]);
         }
         dialogImageChooser = new ImageChooser();
     }
@@ -62,13 +59,8 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-    }
-
-    @Override
-    public  void onPause(){
-        super.onPause();
+    public Session getSession() {
+        return new SessionImages(choosedIndex[0], choosedIndex[1]);
     }
 
     @Override
@@ -92,8 +84,6 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
                 dialogImageChooser.show(getFragmentManager(), "");
                 break;
             default:
-
         }
-
     }
 }

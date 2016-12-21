@@ -92,15 +92,6 @@ public class TabOneFragment extends TabFragment implements TaskActivityInterface
         }
     }
 
-    @Override
-    public void onResume(){
-        super.onResume();
-    }
-
-    @Override
-    public  void onPause(){
-        super.onPause();
-    }
 
     @Override
     public void onClick(View view) {

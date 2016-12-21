@@ -58,21 +58,9 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
     }
 
     @Override
-    public void onResume(){
-        super.onResume();
-    }
-
-    @Override
-    public  void onPause(){
-        super.onPause();
-    }
-
-    @Override
     public Session getSession() {
         return new SessionTapping(sbInterval.getProgress());
     }
-
-
 
     @Override
     public void onDestroy(){
