@@ -33,8 +33,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
                 android:textSize="@dimen/text_view_size"
                 />
 
@@ -54,8 +52,7 @@
                 android:text=""
 
                 style="@style/AlertDialog.AppCompat"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true" />
+             />
 
         </TableRow>
 
@@ -78,7 +75,6 @@
                 android:text="Яркость"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:id="@+id/textView3"
                 android:textSize="@dimen/text_view_size"
                 />
@@ -91,8 +87,6 @@
 
                 android:progress="8"
                 android:id="@+id/sbBrightness"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/textView4"
                 android:padding="1dip"
                 android:layout_margin="1dip"
                 android:layout_weight="1"
@@ -104,8 +98,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/teBrightness"
                 android:elevation="1dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
                 android:textSize="@dimen/text_view_size"
                 />
         </TableRow>
@@ -127,7 +119,6 @@
                 android:text="Диаметр (мм)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
                 android:id="@+id/textView4"
                 android:textSize="@dimen/text_view_size"
                 />
@@ -140,8 +131,6 @@
 
                 android:progress="3"
                 android:id="@+id/sbRoundSize"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/textView4"
                 android:padding="1dip"
                 android:layout_margin="1dip"
                 android:layout_weight="1"
@@ -153,8 +142,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/teRoundSize"
                 android:elevation="1dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
                 android:textSize="@dimen/text_view_size"
                 />
         </TableRow>
@@ -188,8 +175,6 @@
                 android:max="75"
                 android:progress="10"
                 android:id="@+id/sbFrequency"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/textView5"
                 android:padding="1dip"
                 android:layout_margin="1dip"
                 android:layout_weight="1"

@@ -1,13 +1,13 @@
 package layout;
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
+import android.util.Pair;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.YAxis;
@@ -16,37 +16,43 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.hramovnik.reactiontest.R;
+import com.hramovnik.reactiontest.SessionResultActionInterface;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by gshabalev on 12/21/2016.
  */
 
 
-public class ResultDisplayDiagram extends ResultDisplay {
-    protected Typeface mTfLight;
+public class ResultDisplayDiagram extends Activity implements View.OnClickListener {
+
+
+    @Override
+    public void onClick(View v) {
+        finish();
+    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        //setStyle(STYLE_NO_TITLE, 0);
-        mTfLight = Typeface.defaultFromStyle(0);
+        setContentView(R.layout.activity_result_display_diagram);
+        Button buttonSave = ((Button) findViewById(R.id.frameResultButtonSave));
+        buttonSave.setOnClickListener(this);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        //getDialog().setTitle("Результат");
-        View view = inflater.inflate(R.layout.fragment_result_display_diagram, null);
+    public void onResume(){
+        super.onResume();
 
-        return view;
-    }
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+        if ((dataList == null)||(dataList.isEmpty())||(colors == null)){
+            ((TextView) findViewById(R.id.tvDiagramTextResult)).setText("Отсутствуют валидные данные");
+            return;
+        }
 
-        BarChart chart = (BarChart) getView().findViewById(R.id.chart1);
+        BarChart chart = (BarChart) findViewById(R.id.chart1);
 
         chart.getDescription().setEnabled(false);
         chart.setPinchZoom(false);
@@ -57,20 +63,17 @@ public class ResultDisplayDiagram extends ResultDisplay {
         chart.getXAxis().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
 
-
         YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setTypeface(mTfLight);
         leftAxis.setValueFormatter(new LargeValueFormatter());
         leftAxis.setDrawGridLines(false);
         leftAxis.setSpaceTop(35f);
-        leftAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
+        leftAxis.setAxisMinimum(0f);
 
         float groupSpace = 1f;
-        float barSpace = 0f; // x4 DataSet
+        float barSpace = 0f;
         float barWidth = 5f;
-        // (0.2 + 0.03) * 4 + 0.08 = 1.00 -> interval per "group"
 
-        int groupCount = 20;
+        int groupCount = dataList.size();
         int start = 0;
         int end = groupCount-1;
 
@@ -78,23 +81,22 @@ public class ResultDisplayDiagram extends ResultDisplay {
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> yVals2 = new ArrayList<BarEntry>();
 
-
         for (int i = start; i <= end; i++) {
-            yVals1.add(new BarEntry(i, (float) (1*i)));
-            yVals2.add(new BarEntry(i, (float) (2*i)));
+            Pair<Integer, Integer> pair = dataList.get(i);
+            yVals1.add(new BarEntry(i, (float) (pair.first)));
+            yVals2.add(new BarEntry(i, (float) (pair.second)));
         }
 
         BarDataSet set1, set2;
 
-        set1 = new BarDataSet(yVals1, "A");
-        set1.setColor(Color.rgb(104, 241, 175));
-        set2 = new BarDataSet(yVals2, "B");
-        set2.setColor(Color.rgb(164, 228, 251));
 
+        set1 = new BarDataSet(yVals1, "R");
+        set1.setColor(colors[0]);
+        set2 = new BarDataSet(yVals2, "L");
+        set2.setColor(colors[1]);
 
         BarData data = new BarData(set1, set2);
         data.setValueFormatter(new LargeValueFormatter());
-        data.setValueTypeface(mTfLight);
 
         chart.setData(data);
         set1 = (BarDataSet) chart.getData().getDataSetByIndex(0);
@@ -110,12 +112,16 @@ public class ResultDisplayDiagram extends ResultDisplay {
         chart.groupBars(start, groupSpace, barSpace);
         chart.invalidate();
         chart.notifyDataSetChanged();
-
     }
 
-    public void show(FragmentManager manager, String tag, String information){
-        super.show(manager,tag);
-        setText(information);
+    public static void setData(LinkedList<Pair<Integer, Integer>> dataList, int [] colors, SessionResultActionInterface action){
+        ResultDisplayDiagram.dataList = dataList;
+        ResultDisplayDiagram.colors = colors;
+        ResultDisplayDiagram.action = action;
     }
+
+    private static LinkedList<Pair<Integer, Integer>> dataList = null;
+    private static int [] colors = null;
+    private static SessionResultActionInterface action = null;
 
 }

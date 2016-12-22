@@ -26,7 +26,7 @@ public final class SessionImages extends SessionObject {
 
     @Override
     public void analyze() {
-        if (display != null) display.displayResult("Готово");
+        if (display != null) display.displayResult("Готово", null);
     }
 
 }

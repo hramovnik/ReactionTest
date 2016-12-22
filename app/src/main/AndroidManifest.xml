@@ -28,13 +28,10 @@
         <activity
             android:name="layout.PrefActivity"
             android:screenOrientation="landscape">
-            <intent-filter>
-                <action android:name="android.intent.action.APPLICATION_PREFERENCES" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
         </activity>
         <activity android:name="layout.ParametersActivity"></activity>
+        <activity android:name="layout.ResultDisplayDiagram"></activity>
+        <activity android:name="layout.ResultDisplayGraphic"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,52 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="layout.ResultDisplayGraphic">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart1"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight=".40"/>
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/lineChart2"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight=".40"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_weight=".20"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tvDiagramTextResult"
+            android:foregroundGravity="center_horizontal|center"
+            android:layout_gravity="center_horizontal|center"
+            />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            >
+
+            <Button
+                android:text="Ok"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/frameResultButtonSave"
+                style="@android:style/Widget.DeviceDefault.Light.Button.Borderless.Small"
+                android:foregroundGravity="center_horizontal|center"
+                android:layout_gravity="center_horizontal|center" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -16,6 +16,8 @@ public final class SessionSensomotoric extends SessionObject {
         tasks = new LinkedBlockingQueue<>();
 
         int realDotSize = dotSize;
+        colors[0] = firstColor;
+        colors[1] = secondColor;
 
         tasks.add(new CommandSensomotoric(firstColor, realDotSize, serialLen, 1000));
         redResult = new CommandSensoGetResult(serialLen);
@@ -30,6 +32,7 @@ public final class SessionSensomotoric extends SessionObject {
     }
 
     private int serialLen = 0;
+    private int [] colors = new int[2];
 
     @Override
     public TaskExecute getNextTask() {
@@ -45,7 +48,7 @@ public final class SessionSensomotoric extends SessionObject {
             int[] result = (col == 1) ? redResult.getResult() : greenResult.getResult();
             if (result == null) {
                 if (display != null)
-                    display.displayResult("Ошибка анализа - не получено нужное количество достоверных результатов");
+                    display.displayResult("Ошибка анализа - не получено нужное количество достоверных результатов", null);
                 return;
             }
             Hand[] hands = new Hand[2];
@@ -84,9 +87,10 @@ public final class SessionSensomotoric extends SessionObject {
                 }
             }
 
+            allPairs.addAll(inData);
 
-            if (display != null) display.displayResult("Готово");
         }
+        if (display != null) display.displayResult(allPairs, colors, null);
     }
 
 }

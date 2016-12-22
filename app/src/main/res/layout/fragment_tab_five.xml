@@ -59,12 +59,14 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
+                android:background="@android:color/background_light"
                 android:id="@+id/fragmentFiveImageButtonL" />
             <ImageButton
                 app:srcCompat="@drawable/p01"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
+                android:background="@android:color/background_light"
                 android:id="@+id/fragmentFiveImageButtonR" />
         </TableRow>
 

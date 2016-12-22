@@ -14,14 +14,15 @@ import android.widget.TextView;
 
 import com.hramovnik.reactiontest.R;
 import com.hramovnik.reactiontest.Session;
+import com.hramovnik.reactiontest.SessionResultActionInterface;
 
 
 public class ResultDisplay extends DialogFragment  implements View.OnClickListener {
 
     TextView tvFrameResult = null;
-    static String str ="";
-    Session currentSession = null;
+    String str ="";
     LinearLayout layout;
+    SessionResultActionInterface action = null;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +53,8 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
         str = value;
     }
 
-    public void show(FragmentManager manager, String tag, String information){
+    public void show(FragmentManager manager, String tag, String information, SessionResultActionInterface action){
+        this.action = action;
         super.show(manager,tag);
         setText(information);
     }

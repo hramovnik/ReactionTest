@@ -2,11 +2,14 @@ package com.hramovnik.reactiontest;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.View;
 import android.view.Window;
@@ -15,10 +18,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+
 import layout.ParametersActivity;
 import layout.PrefActivity;
 import layout.ResultDisplay;
 import layout.ResultDisplayDiagram;
+import layout.ResultDisplayGraphic;
 import layout.TabFourFragment;
 import layout.TabOneFragment;
 import layout.TabThreeFragment;
@@ -100,17 +107,25 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         SessionObject.setDispalyable(this);
 
         tvResult.setText(PrefActivity.getProfileResult());
-        dialogResultGraph = new ResultDisplayDiagram();
     }
-    ResultDisplayDiagram dialogResultGraph;
+
 
     @Override
     public void onClick(View v) {
         tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
-                //dialogResult.show(getSupportFragmentManager(), "Результат", "Bada-bum!");
-                dialogResultGraph.show(getSupportFragmentManager(), "Arrr");
+                /*int [] arr = new int[2];
+                arr[0] = Color.RED;
+                arr[1] = Color.BLUE;
+                LinkedList<Pair<Integer, Integer> > alist = new LinkedList<>();
+                for( int i = 1; i< 11; i++) {
+                    alist.add(new Pair<Integer, Integer>(i, 2*i));
+                }
+
+                displayResult(alist, arr, null);*/
+
+                startActivity(new Intent(this, ResultDisplayGraphic.class));
 
                 /*if (connection.isWorking()) {
                     return;
@@ -150,18 +165,16 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         super.onDestroy();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        /*MenuItem item = menu.add(0,1,0, "Настройки");
-        item.setIntent(new Intent(this, PrefActivity.class));*/
-        return super.onCreateOptionsMenu(menu);
-    }
 
     private ResultDisplay dialogResult = null;
 
-
-    public void displayResult(String value){
-        dialogResult.show(getSupportFragmentManager(), "Результат", value);
-
+    public void displayResult(String value, SessionResultActionInterface action){
+        dialogResult.show(getSupportFragmentManager(), "Результат", value, action);
     }
+
+    public void displayResult(LinkedList<Pair<Integer, Integer>>dataList, int [] colors, SessionResultActionInterface action){
+        ResultDisplayDiagram.setData(dataList,colors, action);
+        startActivity(new Intent(this, ResultDisplayDiagram.class));
+    }
+
 }

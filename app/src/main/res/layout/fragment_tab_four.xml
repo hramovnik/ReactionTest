@@ -76,7 +76,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:srcCompat="@drawable/p01"
-                android:id="@+id/fragmentFourImageButton" />
+                android:id="@+id/fragmentFourImageButton"
+                android:background="@android:color/background_light" />
         </TableRow>
 
         <TableRow
