@@ -124,7 +124,6 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                 }
 
                 displayResult(alist, arr, null);*/
-
                 startActivity(new Intent(this, ResultDisplayGraphic.class));
 
                 /*if (connection.isWorking()) {
@@ -168,13 +167,20 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
     private ResultDisplay dialogResult = null;
 
+    @Override
     public void displayResult(String value, SessionResultActionInterface action){
         dialogResult.show(getSupportFragmentManager(), "Результат", value, action);
     }
 
+    @Override
     public void displayResult(LinkedList<Pair<Integer, Integer>>dataList, int [] colors, SessionResultActionInterface action){
         ResultDisplayDiagram.setData(dataList,colors, action);
         startActivity(new Intent(this, ResultDisplayDiagram.class));
     }
 
+    @Override
+    public void displayResult(LinkedList<Pair<Integer, Integer>> [] dataList, int [] colors, SessionResultActionInterface action){
+        ResultDisplayGraphic.setData(dataList, colors, action);
+        startActivity(new Intent(this, ResultDisplayGraphic.class));
+    }
 }

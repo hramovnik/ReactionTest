@@ -13,9 +13,10 @@
     tools:context="com.hramovnik.reactiontest.MainActivity">
 
     <android.support.v4.app.FragmentTabHost
-        android:layout_width="match_parent"
         android:id="@+id/tabHost"
-        android:layout_height="250dip"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.80"
         >
 
         <FrameLayout
@@ -32,52 +33,52 @@
 
     </android.support.v4.app.FragmentTabHost>
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-    />
-    <TextView
-        android:text="-"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/tvResult"
-        android:gravity="center"
-        android:textSize="12dp"
-        />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_weight="0.20"
+        android:orientation="vertical"
         >
-        <Button
-            style="@android:style/Widget.Button"
-            android:layout_width="0dp"
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".20"
-            android:id="@+id/buttonOpenProfile"
-            android:text="Профили"
-            android:textSize="12dp"/>
-        <Button
-            style="@android:style/Widget.Button"
-            android:layout_width="0dp"
+            android:id="@+id/progressBar"
+        />
+        <TextView
+            android:text="-"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".60"
-            android:id="@+id/buttonStartStopTest"
-            android:text="Начать тест"
-            android:textSize="12dp"/>
-        <Button
-            style="@android:style/Widget.Button"
-            android:layout_width="0dp"
+            android:id="@+id/tvResult"
+            android:gravity="center"
+            android:textSize="12dp"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight=".20"
-            android:id="@+id/buttonOpenParameters"
-            android:text="Параметры изображения"
-            android:textSize="12dp"/>
+            android:orientation="horizontal"
+            >
+            <Button
+                style="@style/CustomControlButtons"
+                android:layout_weight=".20"
+                android:id="@+id/buttonOpenProfile"
+                android:text="Профили"
+            />
+            <Button
+                style="@style/CustomControlButtons"
+                android:layout_weight=".60"
+                android:id="@+id/buttonStartStopTest"
+                android:text="Начать тест"
+                />
+            <Button
+                style="@style/CustomControlButtons"
+                android:layout_weight=".20"
+                android:id="@+id/buttonOpenParameters"
+                android:text="Параметры"
+                />
 
+        </LinearLayout>
     </LinearLayout>
-
 
 
 </LinearLayout>

@@ -11,4 +11,5 @@ import java.util.LinkedList;
 public interface ResultDisplayable {
     public void displayResult(String value, SessionResultActionInterface action);
     public void displayResult(LinkedList<Pair<Integer, Integer>>dataList, int [] colors, SessionResultActionInterface action);
+    public void displayResult(LinkedList<Pair<Integer, Integer>> [] dataList, int [] colors, SessionResultActionInterface action);
 }

@@ -33,9 +33,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView2"
-                android:layout_centerVertical="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="1dip"
                 android:textSize="@dimen/text_view_size"
                 />
 
@@ -53,11 +50,7 @@
                 android:layout_height="@dimen/color_button_height"
                 android:id="@+id/buttonColor"
                 android:text=""
-
                 style="@style/AlertDialog.AppCompat"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="1dip"
                 />
 
         </TableRow>
@@ -81,9 +74,6 @@
                 android:text="Яркость"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_margin="1dip"
-                android:id="@+id/textView3"
                 android:textSize="@dimen/text_view_size"
                 />
 
@@ -95,8 +85,6 @@
 
                 android:progress="8"
                 android:id="@+id/sbBrightness"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@id/textView3"
                 android:padding="1dip"
                 android:layout_margin="1dip"
                 android:layout_weight="1"
@@ -108,8 +96,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/teBrightness"
                 android:elevation="1dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
                 android:layout_margin="1dip"
                 android:textSize="@dimen/text_view_size"
                 />
@@ -133,8 +119,6 @@
                 android:text="Частота мелькания (Гц)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_margin="1dip"
                 android:id="@+id/textView5"
                 android:textSize="@dimen/text_view_size"
                 />
@@ -159,9 +143,6 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/teFrequency"
                 android:elevation="1dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_margin="1dip"
                 android:textSize="@dimen/text_view_size"
                 />
         </TableRow>
