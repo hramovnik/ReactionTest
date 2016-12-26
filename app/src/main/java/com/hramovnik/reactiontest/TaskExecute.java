@@ -12,4 +12,7 @@ public interface TaskExecute {
 
     public boolean isCriticalError();
     public boolean isInProgress();
+
+    public int getSendedSize();
+    public int getProgress();
 }

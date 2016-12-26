@@ -18,14 +18,17 @@ public class CommandFlicker extends TaskObject {
         task[0] = CMD_START_FREQSWEEP;
         task[1] = color;
         task[2] = color;
-        task[3] = ParametersActivity.getChosenPosition();
-        task[4] = ParametersActivity.getChosenPosition();
-        task[5] = dotSize;
-        task[6] = dotSize;
-        task[7] = brightness;
-        task[8] = brightness;
+        task[3] = brightness;
+        task[4] = brightness;
+        task[5] = ParametersActivity.getChosenPosition();
+        task[6] = ParametersActivity.getChosenPosition();
+        task[7] = dotSize;
+        task[8] = dotSize;
+
         task[9] = initialSpeed_Hz;
         task[10] = maxSpeed_Hz;
+
+        sendSize = task.length;
     }
 
     @Override

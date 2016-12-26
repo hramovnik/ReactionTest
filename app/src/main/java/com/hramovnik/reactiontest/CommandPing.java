@@ -3,9 +3,10 @@ package com.hramovnik.reactiontest;
 public final class CommandPing extends TaskObject {
     @Override
     public int[] getTask() {
-        int [] massive = new int[1];
-        massive[0] = CMD_PING;
-        return massive;
+        int [] task = new int[1];
+        task[0] = CMD_PING;
+        sendSize = task.length;
+        return task;
     }
 
     @Override

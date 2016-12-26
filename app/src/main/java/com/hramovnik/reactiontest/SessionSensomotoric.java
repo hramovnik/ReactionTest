@@ -8,8 +8,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public final class SessionSensomotoric extends SessionObject {
     private SessionSensomotoric(){}
-    private CommandSensoGetResult redResult = null;
-    private CommandSensoGetResult greenResult = null;
+    private CommandSensomotoricGetResult redResult = null;
+    private CommandSensomotoricGetResult greenResult = null;
     public SessionSensomotoric(int serialLen, int dotSize, int firstColor, int secondColor){
 
         this.serialLen = serialLen;
@@ -19,12 +19,14 @@ public final class SessionSensomotoric extends SessionObject {
         colors[0] = firstColor;
         colors[1] = secondColor;
 
-        tasks.add(new CommandSensomotoric(firstColor, realDotSize, serialLen, 1000));
-        redResult = new CommandSensoGetResult(serialLen);
+        CommandSensomotoric task = new CommandSensomotoric(firstColor, 255, realDotSize, serialLen, 1000);
+        tasks.add(task);
+        redResult = new CommandSensomotoricGetResult(task, serialLen);
         tasks.add(redResult);
 
-        tasks.add(new CommandSensomotoric(secondColor, realDotSize, serialLen, 1000));
-        greenResult = new CommandSensoGetResult(serialLen);
+        task = new CommandSensomotoric(secondColor, 255, realDotSize, serialLen, 1000);
+        tasks.add(task);
+        greenResult = new CommandSensomotoricGetResult(task, serialLen);
         tasks.add(greenResult);
 
         tasksInSession = tasks.size();
@@ -45,8 +47,8 @@ public final class SessionSensomotoric extends SessionObject {
         LinkedList<Pair<Integer, Integer>> allPairs = new LinkedList<Pair<Integer, Integer>>();
 
         for (int col = 1; col <= 2; col++) {
-            int[] result = (col == 1) ? redResult.getResult() : greenResult.getResult();
-            if (result == null) {
+            CommandSensomotoricGetResult currentResult = (col == 1) ? redResult : greenResult;
+            if (currentResult.getResult() == null) {
                 if (display != null)
                     display.displayResult("Ошибка анализа - не получено нужное количество достоверных результатов", null);
                 return;
@@ -61,7 +63,7 @@ public final class SessionSensomotoric extends SessionObject {
             LinkedList<Pair<Integer, Integer>> inData = new LinkedList<Pair<Integer, Integer>>();
 
             for (int i = 1; i < serialLen; i++) {
-                Pair<Integer, Integer> pair = new Pair<Integer, Integer>(result[1 + i], result[21 + i]);
+                Pair<Integer, Integer> pair = new Pair<Integer, Integer>(currentResult.dataRight[i], currentResult.dataLeft[i]);
                 if ((pair.first >= 0) && (pair.second >= 0)) {
                     inData.add(pair);
                 } else {

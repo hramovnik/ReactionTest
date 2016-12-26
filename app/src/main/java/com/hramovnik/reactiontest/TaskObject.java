@@ -57,8 +57,6 @@ public abstract class TaskObject implements TaskExecute {
     //Returned if the server was unable to identify the command
     static final int RSP_UNKNOWN_COMMAND                 = 0xFF00FF00;
 
-
-
     @Override
     public int[] getResult() {
         return answer;
@@ -69,28 +67,31 @@ public abstract class TaskObject implements TaskExecute {
         return 0;
     }
 
-
     @Override
     public int getTimeOut() {
         return 2000;
     }
 
-/*    @Override
-    public boolean isError() {
-        if (answer == null) return false;
-        return ((answer.length > 0)&&((answer[0]==RSP_TEST_PROGRESS)||answer[0]==RSP_DATA_NOT_READY));
-    }
-*/
-
     @Override
     public boolean setResult(int[] result) {
         answer = result;
-        if (result == null) return false;
+        if (result == null)             return false;
         if (answer.length > 0){response = answer[0];}
-        else {return false;}
-        return response==RSP_TEST_START_OK;
-    }
+        else {                          return false;}
+        switch (response){
+            case RSP_TEST_START_OK:     return true;
+            case RSP_DATA_IMAGES:       return true;
+            case RSP_DATA_TAPPING:      return true;
+            case RSP_DATA_SENSOMOTORIC: return true;
+            case RSP_DATA_FREQSWEEP:    return true;
+            case RSP_TEST_PROGRESS:{
+                if (answer.length > 1 ) progress = answer[1];
+                                        return false;
+            }
+            default:                    return false;
+        }
 
+    }
 
     @Override
     public boolean isCriticalError(){
@@ -106,10 +107,23 @@ public abstract class TaskObject implements TaskExecute {
     @Override
     public boolean isInProgress(){
         if (response == RSP_TEST_PROGRESS) return true;
+        if (response == RSP_DATA_NOT_READY) return true;
         return false;
     }
 
+    @Override
+    public int getSendedSize(){
+        return sendSize;
+    }
+
+    @Override
+    public int getProgress(){
+        return progress;
+    }
 
     protected int [] answer = null;
     protected int response = 0xDEADBEEF;
+    protected int sendSize = 0;
+    protected int dataOffset = 0;
+    protected int progress = 0;
 }

@@ -98,7 +98,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
             ((TextView) tabs.getTabWidget().getChildAt(i).findViewById(android.R.id.title)).setTextSize(12);
         }
         sp = PreferenceManager.getDefaultSharedPreferences(this);
-        ipAddress = "192.168.0.10";
+        ipAddress = "192.168.0.16";
         port = 8080;
 
 
@@ -124,9 +124,9 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                 }
 
                 displayResult(alist, arr, null);*/
-                startActivity(new Intent(this, ResultDisplayGraphic.class));
+                //startActivity(new Intent(this, ResultDisplayGraphic.class));
 
-                /*if (connection.isWorking()) {
+                if (connection.isWorking()) {
                     return;
                 }
                 Fragment currentTab = getSupportFragmentManager().findFragmentByTag(tabs.getCurrentTabTag());
@@ -139,7 +139,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                    }
                 }else{
                     Toast.makeText(this, "Ошибка реализации", Toast.LENGTH_SHORT).show();
-                }*/
+                }
                 break;
             case R.id.buttonOpenProfile:
                 startActivity(new Intent(this, PrefActivity.class));

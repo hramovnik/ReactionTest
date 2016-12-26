@@ -9,19 +9,23 @@ import layout.ParametersActivity;
 
 public final class CommandSensomotoric extends TaskObject {
 
-    private int [] task = new int[9];
+    private int [] task = new int[11];
     private CommandSensomotoric(){}
-    CommandSensomotoric(int color, int dotSize, int serialLen, int maxWaitMs){
+    CommandSensomotoric(int color, int brightness, int dotSize, int serialLen, int maxWaitMs){
         super();
         task[0] = CMD_START_SENSOMOTORIC;
         task[1] = color;
         task[2] = color;
-        task[3] = ParametersActivity.getChosenPosition();
-        task[4] = ParametersActivity.getChosenPosition();
-        task[5] = dotSize;
-        task[6] = dotSize;
-        task[7] = maxWaitMs;
-        task[8] = serialLen;
+        task[3] = brightness;
+        task[4] = brightness;
+        task[5] = ParametersActivity.getChosenPosition();
+        task[6] = ParametersActivity.getChosenPosition();
+        task[7] = dotSize;
+        task[8] = dotSize;
+        task[9] = maxWaitMs;
+        task[10] = serialLen;
+
+        sendSize = task.length;
     }
 
     @Override

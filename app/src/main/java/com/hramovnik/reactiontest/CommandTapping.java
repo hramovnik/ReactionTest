@@ -16,6 +16,8 @@ public final class CommandTapping extends TaskObject {
         task[1] = imageIndex;
         task[2] = imageIndex;
         task[3] = serialLen;
+
+        sendSize = task.length;
     }
 
     @Override

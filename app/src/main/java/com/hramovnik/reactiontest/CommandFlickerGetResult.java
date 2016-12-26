@@ -6,21 +6,34 @@ package com.hramovnik.reactiontest;
 
 public class CommandFlickerGetResult extends TaskObject {
 
+
+    private CommandFlickerGetResult(){}
+    public CommandFlickerGetResult(TaskObject sendingCommand){
+        dataOffset = sendingCommand.getSendedSize();
+    }
+
     @Override
     public int[] getTask() {
         int[] task = {CMD_REQUEST_FREQSWEEP_DATA};
+        sendSize = task.length;
         return task;
     }
-
 
     @Override
     public boolean setResult(int[] result) {
         if (!super.setResult(result)){return false;}
-        if (response == RSP_DATA_FREQSWEEP) {return true;}
+        if (response == RSP_DATA_FREQSWEEP) {
+            if (result.length >= (dataOffset + 3)){
+            fEnd = result[dataOffset];
+            pulseDataRate = result[dataOffset+1];
+            pulseDataOxSaturation = result[dataOffset+2];
+            return true;
+        }else return false;
+        }
         return false;
     }
 
-
-
-
+    public int fEnd = 0;
+    public int pulseDataRate = 0;
+    public int pulseDataOxSaturation = 0;
 }

@@ -48,8 +48,11 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
     protected String doInBackground(Void... params) {
         synchronized(this) {
             Log.d("Thread", "Begin");
+            Socket socket = null;
+            try {
 
-            try (Socket socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort())) {
+                socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort());
+                socket.setKeepAlive(true);
                 if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение";
                 socket.setSoTimeout(0);
                 Integer iteration = 0;
@@ -72,6 +75,17 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                     Pair<Integer, Integer> taskSize = session.countTasks();
 
                     for (int i = 0; i < 200; i++) {
+
+                        if (socket.isClosed()){
+                            socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort());
+                            socket.setKeepAlive(true);
+                            if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение при отправке данных";
+                            socket.setSoTimeout(0);
+                            out = new DataOutputStream(socket.getOutputStream());
+                            in = new DataInputStream(socket.getInputStream());
+                        }
+
+
                         out.write(byteBuffer.array());
                         out.flush();
 
@@ -123,6 +137,10 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                 return "Ошибка прерывания потока";
             } catch (Throwable e) {
                 return "Фатальная ошибка: " + e.getMessage();
+            } finally {
+                try {
+                    socket.close();
+                }catch (Exception e){}
             }
 
             return null;

@@ -24,27 +24,31 @@ public class SessionFlicker extends SessionObject {
         int realDotSize = dotSize;
 
         if (flickerOne){
-            tasks.add(new CommandFlicker(Color.RED, realDotSize, brightness, initialSpeed_Hz, maxSpeed_Hz));
-            CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
+            CommandFlicker task = new CommandFlicker(Color.RED, realDotSize, brightness, initialSpeed_Hz, maxSpeed_Hz);
+            tasks.add(task);
+            CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task);
             resultOne.add(tempResult);
             tasks.add(tempResult);
 
-            tasks.add(new CommandFlicker(color, realDotSize, brightness, initialSpeed_Hz, maxSpeed_Hz));
-            CommandFlickerGetResult tempResult2 = new CommandFlickerGetResult();
+            task = new CommandFlicker(color, realDotSize, brightness, initialSpeed_Hz, maxSpeed_Hz);
+            tasks.add(task);
+            CommandFlickerGetResult tempResult2 = new CommandFlickerGetResult(task);
             resultTwo.add(tempResult2);
             tasks.add(tempResult2);
         }else{
 
             for (int i = 2; i <= brightness; i+=2) {
-                tasks.add(new CommandFlicker(Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
-                CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
+                CommandFlicker task = new CommandFlicker(Color.RED, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz);
+                tasks.add(task);
+                CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task);
                 resultOne.add(tempResult);
                 tasks.add(tempResult);
             }
 
             for (int i = 2; i <= brightness; i+=2) {
-                tasks.add(new CommandFlicker(color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz));
-                CommandFlickerGetResult tempResult = new CommandFlickerGetResult();
+                CommandFlicker task = new CommandFlicker(color, realDotSize, i, initialSpeed_Hz, maxSpeed_Hz);
+                tasks.add(task);
+                CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task);
                 resultTwo.add(tempResult);
                 tasks.add(tempResult);
             }

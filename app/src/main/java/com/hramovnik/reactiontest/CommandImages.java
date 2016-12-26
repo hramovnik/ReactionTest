@@ -14,6 +14,8 @@ public final class CommandImages extends TaskObject {
         task[1] = imageIndexRight;
         task[2] = imageIndexLeft;
         task[3] = durationTime;
+
+        sendSize = task.length;
     }
 
     @Override
