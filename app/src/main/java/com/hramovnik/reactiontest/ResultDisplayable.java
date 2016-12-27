@@ -2,6 +2,7 @@ package com.hramovnik.reactiontest;
 
 import android.util.Pair;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -11,5 +12,5 @@ import java.util.LinkedList;
 public interface ResultDisplayable {
     public void displayResult(String value, SessionResultActionInterface action);
     public void displayResult(LinkedList<Pair<Integer, Integer>>dataList, int [] colors, SessionResultActionInterface action);
-    public void displayResult(LinkedList<Pair<Integer, Integer>> [] dataList, int [] colors, SessionResultActionInterface action);
+    public void displayResult(Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> > > dataList, int [] colors, SessionResultActionInterface action);
 }

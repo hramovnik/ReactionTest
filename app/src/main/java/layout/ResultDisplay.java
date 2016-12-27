@@ -27,7 +27,7 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //getDialog().setTitle("Результат");
+        getDialog().setTitle("Результат операции");
         return inflater.inflate(R.layout.fragment_result_display, null);
     }
 

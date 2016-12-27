@@ -2,6 +2,7 @@ package com.hramovnik.reactiontest;
 
 import android.util.Pair;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -44,55 +45,65 @@ public final class SessionSensomotoric extends SessionObject {
 
     @Override
     public void analyze() {
-        LinkedList<Pair<Integer, Integer>> allPairs = new LinkedList<Pair<Integer, Integer>>();
 
-        for (int col = 1; col <= 2; col++) {
-            CommandSensomotoricGetResult currentResult = (col == 1) ? redResult : greenResult;
+        LinkedList<Pair<Integer, Integer>> first = new LinkedList<Pair<Integer, Integer>>();
+        LinkedList<Pair<Integer, Integer>> second = new LinkedList<Pair<Integer, Integer>>();
+
+        for (int col = 0; col < 2; col++) {
+            CommandSensomotoricGetResult currentResult = (col == 0) ? redResult : greenResult;
             if (currentResult.getResult() == null) {
                 if (display != null)
                     display.displayResult("Ошибка анализа - не получено нужное количество достоверных результатов", null);
                 return;
             }
-            Hand[] hands = new Hand[2];
-            hands[0] = new Hand("Правая");
-            hands[1] = new Hand("Левая");
+            try {
+                Hand[] hands = new Hand[2];
+                hands[0] = new Hand("Правая");
+                hands[1] = new Hand("Левая");
 
-            int fuckedUpCounter = 0;
-            //первая половина массива для правой, вторая для левой руки
+                int fuckedUpCounter = 0;
+                //первая половина массива для правой, вторая для левой руки
 
-            LinkedList<Pair<Integer, Integer>> inData = new LinkedList<Pair<Integer, Integer>>();
+                LinkedList<Pair<Integer, Integer>> inData = (col == 0)?first:second;
 
-            for (int i = 1; i < serialLen; i++) {
-                Pair<Integer, Integer> pair = new Pair<Integer, Integer>(currentResult.dataRight[i], currentResult.dataLeft[i]);
-                if ((pair.first >= 0) && (pair.second >= 0)) {
-                    inData.add(pair);
-                } else {
-                    fuckedUpCounter++;
+                for (int i = 0; i < serialLen; i++) {
+                    Pair<Integer, Integer> pair = new Pair<Integer, Integer>(currentResult.dataRight[i], currentResult.dataLeft[i]);
+                    if ((pair.first >= 0) && (pair.second >= 0)) {
+                        inData.add(pair);
+                    } else {
+                        fuckedUpCounter++;
+                    }
                 }
+
+                for (Pair<Integer, Integer> pair : inData) {
+                    if (pair.first < 100) {
+                        hands[0].pre++;
+                    } else if (pair.first < 500) {
+                        hands[0].correct.add(pair.first);
+                    } else {
+                        hands[0].post++;
+                    }
+
+                    if (pair.second < 100) {
+                        hands[1].pre++;
+                    } else if (pair.second < 500) {
+                        hands[1].correct.add(pair.second);
+                    } else {
+                        hands[1].post++;
+                    }
+                }
+            }catch (Exception e){
+                MainActivity.display("Ошибка обработки данных " + e.getMessage());
+                return;
             }
 
-            for (Pair<Integer, Integer> pair : inData) {
-                if (pair.first < 100) {
-                    hands[0].pre++;
-                } else if (pair.first < 500) {
-                    hands[0].correct.add(pair.first);
-                } else {
-                    hands[0].post++;
-                }
-
-                if (pair.second < 100) {
-                    hands[1].pre++;
-                } else if (pair.second < 500) {
-                    hands[1].correct.add(pair.second);
-                } else {
-                    hands[1].post++;
-                }
-            }
-
-            allPairs.addAll(inData);
 
         }
-        if (display != null) display.displayResult(allPairs, colors, null);
+
+        //if (display != null) display.displayResult("Готово", null);
+        if (display != null) display.displayResult(new Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> > >(first,second), colors, null);
+
+
     }
 
 }

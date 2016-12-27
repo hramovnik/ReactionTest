@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -38,6 +39,7 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_result_display_diagram);
         Button buttonSave = ((Button) findViewById(R.id.frameResultButtonSave));
         buttonSave.setOnClickListener(this);
@@ -75,13 +77,11 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
 
         int groupCount = dataList.size();
         int start = 0;
-        int end = groupCount-1;
-
 
         ArrayList<BarEntry> yVals1 = new ArrayList<BarEntry>();
         ArrayList<BarEntry> yVals2 = new ArrayList<BarEntry>();
 
-        for (int i = start; i <= end; i++) {
+        for (int i = start; i < groupCount; i++) {
             Pair<Integer, Integer> pair = dataList.get(i);
             yVals1.add(new BarEntry(i, (float) (pair.first)));
             yVals2.add(new BarEntry(i, (float) (pair.second)));

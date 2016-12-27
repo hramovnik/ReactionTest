@@ -41,7 +41,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     Button buttonProfiles;
     Button buttonParameters;
 
-    public Connection connection = null;
+    Connection connection = null;
     private SharedPreferences sp;
     int port;
     String ipAddress;
@@ -107,7 +107,10 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         SessionObject.setDispalyable(this);
 
         tvResult.setText(PrefActivity.getProfileResult());
+        activity = this;
     }
+
+
 
 
     @Override
@@ -166,6 +169,12 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
 
     private ResultDisplay dialogResult = null;
+    static private MainActivity activity = null;
+
+    public static void display(String value){
+        activity.dialogResult.show(activity.getSupportFragmentManager(), "Ошибка", value, null);
+    }
+
 
     @Override
     public void displayResult(String value, SessionResultActionInterface action){
@@ -179,7 +188,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     }
 
     @Override
-    public void displayResult(LinkedList<Pair<Integer, Integer>> [] dataList, int [] colors, SessionResultActionInterface action){
+    public void displayResult(Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> > > dataList, int [] colors, SessionResultActionInterface action){
         ResultDisplayGraphic.setData(dataList, colors, action);
         startActivity(new Intent(this, ResultDisplayGraphic.class));
     }

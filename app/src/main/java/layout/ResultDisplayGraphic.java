@@ -7,6 +7,7 @@ import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -27,6 +28,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.hramovnik.reactiontest.MainActivity;
 import com.hramovnik.reactiontest.R;
 import com.hramovnik.reactiontest.SessionResultActionInterface;
 
@@ -66,6 +68,9 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        try {
+
         setContentView(R.layout.activity_result_display_graphic);
         Button buttonSave = ((Button) findViewById(R.id.frameResultButtonSave));
         buttonSave.setOnClickListener(this);
@@ -116,34 +121,29 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
             YAxis leftAxis = mChart[i].getAxisLeft();
             leftAxis.setTextColor(Color.rgb(0xff,0x80, 0));
-            leftAxis.setAxisMaximum(200f);
+            leftAxis.setAxisMaximum(1000f);
             leftAxis.setAxisMinimum(0f);
             leftAxis.setDrawGridLines(true);
             leftAxis.setGranularityEnabled(true);
 
             mChart[i].getAxisRight().setEnabled(false);
 
-            int range = 100;
-            int count = 20;
+            LinkedList<Pair<Integer, Integer> > inputData = (i == 0)? dataList.first : dataList.second;
+
             ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
-            for (int k = 0; k < count-1; k++) {
-                float mult = range / 2f;
-                float val = (float) (Math.random() * mult) + 50;
-                yVals1.add(new Entry(k, val));
-            }
-
             ArrayList<Entry> yVals2 = new ArrayList<Entry>();
 
-            for (int k = 0; k < count-1; k++) {
-                float mult = range;
-                float val = (float) (Math.random() * mult) + 150;
+            for (int k = 0; k < inputData.size(); k++){
+                float val = (float) inputData.get(k).first;
+                yVals1.add(new Entry(k, val));
+
+                val = (float) inputData.get(k).second;
                 yVals2.add(new Entry(k, val));
             }
 
             LineDataSet set1, set2;
 
-            if (mChart[i].getData() != null &&
+            /*if (mChart[i].getData() != null &&
                     mChart[i].getData().getDataSetCount() > 0) {
                 set1 = (LineDataSet) mChart[i].getData().getDataSetByIndex(0);
                 set2 = (LineDataSet) mChart[i].getData().getDataSetByIndex(1);
@@ -151,7 +151,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 set2.setValues(yVals2);
                 mChart[i].getData().notifyDataChanged();
                 mChart[i].notifyDataSetChanged();
-            } else {
+            } else {*/
                 set1 = new LineDataSet(yVals1, "Правый глаз");
 
                 set1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -181,18 +181,23 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 data.setValueTextSize(9f);
 
                 mChart[i].setData(data);
-            }
+            //}
+        }
+
+        }catch (Exception e){
+            finish();
+            MainActivity.display("Ошибка генерации графика " + e.getMessage());
         }
     }
 
 
-    public static void setData(LinkedList<Pair<Integer, Integer>> [] dataList, int [] colors, SessionResultActionInterface action){
+    public static void setData(Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> > > dataList, int [] colors, SessionResultActionInterface action){
         ResultDisplayGraphic.dataList = dataList;
         ResultDisplayGraphic.colors = colors;
         ResultDisplayGraphic.action = action;
     }
 
-    private static LinkedList<Pair<Integer, Integer>> [] dataList = null;
+    private static Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> > > dataList = null;
     private static int [] colors = null;
     private static SessionResultActionInterface action = null;
 
