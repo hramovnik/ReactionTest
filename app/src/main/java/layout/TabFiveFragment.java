@@ -49,8 +49,8 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
         super.onDestroy();
         try {
             SharedPreferences.Editor ed = sp.edit();
-            ed.putInt("PICTEST_IMAGE_0", choosedIndex[0]+1);
-            ed.putInt("PICTEST_IMAGE_1", choosedIndex[1]+1);
+            ed.putInt("PICTEST_IMAGE_0", choosedIndex[0]);
+            ed.putInt("PICTEST_IMAGE_1", choosedIndex[1]);
             ed.apply();
         }catch (Exception e){
 
@@ -60,7 +60,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
 
     @Override
     public Session getSession() {
-        return new SessionImages(choosedIndex[0], choosedIndex[1], 5000);
+        return new SessionImages(choosedIndex[0]+1, choosedIndex[1]+1, 5000);
     }
 
     @Override

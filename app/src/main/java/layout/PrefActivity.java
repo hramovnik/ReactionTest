@@ -17,8 +17,11 @@ import android.widget.Toast;
 
 import com.hramovnik.reactiontest.R;
 
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.LinkedList;
 import java.util.Locale;
 
 public class PrefActivity extends Activity implements View.OnClickListener, View.OnTouchListener{
@@ -31,6 +34,7 @@ public class PrefActivity extends Activity implements View.OnClickListener, View
     private Button buttonOk;
     private static String profileResult = new String();
     public static String getProfileResult(){
+        if (profileResult.isEmpty()){return "NoName";}
         return profileResult;
     }
 
@@ -58,6 +62,15 @@ public class PrefActivity extends Activity implements View.OnClickListener, View
         buttonOk.setOnClickListener(this);
 
         dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ROOT);
+        Date lastDate = null;
+        try {
+            lastDate = dateFormatter.parse(sp.getString("PersonDate", "1-1-1990"), new ParsePosition(0));
+
+        }catch (Exception e){
+            sp.edit().clear().apply();
+            lastDate = null;
+        }
+
 
         Calendar newCalendar = Calendar.getInstance();
         datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -68,9 +81,17 @@ public class PrefActivity extends Activity implements View.OnClickListener, View
                 teDate.setText(dateFormatter.format(newDate.getTime()));
             }
 
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        }, lastDate == null ? newCalendar.get(Calendar.YEAR) : lastDate.getYear()+1900,
+                lastDate == null ? newCalendar.get(Calendar.MONTH) : lastDate.getMonth(),
+                lastDate == null ? newCalendar.get(Calendar.DAY_OF_MONTH) : lastDate.getDay());
 
     }
+
+    public static String getCurrentDate(){
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ROOT);
+        return (formatter.format(new Date()));
+    }
+
 
     public void onResume(){
         super.onResume();
@@ -83,21 +104,34 @@ public class PrefActivity extends Activity implements View.OnClickListener, View
                 sp.edit().clear().apply();
             }
 
+        Log.d("Date", getCurrentDate());
     }
 
     public static void loadStaticData(Context context){
         SharedPreferences sharPref = PreferenceManager.getDefaultSharedPreferences(context);
+        profileData = new LinkedList<String>();
 
         StringBuilder builder = new StringBuilder();
         builder.append(sharPref.getString("PersonSurname", ""));
+        profileData.add(sharPref.getString("PersonSurname", ""));
         builder.append(" ");
         builder.append(sharPref.getString("PersonName", ""));
+        profileData.add(sharPref.getString("PersonName", ""));
         builder.append(" ");
         builder.append(sharPref.getString("PersonSecondName", ""));
+        profileData.add(sharPref.getString("PersonSecondName", ""));
         builder.append(" ");
         builder.append(sharPref.getString("PersonDate", ""));
+        profileData.add(sharPref.getString("PersonDate", ""));
         profileResult = builder.toString();
     }
+
+    public static LinkedList<String> getProfileData() {
+        return profileData;
+    }
+
+    private static LinkedList<String> profileData = null;
+
 
     @Override
     public void onPause(){
@@ -112,15 +146,19 @@ public class PrefActivity extends Activity implements View.OnClickListener, View
         }catch (Exception e){
             Toast.makeText(this, "Профиль не сохранён", Toast.LENGTH_LONG).show();
         }
-
+        profileData = new LinkedList<String>();
         StringBuilder builder = new StringBuilder();
         builder.append(teSurname.getText().toString());
+        profileData.add(teSurname.getText().toString());
         builder.append(" ");
         builder.append(teName.getText().toString());
+        profileData.add(teName.getText().toString());
         builder.append(" ");
         builder.append(teSecondName.getText().toString());
+        profileData.add(teSecondName.getText().toString());
         builder.append(" ");
         builder.append(teDate.getText().toString());
+        profileData.add(teDate.getText().toString());
         profileResult = builder.toString();
     }
 

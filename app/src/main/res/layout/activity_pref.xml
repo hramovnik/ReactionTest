@@ -109,14 +109,14 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text=""
                 android:ems="10"
                 android:id="@+id/tePersonDate"
                 android:inputType="date"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_weight="1"
-                android:editable="false" />
+                android:editable="false"
+                android:freezesText="true" />
         </TableRow>
         <TableRow
             android:layout_width="match_parent"

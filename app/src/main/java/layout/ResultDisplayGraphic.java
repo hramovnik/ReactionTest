@@ -46,6 +46,18 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.frameGraphicResultButtonSave){
+            if (action != null){
+                try {
+                    action.doSomething();
+                    Toast.makeText(this.getBaseContext(), "Сохранено", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(this.getBaseContext(), "Ошибка. Не удалось сохранить данные", Toast.LENGTH_LONG).show();
+                }
+            }else{
+                Toast.makeText(this.getBaseContext(), "Отсутстствует обработчик сохранения", Toast.LENGTH_LONG).show();
+            }
+        }
         finish();
     }
 
@@ -59,8 +71,6 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
             ((TextView) findViewById(R.id.tvDiagramTextResult)).setText("Отсутствуют валидные данные");
             return;
         }
-
-
     }
 
     private LineChart [] mChart = new LineChart[2];
@@ -72,8 +82,10 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
         try {
 
         setContentView(R.layout.activity_result_display_graphic);
-        Button buttonSave = ((Button) findViewById(R.id.frameResultButtonSave));
+        Button buttonSave = ((Button) findViewById(R.id.frameGraphicResultButtonSave));
         buttonSave.setOnClickListener(this);
+        Button buttonOk = ((Button) findViewById(R.id.frameDiagramResultButtonOk));
+        buttonOk.setOnClickListener(this);
 
         mChart[0] = (LineChart) findViewById(R.id.lineChart1);
         mChart[1] = (LineChart) findViewById(R.id.lineChart2);
@@ -92,7 +104,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
             hsvColor[2] = 0.85f;
             localColors[1] = Color.HSVToColor(hsvColor);
 
-            mChart[i].getDescription().setEnabled(false);
+            mChart[i].getDescription().setEnabled(true);
 
             mChart[i].setDragDecelerationFrictionCoef(0.9f);
             mChart[i].setDragEnabled(false);
@@ -179,6 +191,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 LineData data = new LineData(set1, set2);
                 data.setValueTextColor(Color.GRAY);
                 data.setValueTextSize(9f);
+
 
                 mChart[i].setData(data);
             //}

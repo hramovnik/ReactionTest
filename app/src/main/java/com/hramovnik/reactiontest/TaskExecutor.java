@@ -85,17 +85,19 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                             in = new DataInputStream(socket.getInputStream());
                         }
 
+                        for (int k = 0; k < 3; k++) {
+                            out.write(byteBuffer.array());
+                            out.flush();
 
-                        out.write(byteBuffer.array());
-                        out.flush();
-
-                        TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
-                        for(int t = 0; (t < 20) && (in.available() == 0); t++){
                             TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
+                            for (int t = 0; (t < 3) && (in.available() == 0); t++) {
+                                TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
+                            }
+                            if (in.available() > 0) {break;}
                         }
-                        if (in.available() == 0){
-                            return "Задача " + String.valueOf(iteration) + " : таймаут принятия сообщений (" + String.valueOf(executable.getTimeOut()*20) + "мc)";
-                        }else if(in.available() < 4){
+                        if (in.available() == 0) {
+                            return "Задача " + String.valueOf(iteration) + " : таймаут принятия сообщений (" + String.valueOf(executable.getTimeOut() * 3*3) + "мc)";
+                        } else if (in.available() < 4) {
                             return "Задача " + String.valueOf(iteration) + " : ошибка количества принятых данных ( < 4 байт)";
                         }
 

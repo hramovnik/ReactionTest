@@ -98,6 +98,16 @@ public class ParametersActivity extends Activity implements View.OnClickListener
         return eye;
     }
 
+    public static boolean isUsingRightEye(){
+        return getChosenEye() != 0;
+    }
+    public static boolean isUsingLeftEye(){
+        return getChosenEye() != 2;
+    }
+
+
+
+
     public static void loadStaticData(Context context){
         SharedPreferences sharPref = PreferenceManager.getDefaultSharedPreferences(context);
         position = sharPref.getInt("rbPosition", 4);

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.YAxis;
@@ -32,6 +33,19 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
+        if (v.getId() == R.id.frameDiagramResultButtonSave){
+            if (action != null){
+                try {
+                    action.doSomething();
+                    Toast.makeText(this.getBaseContext(), "Сохранено", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){
+                    Toast.makeText(this.getBaseContext(), "Ошибка. Не удалось сохранить данные", Toast.LENGTH_LONG).show();
+                }
+
+            }else{
+                Toast.makeText(this.getBaseContext(), "Отсутстствует обработчик сохранения", Toast.LENGTH_LONG).show();
+            }
+        }
         finish();
     }
 
@@ -41,8 +55,11 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_result_display_diagram);
-        Button buttonSave = ((Button) findViewById(R.id.frameResultButtonSave));
+
+        Button buttonSave = ((Button) findViewById(R.id.frameDiagramResultButtonSave));
         buttonSave.setOnClickListener(this);
+        Button buttonOk = ((Button) findViewById(R.id.frameDiagramResultButtonOk));
+        buttonOk.setOnClickListener(this);
     }
 
     @Override
@@ -83,8 +100,10 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
 
         for (int i = start; i < groupCount; i++) {
             Pair<Integer, Integer> pair = dataList.get(i);
-            yVals1.add(new BarEntry(i, (float) (pair.first)));
-            yVals2.add(new BarEntry(i, (float) (pair.second)));
+            if ((pair.first >= 0)&&(pair.second >= 0)) {
+                yVals1.add(new BarEntry(i, (float) (pair.first)));
+                yVals2.add(new BarEntry(i, (float) (pair.second)));
+            }
         }
 
         BarDataSet set1, set2;

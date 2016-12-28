@@ -57,23 +57,6 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         ParametersActivity.loadStaticData(this);
         PrefActivity.loadStaticData(this);
         Log.d("Tag", "Main activity created");
-    }
-
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    @Override
-    protected void onRestoreInstanceState(Bundle inState){
-        super.onRestoreInstanceState(inState);
-    }
-
-
-    @Override
-    public void onResume(){
-        super.onResume();
 
         tvResult = (TextView) findViewById(R.id.tvResult);
         buttonStartStop = (Button) findViewById(R.id.buttonStartStopTest);
@@ -100,7 +83,23 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         sp = PreferenceManager.getDefaultSharedPreferences(this);
         ipAddress = "192.168.0.16";
         port = 8080;
+    }
 
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle inState){
+        super.onRestoreInstanceState(inState);
+    }
+
+
+    @Override
+    public void onResume(){
+        super.onResume();
 
         connection.setControls(ipAddress, port, tvResult, progressBar);
         dialogResult = new ResultDisplay();

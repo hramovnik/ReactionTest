@@ -18,8 +18,8 @@ public class CommandFlicker extends TaskObject {
         task[0] = CMD_START_FREQSWEEP;
         task[1] = color;
         task[2] = color;
-        task[3] = brightness;
-        task[4] = brightness;
+        task[3] = ParametersActivity.isUsingRightEye() ? brightness : 0;
+        task[4] = ParametersActivity.isUsingLeftEye() ? brightness : 0;
         task[5] = ParametersActivity.getChosenPosition();
         task[6] = ParametersActivity.getChosenPosition();
         task[7] = dotSize;

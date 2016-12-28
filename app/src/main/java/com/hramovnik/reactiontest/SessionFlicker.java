@@ -18,23 +18,25 @@ public class SessionFlicker extends SessionObject {
     private ArrayList<CommandFlickerGetResult> resultOne = new ArrayList<>();
     private ArrayList<CommandFlickerGetResult> resultTwo = new ArrayList<>();
     private boolean flickerOne = true;
+    private int dotSize;
     private int [] colors = new int[2];
 
     public SessionFlicker(boolean flickerOne, int color, int dotSize, int brightness, int initialSpeed_Hz, int maxSpeed_Hz){
         tasks = new LinkedBlockingQueue<>();
         this.flickerOne = flickerOne;
+        this.dotSize = dotSize;
         colors[0] = Color.RED;
         colors[1] = color;
         int realDotSize = dotSize;
 
         if (flickerOne){
-            CommandFlicker task = new CommandFlicker(Color.RED, realDotSize, (int)(((float)brightness)/12)*255, initialSpeed_Hz, maxSpeed_Hz);
+            CommandFlicker task = new CommandFlicker(Color.RED, realDotSize, (int)((((float)brightness)/12.)*255.), initialSpeed_Hz, maxSpeed_Hz);
             tasks.add(task);
             CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task);
             resultOne.add(tempResult);
             tasks.add(tempResult);
 
-            task = new CommandFlicker(color, realDotSize, (int)(((float)brightness)/12)*255, initialSpeed_Hz, maxSpeed_Hz);
+            task = new CommandFlicker(color, realDotSize, (int)((((float)brightness)/12.)*255.), initialSpeed_Hz, maxSpeed_Hz);
             tasks.add(task);
             CommandFlickerGetResult tempResult2 = new CommandFlickerGetResult(task);
             resultTwo.add(tempResult2);
@@ -42,7 +44,7 @@ public class SessionFlicker extends SessionObject {
         }else{
 
             for (int i = 1; i <= brightness; i++) {
-                CommandFlicker task = new CommandFlicker(Color.RED, realDotSize, (int)(((float)i)/5)*255, initialSpeed_Hz, maxSpeed_Hz);
+                CommandFlicker task = new CommandFlicker(Color.RED, realDotSize, (int)((((float)i)/5.)*255.), initialSpeed_Hz, maxSpeed_Hz);
                 tasks.add(task);
                 CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task);
                 resultOne.add(tempResult);
@@ -50,7 +52,7 @@ public class SessionFlicker extends SessionObject {
             }
 
             for (int i = 1; i <= brightness; i++) {
-                CommandFlicker task = new CommandFlicker(color, realDotSize, (int)(((float)i)/5)*255, initialSpeed_Hz, maxSpeed_Hz);
+                CommandFlicker task = new CommandFlicker(color, realDotSize, (int)((((float)i)/5.)*255.), initialSpeed_Hz, maxSpeed_Hz);
                 tasks.add(task);
                 CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task);
                 resultTwo.add(tempResult);

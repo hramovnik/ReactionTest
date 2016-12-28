@@ -50,7 +50,7 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
         imageButton.setOnClickListener(this);
 
         choosedIndex = sp.getInt("TAPTEST_IMAGE_1", 0);
-        if (choosedIndex > 25) choosedIndex = 0;
+        if ((choosedIndex > 25)||(choosedIndex < 0)) choosedIndex = 0;
 
         imageButton.setImageResource(ImageChooser.imageId[choosedIndex]);
         dialogImageChooser = new ImageChooser();
@@ -59,7 +59,7 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
 
     @Override
     public Session getSession() {
-        return new SessionTapping(choosedIndex, sbInterval.getProgress());
+        return new SessionTapping(choosedIndex+1, sbInterval.getProgress());
     }
 
     @Override
@@ -67,7 +67,7 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
         super.onDestroy();
         try {
             SharedPreferences.Editor ed = sp.edit();
-            ed.putInt("TAPTEST_IMAGE_1", choosedIndex+1);
+            ed.putInt("TAPTEST_IMAGE_1", choosedIndex);
             ed.apply();
         }catch (Exception e){
 

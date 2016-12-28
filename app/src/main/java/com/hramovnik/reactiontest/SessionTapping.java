@@ -1,5 +1,6 @@
 package com.hramovnik.reactiontest;
 
+import android.graphics.Color;
 import android.util.Pair;
 
 import java.util.LinkedList;
@@ -33,9 +34,16 @@ public final class SessionTapping extends SessionObject {
 
     @Override
     public void analyze() {
+        LinkedList<Pair<Integer, Integer> > inData = new LinkedList<Pair<Integer, Integer> >();
+        for (int i = 0; i < serialLen; i++) {
+            Pair<Integer, Integer> pair = new Pair<Integer, Integer>(result.dataRight[i], result.dataLeft[i]);
+            if ((pair.first >= 0) && (pair.second >= 0)) {inData.add(pair);}
+        }
 
-
-        if (display != null) display.displayResult("Готово", null);
+        int [] colors = new int [2];
+        colors[0] = Color.RED;
+        colors[1] = Color.BLUE;
+        if (display != null) display.displayResult(inData, colors, null);
     }
 
 }

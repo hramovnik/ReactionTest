@@ -2,8 +2,12 @@ package com.hramovnik.reactiontest;
 
 import android.util.Pair;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
+import java.util.Locale;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -61,21 +65,19 @@ public final class SessionSensomotoric extends SessionObject {
                 hands[0] = new Hand("Правая");
                 hands[1] = new Hand("Левая");
 
-                int fuckedUpCounter = 0;
                 //первая половина массива для правой, вторая для левой руки
 
                 LinkedList<Pair<Integer, Integer>> inData = (col == 0)?first:second;
 
                 for (int i = 0; i < serialLen; i++) {
                     Pair<Integer, Integer> pair = new Pair<Integer, Integer>(currentResult.dataRight[i], currentResult.dataLeft[i]);
-                    if ((pair.first >= 0) && (pair.second >= 0)) {
-                        inData.add(pair);
-                    } else {
-                        fuckedUpCounter++;
-                    }
+                    inData.add(pair);
+                    /*if ((pair.first >= 0) && (pair.second >= 0)) {
+
+                    }*/
                 }
 
-                for (Pair<Integer, Integer> pair : inData) {
+                /*for (Pair<Integer, Integer> pair : inData) {
                     if (pair.first < 100) {
                         hands[0].pre++;
                     } else if (pair.first < 500) {
@@ -91,7 +93,7 @@ public final class SessionSensomotoric extends SessionObject {
                     } else {
                         hands[1].post++;
                     }
-                }
+                }*/
             }catch (Exception e){
                 MainActivity.display("Ошибка обработки данных " + e.getMessage());
                 return;
@@ -101,7 +103,14 @@ public final class SessionSensomotoric extends SessionObject {
         }
 
         //if (display != null) display.displayResult("Готово", null);
-        if (display != null) display.displayResult(new Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> > >(first,second), colors, null);
+        if (display != null) display.displayResult(new Pair<LinkedList<Pair<Integer, Integer>>, LinkedList<Pair<Integer, Integer>>>(first, second), colors, new SessionResultActionInterface() {
+            @Override
+            public void doSomething() {
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("hh-mm-ss", Locale.ROOT);
+                CsvSaver saver = new CsvSaver("","Сенсомоторный тест " + dateFormatter.format(new Date()));
+
+            }
+        });
 
 
     }

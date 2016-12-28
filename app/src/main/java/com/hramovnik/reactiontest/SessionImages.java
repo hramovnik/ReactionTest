@@ -27,7 +27,18 @@ public final class SessionImages extends SessionObject {
 
     @Override
     public void analyze() {
-        if (display != null) display.displayResult("Готово", null);
+
+        switch (result.buttonId){
+            case 0x01:
+                if (display != null) display.displayResult("Нажата левая кнопка", null);
+                break;
+            case 0x02:
+                if (display != null) display.displayResult("Нажата правая кнопка", null);
+                break;
+            default:
+                if (display != null) display.displayResult("Неопределённый результат (возможно, нажаты обе кнопки)", null);
+        }
+
     }
 
 }
