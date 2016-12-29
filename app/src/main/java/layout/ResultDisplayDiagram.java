@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -78,7 +79,7 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
         chart.setDrawBarShadow(false);
         chart.setDrawGridBackground(false);
         chart.animateXY(1000, 1000);
-        chart.getLegend().setEnabled(false);
+        chart.getLegend().setEnabled(true);
         chart.getXAxis().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
 
@@ -87,6 +88,17 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
         leftAxis.setDrawGridLines(false);
         leftAxis.setSpaceTop(35f);
         leftAxis.setAxisMinimum(0f);
+
+        Legend l = chart.getLegend();
+
+        l.setForm(Legend.LegendForm.LINE);
+        l.setTextSize(11f);
+        l.setTextColor(Color.BLACK);
+        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        l.setDrawInside(false);
+
 
         float groupSpace = 1f;
         float barSpace = 0f;
@@ -106,12 +118,13 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
             }
         }
 
-        BarDataSet set1, set2;
+
+                BarDataSet set1, set2;
 
 
-        set1 = new BarDataSet(yVals1, "R");
+        set1 = new BarDataSet(yVals1, "Право");
         set1.setColor(colors[0]);
-        set2 = new BarDataSet(yVals2, "L");
+        set2 = new BarDataSet(yVals2, "Лево");
         set2.setColor(colors[1]);
 
         BarData data = new BarData(set1, set2);

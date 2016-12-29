@@ -107,18 +107,18 @@ public final class SessionSensomotoric extends SessionObject {
 
                 for (int k = 0; k < 2; k++) {
                     for (int i = 0; i < ((k == 0) ? first.size() : second.size()); i++) {
-                        LinkedList<String> saveble = new LinkedList<String>();
-                        saveble.add(ParametersActivity.getStringPosition());
-                        saveble.add(ParametersActivity.getStringEye());
-                        saveble.add(String.valueOf(realDotSize));
-                        saveble.add(getColor(colors[k]));
-                        saveble.add(String.valueOf(i));
+                        LinkedList<String> savable = new LinkedList<String>();
+                        savable.add(ParametersActivity.getStringPosition());
+                        savable.add(ParametersActivity.getStringEye());
+                        savable.add(String.valueOf(realDotSize));
+                        savable.add(getColor(colors[k]));
+                        savable.add(String.valueOf(i+1));
                         Pair<Integer, Integer> pair = ((k == 0) ? first.get(i) : second.get(i));
-                        saveble.add((pair.first >= 0) ? String.valueOf(pair.first) : "-");
-                        saveble.add((pair.second >= 0) ? String.valueOf(pair.second) : "-");
-                        saveble.add("-");
-                        saveble.add("-");
-                        saver.save(saveble);
+                        savable.add((pair.first >= 0) ? String.valueOf(pair.first) : "-");
+                        savable.add((pair.second >= 0) ? String.valueOf(pair.second) : "-");
+                        savable.add("-");
+                        savable.add("-");
+                        saver.save(savable);
                     }
                 }
             }
