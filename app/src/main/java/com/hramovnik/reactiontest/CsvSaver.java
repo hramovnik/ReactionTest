@@ -19,7 +19,7 @@ import layout.PrefActivity;
  * Created by gshabalev on 12/28/2016.
  */
 
-public class CsvSaver {
+public class CsvSaver implements AutoCloseable{
     private CsvSaver(){}
     File sdFile = null;
 
@@ -35,6 +35,7 @@ public class CsvSaver {
                 sdPath.mkdirs();
 
                 sdFile = new File(sdPath, fileName + ".csv");
+                out = new PrintWriter(sdFile, "Cp1251");
                 save(PrefActivity.getProfileData());
             }
         }catch (Exception e) {
@@ -51,39 +52,41 @@ public class CsvSaver {
             second.add(value.second);
         }
 
-        try {
-            PrintWriter out = new PrintWriter(sdFile);
-            StringBuilder sb = new StringBuilder();
-            for (String val:first) {sb.append(val + ",");}
-            sb.append("\n");
-            for (String val:second) {sb.append(val + ",");}
-            sb.append("\n");
 
-            out.write(sb.toString());
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        StringBuilder sb = new StringBuilder();
+        for (String val:first) {sb.append(val + ",");}
+        sb.append("\n");
+        for (String val:second) {sb.append(val + ",");}
+        sb.append("\n");
+
+        out.append(sb.toString());
+        out.flush();
+
         return true;
     }
 
     public boolean save(LinkedList<String> dataList){
         if (sdFile == null) return false;
-        try {
-            PrintWriter out = new PrintWriter(sdFile);
-            StringBuilder sb = new StringBuilder();
-            for (String val:dataList) {sb.append(val + ",");}
-            sb.append("\n");
 
-            out.write(sb.toString());
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
+        StringBuilder sb = new StringBuilder();
+        for (String val:dataList) {sb.append(val + ",");}
+        sb.append("\n");
+
+        out.append(sb.toString());
+        out.flush();
         return true;
 
     }
 
+    private PrintWriter out;
+
+    @Override
+    public void close() throws Exception {
+        try {
+            out.close();
+        }catch (Exception e){
+
+        }
+
+    }
 }

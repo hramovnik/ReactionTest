@@ -48,7 +48,7 @@ public abstract class SessionObject implements Session {
 
     final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
-    protected String getColor(int color){
+    public static String getColor(int color){
 
         int cwoalfa = color&0xffffff;
         switch (cwoalfa){

@@ -16,7 +16,7 @@ public final class CommandTappingGetResult extends TaskObject{
             this.serialLen = 1;
         }
     }
-    private int serialLen = 12;
+
     @Override
     public int[] getTask() {
         int [] task = {CMD_REQUEST_TAPPING_DATA};
@@ -50,6 +50,7 @@ public final class CommandTappingGetResult extends TaskObject{
 
     public int pulseDataRate = 0;
     public int pulseDataOxSaturation = 0;
+    public int serialLen = 12;
 
 
     @Override

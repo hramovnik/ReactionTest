@@ -8,9 +8,11 @@ public class CommandFlickerGetResult extends TaskObject {
 
 
     private CommandFlickerGetResult(){}
-    public CommandFlickerGetResult(TaskObject sendingCommand){
+    public CommandFlickerGetResult(TaskObject sendingCommand, int brightness){
         dataOffset = sendingCommand.getSendedSize();
+        this.brightness = brightness;
     }
+
 
     @Override
     public int[] getTask() {
@@ -36,4 +38,5 @@ public class CommandFlickerGetResult extends TaskObject {
     public int fEnd = 0;
     public int pulseDataRate = 0;
     public int pulseDataOxSaturation = 0;
+    public int brightness = 0;
 }

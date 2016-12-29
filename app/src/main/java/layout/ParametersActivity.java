@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
@@ -25,6 +26,8 @@ public class ParametersActivity extends Activity implements View.OnClickListener
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_parameters);
+
+        ((Button) findViewById(R.id.parametersButtonOk)).setOnClickListener(this);
 
         sp = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -71,7 +74,9 @@ public class ParametersActivity extends Activity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+
         finish();
+
     }
 
     int getPosition(){

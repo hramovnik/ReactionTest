@@ -88,7 +88,7 @@ public class PrefActivity extends Activity implements View.OnClickListener, View
     }
 
     public static String getCurrentDate(){
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy", Locale.ROOT);
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.ROOT);
         return (formatter.format(new Date()));
     }
 

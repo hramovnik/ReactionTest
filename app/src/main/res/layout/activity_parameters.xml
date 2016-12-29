@@ -16,22 +16,15 @@
     <TextView
         android:text="Позиция изображения"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
+        android:layout_weight="0.05"
         android:textSize="@dimen/text_view_size"
-        />
-
-    <Space
-        android:layout_width="20dp"
-        android:layout_height="@dimen/vertical_space_of_color_chooser"
-        android:padding="1dip"
-        android:layout_margin="1dip"
-        android:layout_weight="1"
         />
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="1dp"
+        android:layout_weight="0.4">
 
         <TableRow
             android:layout_width="match_parent"
@@ -114,31 +107,20 @@
 
     </TableLayout>
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/vertical_space_of_color_chooser"
-        android:padding="1dip"
-        android:layout_margin="1dip"
-        android:layout_weight="1" />
 
     <TextView
         android:text="Выбор активного дисплея"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
+        android:layout_weight="0.05"
         android:textSize="@dimen/text_view_size"
         android:id="@+id/textView7" />
 
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/vertical_space_of_color_chooser"
-        android:padding="1dip"
-        android:layout_margin="1dip"
-        android:layout_weight="1" />
 
     <TableLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="1dp"
+        android:layout_weight="0.2">
 
         <TableRow
             android:layout_width="match_parent"
@@ -168,4 +150,19 @@
 
     </TableLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:orientation="vertical"
+        android:layout_weight="0.1">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ok"
+            android:id="@+id/parametersButtonOk"
+            style="@android:style/Widget.Button"
+            />
+
+    </LinearLayout>
 </LinearLayout>

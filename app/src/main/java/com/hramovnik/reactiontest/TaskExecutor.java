@@ -75,17 +75,16 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                     Pair<Integer, Integer> taskSize = session.countTasks();
 
                     for (int i = 0; i < 200; i++) {
-
-                        if (socket.isClosed()){
-                            socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort());
-                            socket.setKeepAlive(true);
-                            if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение при отправке данных";
-                            socket.setSoTimeout(0);
-                            out = new DataOutputStream(socket.getOutputStream());
-                            in = new DataInputStream(socket.getInputStream());
-                        }
-
                         for (int k = 0; k < 3; k++) {
+                            if (socket.isClosed()){
+                                socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort());
+                                socket.setKeepAlive(true);
+                                if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение при отправке данных";
+                                socket.setSoTimeout(0);
+                                out = new DataOutputStream(socket.getOutputStream());
+                                in = new DataInputStream(socket.getInputStream());
+                            }
+
                             if (isCancelled()){
                                 byteBuffer.clear();
                                 byteBuffer.putInt(TaskObject.CMD_FORCE_STOP_TEST);
@@ -117,11 +116,15 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
 
 
                         if (executable.setResult(array)) {
-                            if (array.length > 0) {publishProgress(new Pair<String,Integer>("Задача " + String.valueOf(iteration) + ": " + String.valueOf(array[0]), null));}
-                            publishProgress(new Pair<String,Integer>(null, (taskSize.second-taskSize.first)*100/taskSize.second));
+                            //if (array.length > 0) {publishProgress(new Pair<String,Integer>("Задача " + String.valueOf(iteration) + ": " + String.valueOf(array[0]), null));}
+                            publishProgress(new Pair<String,Integer>(null, (int)((((float)taskSize.second-taskSize.first)*100)/((float)taskSize.second))));
+
                             break;
                         } else {
-                            if (executable.isCriticalError()){
+                            if(executable.isInProgress()){
+                                publishProgress(new Pair<String,Integer>(null, (int)(((float)(taskSize.second - taskSize.first - 1) +
+                                        ((float)executable.getProgress())/100/taskSize.second)*100/(float)taskSize.second)));
+                            }else if (executable.isCriticalError()){
                                 return "Ошибка: невозможно совершить данное действие";
                             }else{
                                 if (i == 199) {
@@ -130,6 +133,8 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                                 }
                                 TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
                             }
+
+
                         }
                     }
                 }

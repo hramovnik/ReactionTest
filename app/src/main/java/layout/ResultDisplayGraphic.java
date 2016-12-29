@@ -84,7 +84,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
         setContentView(R.layout.activity_result_display_graphic);
         Button buttonSave = ((Button) findViewById(R.id.frameGraphicResultButtonSave));
         buttonSave.setOnClickListener(this);
-        Button buttonOk = ((Button) findViewById(R.id.frameDiagramResultButtonOk));
+        Button buttonOk = ((Button) findViewById(R.id.frameGraphicResultButtonOk));
         buttonOk.setOnClickListener(this);
 
         mChart[0] = (LineChart) findViewById(R.id.lineChart1);
@@ -140,7 +140,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
             mChart[i].getAxisRight().setEnabled(false);
 
-            LinkedList<Pair<Integer, Integer> > inputData = (i == 0)? dataList.first : dataList.second;
+            LinkedList<Pair<Integer, Integer> > inputData = ((i == 0)? dataList.first : dataList.second);
 
             ArrayList<Entry> yVals1 = new ArrayList<Entry>();
             ArrayList<Entry> yVals2 = new ArrayList<Entry>();
@@ -202,7 +202,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
         }catch (Exception e){
             finish();
-            MainActivity.display("Ошибка генерации графика " + e.getMessage());
+            MainActivity.display("Ошибка генерации графика " + e.getStackTrace()[0].toString());
         }
     }
 
