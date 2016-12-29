@@ -110,67 +110,68 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
 
         tvResult.setText(PrefActivity.getProfileResult());
         activity = this;
+        //Log.d("Time",new SimpleDateFormat("HH-mm-ss",Locale.ROOT).format(new Date()));
     }
 
 
+    boolean testGraphicsAndLog(){
+        final LinkedList<Pair<Integer, Integer>> l = new LinkedList<>();
+        for (int i = -100; i < 1000 ; i+= 100){
+            l.add(new Pair<Integer, Integer>(i/2,i));
+        }
+        Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> >> p = new Pair<>(l,l);
+        final int [] c = new int[2];
+        c[0] = Color.RED;
+        c[1] = Color.YELLOW;
+        displayResult(l,c,new SessionResultActionInterface() {
+            @Override
+            public void doSomething() {
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("HH-mm-ss", Locale.ROOT);
+                try (CsvSaver saver = new CsvSaver("","Сенсомоторный тест " + dateFormatter.format(new Date()))) {
 
+                    LinkedList<String> header = new LinkedList<String>();
+
+                    header.add("Позиция кружка");
+                    header.add("Режим (глаз)");
+                    header.add("Размер кружка (мм)");
+                    header.add("Цвет кружка");
+                    header.add("№ проявления");
+                    header.add("Время реакции правой руки (мс)");
+                    header.add("Время реакции левой руки (мс)");
+                    header.add("Пульс");
+                    header.add("Оксиометр");
+
+                    saver.save(header);
+
+                    for (int k = 0; k < 2; k++) {
+                        for (int i = 0; i < ((k == 0) ? l.size() : l.size()); i++) {
+                            LinkedList<String> savable = new LinkedList<String>();
+                            savable.add(ParametersActivity.getStringPosition());
+                            savable.add(ParametersActivity.getStringEye());
+                            savable.add(String.valueOf(3));
+                            savable.add(SessionObject.getColor(c[k]));
+                            savable.add(String.valueOf(i + 1));
+                            Pair<Integer, Integer> pair = ((k == 0) ? l.get(i) : l.get(i));
+                            savable.add((pair.first >= 0) ? String.valueOf(pair.first) : "-");
+                            savable.add((pair.second >= 0) ? String.valueOf(pair.second) : "-");
+                            savable.add("-");
+                            savable.add("-");
+                            saver.save(savable);
+                        }
+                    }
+                }catch (Exception e){
+
+                }
+            }});
+        return true;
+    }
 
     @Override
     public void onClick(View v) {
         tvResult.clearComposingText();
         switch (v.getId()){
             case R.id.buttonStartStopTest:
-
-                /*final LinkedList<Pair<Integer, Integer>> l = new LinkedList<>();
-                for (int i = -100; i < 1000 ; i+= 100){
-                    l.add(new Pair<Integer, Integer>(i/2,i));
-                }
-                Pair<LinkedList<Pair<Integer, Integer> > , LinkedList<Pair<Integer, Integer> >> p = new Pair<>(l,l);
-                final int [] c = new int[2];
-                c[0] = Color.RED;
-                c[1] = Color.YELLOW;
-                displayResult(l,c,new SessionResultActionInterface() {
-                    @Override
-                    public void doSomething() {
-                        SimpleDateFormat dateFormatter = new SimpleDateFormat("hh-mm-ss", Locale.ROOT);
-                        try (CsvSaver saver = new CsvSaver("","Сенсомоторный тест " + dateFormatter.format(new Date()))) {
-
-                            LinkedList<String> header = new LinkedList<String>();
-
-                            header.add("Позиция кружка");
-                            header.add("Режим (глаз)");
-                            header.add("Размер кружка (мм)");
-                            header.add("Цвет кружка");
-                            header.add("№ проявления");
-                            header.add("Время реакции правой руки (мс)");
-                            header.add("Время реакции левой руки (мс)");
-                            header.add("Пульс");
-                            header.add("Оксиометр");
-
-                            saver.save(header);
-
-                            for (int k = 0; k < 2; k++) {
-                                for (int i = 0; i < ((k == 0) ? l.size() : l.size()); i++) {
-                                    LinkedList<String> savable = new LinkedList<String>();
-                                    savable.add(ParametersActivity.getStringPosition());
-                                    savable.add(ParametersActivity.getStringEye());
-                                    savable.add(String.valueOf(3));
-                                    savable.add(SessionObject.getColor(c[k]));
-                                    savable.add(String.valueOf(i + 1));
-                                    Pair<Integer, Integer> pair = ((k == 0) ? l.get(i) : l.get(i));
-                                    savable.add((pair.first >= 0) ? String.valueOf(pair.first) : "-");
-                                    savable.add((pair.second >= 0) ? String.valueOf(pair.second) : "-");
-                                    savable.add("-");
-                                    savable.add("-");
-                                    saver.save(savable);
-                                }
-                            }
-                        }catch (Exception e){
-
-                        }
-                    }});*/
-
-
+                //if(testGraphicsAndLog()) return;
                 if (connection.isWorking() != null) {
                     return;
                 }

@@ -36,7 +36,7 @@ public final class SessionImages extends SessionObject {
                 if (display != null) display.displayResult("Нажата правая кнопка", null);
                 break;
             default:
-                if (display != null) display.displayResult("Неопределённый результат (возможно, нажаты обе кнопки)", null);
+                if (display != null) display.displayResult("Неопределённый результат", null);
         }
 
     }

@@ -56,7 +56,7 @@ public final class SessionTapping extends SessionObject {
         if (display != null) display.displayResult(inData, colors,new SessionResultActionInterface() {
             @Override
             public void doSomething() {
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("hh-mm-ss", Locale.ROOT);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("HH-mm-ss", Locale.ROOT);
                 try(CsvSaver saver = new CsvSaver("","ТТ " + dateFormatter.format(new Date()))) {
                     LinkedList<String> header = new LinkedList<String>();
 

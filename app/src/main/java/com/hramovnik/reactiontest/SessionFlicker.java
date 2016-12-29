@@ -99,7 +99,7 @@ public class SessionFlicker extends SessionObject {
         if (display != null) display.displayResult(freqList, colors, new SessionResultActionInterface() {
             @Override
             public void doSomething() {
-                SimpleDateFormat dateFormatter = new SimpleDateFormat("hh-mm-ss", Locale.ROOT);
+                SimpleDateFormat dateFormatter = new SimpleDateFormat("HH-mm-ss", Locale.ROOT);
                 try (CsvSaver saver = new CsvSaver("","КЧСМ " + dateFormatter.format(new Date()))) {
 
                     LinkedList<String> header = new LinkedList<String>();

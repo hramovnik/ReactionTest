@@ -167,7 +167,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 mChart[i].getData().notifyDataChanged();
                 mChart[i].notifyDataSetChanged();
             } else {*/
-                set1 = new LineDataSet(yVals1, "Правый глаз");
+                set1 = new LineDataSet(yVals1, "Правая рука");
 
                 set1.setAxisDependency(YAxis.AxisDependency.LEFT);
                 set1.setColor(localColors[0]);
@@ -180,7 +180,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 set1.setDrawCircleHole(false);
 
 
-                set2 = new LineDataSet(yVals2, "Левый глаз");
+                set2 = new LineDataSet(yVals2, "Левая рука");
                 set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
                 set2.setColor(localColors[1]);
                 set2.setCircleColor(Color.BLACK);
