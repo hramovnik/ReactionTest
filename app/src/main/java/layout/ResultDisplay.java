@@ -59,7 +59,6 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
         setText(information);
     }
 
-
     @Override
     public void onClick(View v) {
         dismiss();

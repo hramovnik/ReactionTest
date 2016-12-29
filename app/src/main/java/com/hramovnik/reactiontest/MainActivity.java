@@ -101,7 +101,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     public void onResume(){
         super.onResume();
 
-        connection.setControls(ipAddress, port, tvResult, progressBar);
+        connection.setControls(ipAddress, port, getBaseContext(), progressBar);
         dialogResult = new ResultDisplay();
         SessionObject.setDispalyable(this);
 
@@ -128,7 +128,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
                 displayResult(alist, arr, null);*/
                 //startActivity(new Intent(this, ResultDisplayGraphic.class));
 
-                if (connection.isWorking()) {
+                if (connection.isWorking() != null) {
                     return;
                 }
                 Fragment currentTab = getSupportFragmentManager().findFragmentByTag(tabs.getCurrentTabTag());

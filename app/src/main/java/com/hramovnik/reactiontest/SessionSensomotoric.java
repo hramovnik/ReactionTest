@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.Locale;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import layout.ParametersActivity;
+
 
 public final class SessionSensomotoric extends SessionObject {
     private SessionSensomotoric(){}
@@ -20,7 +22,7 @@ public final class SessionSensomotoric extends SessionObject {
         this.serialLen = serialLen;
         tasks = new LinkedBlockingQueue<>();
 
-        int realDotSize = dotSize;
+        realDotSize = dotSize;
         colors[0] = firstColor;
         colors[1] = secondColor;
 
@@ -40,6 +42,7 @@ public final class SessionSensomotoric extends SessionObject {
 
     private int serialLen = 0;
     private int [] colors = new int[2];
+    int realDotSize = 0;
 
     @Override
     public TaskExecute getNextTask() {
@@ -50,8 +53,8 @@ public final class SessionSensomotoric extends SessionObject {
     @Override
     public void analyze() {
 
-        LinkedList<Pair<Integer, Integer>> first = new LinkedList<Pair<Integer, Integer>>();
-        LinkedList<Pair<Integer, Integer>> second = new LinkedList<Pair<Integer, Integer>>();
+        final LinkedList<Pair<Integer, Integer>> first = new LinkedList<Pair<Integer, Integer>>();
+        final LinkedList<Pair<Integer, Integer>> second = new LinkedList<Pair<Integer, Integer>>();
 
         for (int col = 0; col < 2; col++) {
             CommandSensomotoricGetResult currentResult = (col == 0) ? redResult : greenResult;
@@ -72,28 +75,8 @@ public final class SessionSensomotoric extends SessionObject {
                 for (int i = 0; i < serialLen; i++) {
                     Pair<Integer, Integer> pair = new Pair<Integer, Integer>(currentResult.dataRight[i], currentResult.dataLeft[i]);
                     inData.add(pair);
-                    /*if ((pair.first >= 0) && (pair.second >= 0)) {
-
-                    }*/
                 }
 
-                /*for (Pair<Integer, Integer> pair : inData) {
-                    if (pair.first < 100) {
-                        hands[0].pre++;
-                    } else if (pair.first < 500) {
-                        hands[0].correct.add(pair.first);
-                    } else {
-                        hands[0].post++;
-                    }
-
-                    if (pair.second < 100) {
-                        hands[1].pre++;
-                    } else if (pair.second < 500) {
-                        hands[1].correct.add(pair.second);
-                    } else {
-                        hands[1].post++;
-                    }
-                }*/
             }catch (Exception e){
                 MainActivity.display("Ошибка обработки данных " + e.getMessage());
                 return;
@@ -108,7 +91,36 @@ public final class SessionSensomotoric extends SessionObject {
             public void doSomething() {
                 SimpleDateFormat dateFormatter = new SimpleDateFormat("hh-mm-ss", Locale.ROOT);
                 CsvSaver saver = new CsvSaver("","Сенсомоторный тест " + dateFormatter.format(new Date()));
+                LinkedList<String> header = new LinkedList<String>();
 
+                header.add("Позиция кружка");
+                header.add("Режим (глаз)");
+                header.add("Размер кружка (мм)");
+                header.add("Цвет кружка");
+                header.add("№ проявления");
+                header.add("Время реакции правой руки (мс)");
+                header.add("Время реакции левой руки (мс)");
+                header.add("Пульс");
+                header.add("Оксиометр");
+
+                saver.save(header);
+
+                for (int k = 0; k < 2; k++) {
+                    for (int i = 0; i < ((k == 0) ? first.size() : second.size()); i++) {
+                        LinkedList<String> saveble = new LinkedList<String>();
+                        saveble.add(ParametersActivity.getStringPosition());
+                        saveble.add(ParametersActivity.getStringEye());
+                        saveble.add(String.valueOf(realDotSize));
+                        saveble.add(getColor(colors[k]));
+                        saveble.add(String.valueOf(i));
+                        Pair<Integer, Integer> pair = ((k == 0) ? first.get(i) : second.get(i));
+                        saveble.add((pair.first >= 0) ? String.valueOf(pair.first) : "-");
+                        saveble.add((pair.second >= 0) ? String.valueOf(pair.second) : "-");
+                        saveble.add("-");
+                        saveble.add("-");
+                        saver.save(saveble);
+                    }
+                }
             }
         });
 

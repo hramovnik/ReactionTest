@@ -87,9 +87,9 @@ public class ParametersActivity extends Activity implements View.OnClickListener
         return 1;
     }
 
-    static int position = 5;
+    static int position = 4;
     public static int getChosenPosition(){
-        if ((position > 8) || (position < 0)) position = 5;
+        if ((position > 8) || (position < 0)) position = 4;
         return position;
     }
     static int eye = 1;
@@ -105,7 +105,29 @@ public class ParametersActivity extends Activity implements View.OnClickListener
         return getChosenEye() != 2;
     }
 
+    public static String getStringPosition(){
+        switch (position){
+            case 0: return "Верх - лево";
+            case 1: return "Верх - центр";
+            case 2: return "Верх - право";
+            case 3: return "Середина - лево";
+            case 4: return "Центр";
+            case 5: return "Середина - право";
+            case 6: return "Низ - лево";
+            case 7: return "Низ - центр";
+            case 8: return "Низ - право";
+            default: return "-";
+        }
+    }
 
+    public static String getStringEye(){
+        switch (eye){
+            case 0: return "Левый";
+            case 1: return "Оба";
+            case 2: return "Правый";
+            default: return "-";
+        }
+    }
 
 
     public static void loadStaticData(Context context){

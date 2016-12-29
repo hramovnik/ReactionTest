@@ -5,6 +5,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -35,8 +36,8 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
         execute();
     }
 
-    private void print(String string){
-        if (connection.getStatus() != null) connection.getStatus().setText(string);
+    public void print(String string){
+        if (connection!=null) connection.print(string);
     }
 
     private void setProgressBar(Integer value){
@@ -50,7 +51,6 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
             Log.d("Thread", "Begin");
             Socket socket = null;
             try {
-
                 socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort());
                 socket.setKeepAlive(true);
                 if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение";
@@ -86,9 +86,15 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                         }
 
                         for (int k = 0; k < 3; k++) {
+                            if (isCancelled()){
+                                byteBuffer.clear();
+                                byteBuffer.putInt(TaskObject.CMD_FORCE_STOP_TEST);
+                            }
                             out.write(byteBuffer.array());
                             out.flush();
-
+                            if (isCancelled()){
+                                return "Текущая сессия остановлена";
+                            }
                             TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
                             for (int t = 0; (t < 3) && (in.available() == 0); t++) {
                                 TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());

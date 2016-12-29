@@ -1,5 +1,6 @@
 package com.hramovnik.reactiontest;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.widget.ProgressBar;
@@ -22,6 +23,7 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import android.os.NetworkOnMainThreadException;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -32,33 +34,36 @@ import org.w3c.dom.Text;
 public class Connection{
     private String IPAddress = null;
     private int port = 0;
-    private TextView status = null;
-    private boolean working = false;
+    private Context context = null;
+    private Session currentSession = null;
     private ProgressBar progressBar = null;
 
     Connection(){
         super();
         Log.d("Tag", "Connection created");
     }
-    public void setControls(String ip, int port, TextView status, ProgressBar progressBar){
+    public void setControls(String ip, int port, Context context, ProgressBar progressBar){
         IPAddress = ip;
         this.port = port;
-        this.status = status;
+        this.context = context;
         this.progressBar = progressBar;
     }
-    private void print(String string){
-        if(status != null) status.setText(string);
+    public void print(String string){
+        if(context != null) Toast.makeText(context, string, Toast.LENGTH_LONG).show();
     }
-    public boolean isWorking(){
-        return working;
+
+    public Session isWorking(){
+        return currentSession;
     }
 
     public void sendSession(Session session){
-        if (isWorking()) return;
-        working = true;
-        print("Отправка команды");
+        synchronized(this) {
+            if (isWorking() != null) return;
+            currentSession = session;
+            print("Отправка команды");
 
-        TaskExecutor taskExecutor = new TaskExecutor(session, this);
+            TaskExecutor taskExecutor = new TaskExecutor(session, this);
+        }
     }
 
     public int getPort() {
@@ -69,16 +74,22 @@ public class Connection{
         return IPAddress;
     }
 
-    TextView getStatus(){
-        return status;
-    }
-
     ProgressBar getProgressBar(){
         return progressBar;
     }
 
     void workingEnds(){
-        working = false;
+        synchronized(this) {
+            currentSession = null;
+        }
+    }
+
+    void stopSession(){
+        synchronized(this) {
+            if (currentSession != null){
+                currentSession.setCanceled();
+            }
+        }
     }
 
 

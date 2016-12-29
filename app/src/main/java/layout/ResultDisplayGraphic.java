@@ -146,11 +146,14 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
             ArrayList<Entry> yVals2 = new ArrayList<Entry>();
 
             for (int k = 0; k < inputData.size(); k++){
-                float val = (float) inputData.get(k).first;
-                yVals1.add(new Entry(k, val));
+                Pair<Integer, Integer> pair = inputData.get(k);
+                if ((pair.first >= 0)&&(pair.second >=0)) {
+                    float val = (float) pair.first;
+                    yVals1.add(new Entry(k, val));
 
-                val = (float) inputData.get(k).second;
-                yVals2.add(new Entry(k, val));
+                    val = (float) pair.second;
+                    yVals2.add(new Entry(k, val));
+                }
             }
 
             LineDataSet set1, set2;
