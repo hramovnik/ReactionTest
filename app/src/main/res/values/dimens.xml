@@ -14,6 +14,6 @@
 
     <dimen name="space_between_seek_bars">8sp</dimen>
     <dimen name="space_between_buttons_and_seek_bars">18sp</dimen>
-    <dimen name="text_view_size">15dp</dimen>
+    <dimen name="text_view_size">15sp</dimen>
     <dimen name="vertical_space_of_color_chooser">28sp</dimen>
 </resources>
