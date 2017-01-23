@@ -82,14 +82,13 @@ public final class SessionSensomotoric extends SessionObject {
                 MainActivity.display("Ошибка обработки данных " + e.getMessage());
                 return;
             }
-
-
         }
 
         //if (display != null) display.displayResult("Готово", null);
         if (display != null) display.displayResult(new Pair<LinkedList<Pair<Integer, Integer>>, LinkedList<Pair<Integer, Integer>>>(first, second), colors, new SessionResultActionInterface() {
             @Override
             public void doSomething() {
+
                 SimpleDateFormat dateFormatter = new SimpleDateFormat("HH-mm-ss", Locale.ROOT);
                 try (CsvSaver saver = new CsvSaver("","Сенсомоторный тест " + dateFormatter.format(new Date()))) {
 
@@ -131,5 +130,4 @@ public final class SessionSensomotoric extends SessionObject {
 
 
     }
-
 }

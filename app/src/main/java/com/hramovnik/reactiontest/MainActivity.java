@@ -123,7 +123,7 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
         final int [] c = new int[2];
         c[0] = Color.RED;
         c[1] = Color.YELLOW;
-        displayResult(l,c,new SessionResultActionInterface() {
+        displayResult(l,c,false, new SessionResultActionInterface() {
             @Override
             public void doSomething() {
                 SimpleDateFormat dateFormatter = new SimpleDateFormat("HH-mm-ss", Locale.ROOT);
@@ -225,8 +225,8 @@ public class MainActivity extends FragmentActivity implements ResultDisplayable,
     }
 
     @Override
-    public void displayResult(LinkedList<Pair<Integer, Integer>>dataList, int [] colors, SessionResultActionInterface action){
-        ResultDisplayDiagram.setData(dataList,colors, action);
+    public void displayResult(LinkedList<Pair<Integer, Integer>>dataList, int [] colors, boolean showLegend, SessionResultActionInterface action){
+        ResultDisplayDiagram.setData(dataList,colors, showLegend, action);
         startActivity(new Intent(this, ResultDisplayDiagram.class));
     }
 

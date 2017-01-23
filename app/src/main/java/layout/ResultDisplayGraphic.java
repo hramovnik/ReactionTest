@@ -68,7 +68,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
         super.onResume();
 
         if ((dataList == null)||(colors == null)){
-            ((TextView) findViewById(R.id.tvDiagramTextResult)).setText("Отсутствуют валидные данные");
+            ((TextView) findViewById(R.id.tvGraphicsTextResult)).setText("Отсутствуют валидные данные");
             return;
         }
     }
@@ -77,96 +77,117 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         try {
+            super.onCreate(savedInstanceState);
+            requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.activity_result_display_graphic);
-        Button buttonSave = ((Button) findViewById(R.id.frameGraphicResultButtonSave));
-        buttonSave.setOnClickListener(this);
-        Button buttonOk = ((Button) findViewById(R.id.frameGraphicResultButtonOk));
-        buttonOk.setOnClickListener(this);
+            setContentView(R.layout.activity_result_display_graphic);
 
-        mChart[0] = (LineChart) findViewById(R.id.lineChart1);
-        mChart[1] = (LineChart) findViewById(R.id.lineChart2);
+            Button buttonSave = ((Button) findViewById(R.id.frameGraphicResultButtonSave));
+            buttonSave.setOnClickListener(this);
+            Button buttonOk = ((Button) findViewById(R.id.frameGraphicResultButtonOk));
+            buttonOk.setOnClickListener(this);
 
-        for(int i = 0; i < 2; i++){
-            int [] localColors= new int[2];
-
-            float [] hsvColor = new float[3];
-            Color.colorToHSV(colors[i], hsvColor);
-
-            hsvColor[1] = 1f;
-            hsvColor[2] = 1f;
-            localColors[0] = Color.HSVToColor(hsvColor);
-
-            hsvColor[1] = 0.15f;
-            hsvColor[2] = 0.85f;
-            localColors[1] = Color.HSVToColor(hsvColor);
-
-            mChart[i].getDescription().setEnabled(true);
-
-            mChart[i].setDragDecelerationFrictionCoef(0.9f);
-            mChart[i].setDragEnabled(false);
-            mChart[i].setScaleEnabled(false);
-            mChart[i].setDrawGridBackground(false);
-            mChart[i].setPinchZoom(false);
-            mChart[i].setBackgroundColor(Color.WHITE);
-
-            mChart[i].animateX(2500);
-
-            Legend l = mChart[i].getLegend();
-
-            l.setForm(Legend.LegendForm.LINE);
-            l.setTextSize(11f);
-            l.setTextColor(Color.BLACK);
-            l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-            l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-            l.setDrawInside(false);
-
-            XAxis xAxis = mChart[i].getXAxis();
-            xAxis.setTextSize(10f);
-            xAxis.setTextColor(Color.BLACK);
-            xAxis.setDrawGridLines(false);
-            xAxis.setDrawAxisLine(false);
-
-            YAxis leftAxis = mChart[i].getAxisLeft();
-            leftAxis.setTextColor(Color.rgb(0xff,0x80, 0));
-            leftAxis.setAxisMaximum(1000f);
-            leftAxis.setAxisMinimum(0f);
-            leftAxis.setDrawGridLines(true);
-            leftAxis.setGranularityEnabled(true);
-
-            mChart[i].getAxisRight().setEnabled(false);
-
-            LinkedList<Pair<Integer, Integer> > inputData = ((i == 0)? dataList.first : dataList.second);
-
-            ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-            ArrayList<Entry> yVals2 = new ArrayList<Entry>();
-
-            for (int k = 0; k < inputData.size(); k++){
-                Pair<Integer, Integer> pair = inputData.get(k);
-                if ((pair.first >= 0)&&(pair.second >=0)) {
-                    float val = (float) pair.first;
-                    yVals1.add(new Entry(k, val));
-
-                    val = (float) pair.second;
-                    yVals2.add(new Entry(k, val));
-                }
+            if ((dataList == null)||(colors == null)){
+                ((TextView) findViewById(R.id.tvGraphicsTextResult)).setText("Отсутствуют валидные данные");
+                return;
+            }else if((dataList.first == null)||(dataList.second == null)){
+                ((TextView) findViewById(R.id.tvGraphicsTextResult)).setText("Отсутствуют валидные данные в массиве");
+                return;
+            }else if(dataList.first.isEmpty()||dataList.second.isEmpty()){
+                ((TextView) findViewById(R.id.tvGraphicsTextResult)).setText("Не обнаружено входных данных для графика");
             }
 
-            LineDataSet set1, set2;
+            mChart[0] = (LineChart) findViewById(R.id.lineChart1);
+            mChart[1] = (LineChart) findViewById(R.id.lineChart2);
 
-            /*if (mChart[i].getData() != null &&
-                    mChart[i].getData().getDataSetCount() > 0) {
-                set1 = (LineDataSet) mChart[i].getData().getDataSetByIndex(0);
-                set2 = (LineDataSet) mChart[i].getData().getDataSetByIndex(1);
-                set1.setValues(yVals1);
-                set2.setValues(yVals2);
-                mChart[i].getData().notifyDataChanged();
-                mChart[i].notifyDataSetChanged();
-            } else {*/
+            for(int i = 0; i < 2; i++){
+                int [] localColors= new int[2];
+
+                float [] hsvColor = new float[3];
+                Color.colorToHSV(colors[i], hsvColor);
+
+                hsvColor[1] = 1f;
+                hsvColor[2] = 1f;
+                localColors[0] = Color.HSVToColor(hsvColor);
+
+                hsvColor[1] = 0.15f;
+                hsvColor[2] = 0.85f;
+                localColors[1] = Color.HSVToColor(hsvColor);
+
+                mChart[i].getDescription().setEnabled(true);
+
+                mChart[i].setDragDecelerationFrictionCoef(0.9f);
+                mChart[i].setDragEnabled(false);
+                mChart[i].setScaleEnabled(false);
+                mChart[i].setDrawGridBackground(false);
+                mChart[i].setPinchZoom(false);
+                mChart[i].setBackgroundColor(Color.WHITE);
+
+                mChart[i].animateX(2500);
+
+                Legend l = mChart[i].getLegend();
+
+                l.setForm(Legend.LegendForm.LINE);
+                l.setTextSize(11f);
+                l.setTextColor(Color.BLACK);
+                l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+                l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+                l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+                l.setDrawInside(false);
+
+                XAxis xAxis = mChart[i].getXAxis();
+                xAxis.setTextSize(10f);
+                xAxis.setTextColor(Color.BLACK);
+                xAxis.setDrawGridLines(false);
+                xAxis.setDrawAxisLine(false);
+
+
+
+                mChart[i].getAxisRight().setEnabled(false);
+
+                LinkedList<Pair<Integer, Integer> > inputData = ((i == 0)? dataList.first : dataList.second);
+
+                ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+                ArrayList<Entry> yVals2 = new ArrayList<Entry>();
+
+                int scale = 200;
+
+                for (int k = 0; k < inputData.size(); k++){
+                    Pair<Integer, Integer> pair = inputData.get(k);
+
+                        float val = (float) ((pair.first >= 0)? pair.first : 1000);
+                        yVals1.add(new Entry(k, val));
+                        scale = (((int)val > scale)?(int)val:scale);
+
+                        val = (float) ((pair.second >= 0)? pair.second : 1000);
+                        yVals2.add(new Entry(k, val));
+                        scale = (((int)val > scale)?(int)val:scale);
+
+                }
+                scale /= 100;
+                scale *= 100;
+                if(scale < 1000) {scale+=100;}
+
+
+                YAxis leftAxis = mChart[i].getAxisLeft();
+                leftAxis.setTextColor(Color.rgb(0xff,0x80, 0));
+                leftAxis.setAxisMaximum((float)scale);
+                leftAxis.setAxisMinimum(0f);
+                leftAxis.setDrawGridLines(true);
+                leftAxis.setGranularityEnabled(true);
+
+                LineDataSet set1, set2;
+
+                /*if (mChart[i].getData() != null &&
+                        mChart[i].getData().getDataSetCount() > 0) {
+                    set1 = (LineDataSet) mChart[i].getData().getDataSetByIndex(0);
+                    set2 = (LineDataSet) mChart[i].getData().getDataSetByIndex(1);
+                    set1.setValues(yVals1);
+                    set2.setValues(yVals2);
+                    mChart[i].getData().notifyDataChanged();
+                    mChart[i].notifyDataSetChanged();
+                } else {*/
                 set1 = new LineDataSet(yVals1, "Правая рука");
 
                 set1.setAxisDependency(YAxis.AxisDependency.LEFT);
@@ -181,7 +202,7 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
 
                 set2 = new LineDataSet(yVals2, "Левая рука");
-                set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
+                set2.setAxisDependency(YAxis.AxisDependency.LEFT);
                 set2.setColor(localColors[1]);
                 set2.setCircleColor(Color.BLACK);
                 set2.setLineWidth(2f);
@@ -197,10 +218,9 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
 
                 mChart[i].setData(data);
-            //}
-        }
+            }
 
-        }catch (Exception e){
+        }catch (Throwable e){
             finish();
             MainActivity.display("Ошибка генерации графика " + e.getStackTrace()[0].toString());
         }

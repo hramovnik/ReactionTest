@@ -47,7 +47,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
 
             imageButton[i].setOnClickListener(this);
             choosedIndex[i] = sp.getInt("PICTEST_IMAGE_" + String.valueOf(i), 0);
-            if ((choosedIndex[i] > 25)||(choosedIndex[i] < 0)) choosedIndex[i] = 0;
+            if ((choosedIndex[i] > 25)||(choosedIndex[i] < 0)) choosedIndex[i] = 1;
             imageButton[i].setImageResource(ImageChooser.imageId[choosedIndex[i]]);
         }
         dialogImageChooser = new ImageChooser();
@@ -60,7 +60,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
             SharedPreferences.Editor ed = sp.edit();
             ed.putInt("PICTEST_IMAGE_0", choosedIndex[0]);
             ed.putInt("PICTEST_IMAGE_1", choosedIndex[1]);
-            ed.putInt("PICTEST_IMAGE_EXPOSITION", sbExposition.getProgress()*1000);
+            ed.putInt("PICTEST_IMAGE_EXPOSITION", sbExposition.getProgress());
             ed.apply();
         }catch (Exception e){
 
@@ -70,7 +70,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
 
     @Override
     public Session getSession() {
-        return new SessionImages(choosedIndex[0]+1, choosedIndex[1]+1, sbExposition.getProgress());
+        return new SessionImages(choosedIndex[0]+1, choosedIndex[1]+1, sbExposition.getProgress()*1000);
     }
 
     @Override

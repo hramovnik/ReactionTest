@@ -87,7 +87,7 @@ public class Connection{
     void stopSession(){
         synchronized(this) {
             if (currentSession != null){
-                currentSession.setCanceled();
+                currentSession.setCancelled();
             }
         }
     }
