@@ -53,7 +53,7 @@ public final class SessionTapping extends SessionObject {
         colors[0] = Color.RED;
         colors[1] = Color.BLUE;
 
-        if (display != null) display.displayResult(inData, colors,new SessionResultActionInterface() {
+        if (display != null) display.displayResult(inData, colors,true,new SessionResultActionInterface() {
             @Override
             public void doSomething() {
                 SimpleDateFormat dateFormatter = new SimpleDateFormat("HH-mm-ss", Locale.ROOT);

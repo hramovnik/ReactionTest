@@ -54,7 +54,6 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
 
         imageButton.setImageResource(ImageChooser.imageId[choosedIndex]);
         dialogImageChooser = new ImageChooser();
-
     }
 
     @Override

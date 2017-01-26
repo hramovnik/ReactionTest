@@ -96,7 +96,7 @@ public class SessionFlicker extends SessionObject {
             freqList.add(new Pair<Integer, Integer>(resultOne.get(i).fEnd, resultTwo.get(i).fEnd));
         }
 
-        if (display != null) display.displayResult(freqList, colors, new SessionResultActionInterface() {
+        if (display != null) display.displayResult(freqList, colors, false, new SessionResultActionInterface() {
             @Override
             public void doSomething() {
                 SimpleDateFormat dateFormatter = new SimpleDateFormat("HH-mm-ss", Locale.ROOT);

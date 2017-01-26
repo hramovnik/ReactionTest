@@ -32,15 +32,14 @@ public abstract class SessionObject implements Session {
     }
 
     @Override
-    public void setCanceled(){
+    public void setCancelled(){
         synchronized(this) {
             cancel = true;
         }
     }
 
-
     @Override
-    public boolean isCanceled(){
+    public boolean getCancelled(){
         synchronized(this) {
             return cancel;
         }

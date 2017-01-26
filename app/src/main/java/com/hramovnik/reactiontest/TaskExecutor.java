@@ -44,7 +44,6 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
         if (connection.getProgressBar() != null) connection.getProgressBar().setProgress(value);
     }
 
-
     @Override
     protected String doInBackground(Void... params) {
         synchronized(this) {
@@ -75,23 +74,22 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
                     Pair<Integer, Integer> taskSize = session.countTasks();
 
                     for (int i = 0; i < 200; i++) {
+                        if (socket.isClosed()){
+                            socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort());
+                            socket.setKeepAlive(true);
+                            if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение при отправке данных";
+                            socket.setSoTimeout(0);
+                            out = new DataOutputStream(socket.getOutputStream());
+                            in = new DataInputStream(socket.getInputStream());
+                        }
                         for (int k = 0; k < 3; k++) {
-                            if (socket.isClosed()){
-                                socket = new Socket(InetAddress.getByName(connection.getAddress()), connection.getPort());
-                                socket.setKeepAlive(true);
-                                if (socket.isClosed()) return "Ошибка соединения: невозможно установить соединение при отправке данных";
-                                socket.setSoTimeout(0);
-                                out = new DataOutputStream(socket.getOutputStream());
-                                in = new DataInputStream(socket.getInputStream());
-                            }
-
-                            if (isCancelled()){
+                            if (session.getCancelled()){
                                 byteBuffer.clear();
                                 byteBuffer.putInt(TaskObject.CMD_FORCE_STOP_TEST);
                             }
                             out.write(byteBuffer.array());
                             out.flush();
-                            if (isCancelled()){
+                            if (session.getCancelled()){
                                 return "Текущая сессия остановлена";
                             }
                             TimeUnit.MILLISECONDS.sleep(executable.getTimeOut());
@@ -174,7 +172,7 @@ public class TaskExecutor extends AsyncTask<Void,Pair<String,Integer>,String> {
             print(message);
         }else{
             print("Тест успешно завершён");
-            session.analyze();
+             session.analyze();
         }
         session = null;
         connection.workingEnds();

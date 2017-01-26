@@ -89,15 +89,16 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
         leftAxis.setSpaceTop(35f);
         leftAxis.setAxisMinimum(0f);
 
-        Legend l = chart.getLegend();
-
-        l.setForm(Legend.LegendForm.LINE);
-        l.setTextSize(11f);
-        l.setTextColor(Color.BLACK);
-        l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
-        l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
-        l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
-        l.setDrawInside(false);
+        if (showLegend) {
+            Legend l = chart.getLegend();
+            l.setForm(Legend.LegendForm.LINE);
+            l.setTextSize(11f);
+            l.setTextColor(Color.BLACK);
+            l.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+            l.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+            l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+            l.setDrawInside(false);
+        }
 
 
         float groupSpace = 1f;
@@ -119,8 +120,7 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
         }
 
 
-                BarDataSet set1, set2;
-
+        BarDataSet set1, set2;
 
         set1 = new BarDataSet(yVals1, "Право");
         set1.setColor(colors[0]);
@@ -146,14 +146,16 @@ public class ResultDisplayDiagram extends Activity implements View.OnClickListen
         chart.notifyDataSetChanged();
     }
 
-    public static void setData(LinkedList<Pair<Integer, Integer>> dataList, int [] colors, SessionResultActionInterface action){
+    public static void setData(LinkedList<Pair<Integer, Integer>> dataList, int [] colors, boolean showLegend, SessionResultActionInterface action){
         ResultDisplayDiagram.dataList = dataList;
         ResultDisplayDiagram.colors = colors;
         ResultDisplayDiagram.action = action;
+        ResultDisplayDiagram.showLegend = showLegend;
     }
 
     private static LinkedList<Pair<Integer, Integer>> dataList = null;
     private static int [] colors = null;
     private static SessionResultActionInterface action = null;
+    private static boolean showLegend = false;
 
 }
