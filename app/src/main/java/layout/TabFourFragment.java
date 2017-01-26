@@ -50,7 +50,7 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
         imageButton.setOnClickListener(this);
 
         choosedIndex = sp.getInt("TAPTEST_IMAGE_1", 0);
-        if ((choosedIndex > 25)||(choosedIndex < 0)) choosedIndex = 0;
+        if ((choosedIndex >= ImageChooser.imageId.length)||(choosedIndex < 0)) choosedIndex = 0;
 
         imageButton.setImageResource(ImageChooser.imageId[choosedIndex]);
         dialogImageChooser = new ImageChooser();
@@ -77,7 +77,7 @@ public class TabFourFragment extends TabFragment implements TaskActivityInterfac
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
         choosedIndex = resultCode;
-        if (choosedIndex > 25) choosedIndex = 0;
+        if (choosedIndex >= ImageChooser.imageId.length) choosedIndex = 0;
 
         imageButton.setImageResource(ImageChooser.imageId[choosedIndex]);
 

@@ -47,7 +47,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
 
             imageButton[i].setOnClickListener(this);
             choosedIndex[i] = sp.getInt("PICTEST_IMAGE_" + String.valueOf(i), 0);
-            if ((choosedIndex[i] > 25)||(choosedIndex[i] < 0)) choosedIndex[i] = 1;
+            if ((choosedIndex[i] >= ImageChooser.imageId.length)||(choosedIndex[i] < 0)) choosedIndex[i] = 0;
             imageButton[i].setImageResource(ImageChooser.imageId[choosedIndex[i]]);
         }
         dialogImageChooser = new ImageChooser();
@@ -77,7 +77,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode,resultCode,data);
         choosedIndex[requestCode] = resultCode;
-        if ((choosedIndex[requestCode] > 25)||(choosedIndex[requestCode] < 0)) choosedIndex[requestCode] = 0;
+        if ((choosedIndex[requestCode] >= ImageChooser.imageId.length)||(choosedIndex[requestCode] < 0)) choosedIndex[requestCode] = 0;
         imageButton[requestCode].setImageResource(ImageChooser.imageId[choosedIndex[requestCode]]);
 
     }
