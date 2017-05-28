@@ -39,12 +39,11 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
         super.onActivityCreated(savedInstanceState);
 
         teExposition = (TextView) getView().findViewById(R.id.teExpositionTime);
-        sbExposition = getSb(teExposition, R.id.sbExpositionTime, 1,25,expositionTag);
+        sbExposition = getSb(teExposition, R.id.sbExpositionTime, 1,120,expositionTag);
 
         imageButton[0] = (ImageButton) getView().findViewById(R.id.fragmentFiveImageButtonL);
         imageButton[1] = (ImageButton) getView().findViewById(R.id.fragmentFiveImageButtonR);
         for (int i = 0; i < 2; i++) {
-
             imageButton[i].setOnClickListener(this);
             choosedIndex[i] = sp.getInt("PICTEST_IMAGE_" + String.valueOf(i), 0);
             if ((choosedIndex[i] >= ImageChooser.imageId.length)||(choosedIndex[i] < 0)) choosedIndex[i] = 0;
@@ -70,7 +69,7 @@ public class TabFiveFragment extends TabFragment implements TaskActivityInterfac
 
     @Override
     public Session getSession() {
-        return new SessionImages(choosedIndex[0]+1, choosedIndex[1]+1, sbExposition.getProgress()*1000);
+        return new SessionImages(choosedIndex[0] + 1, choosedIndex[1] + 1, sbExposition.getProgress()*1000);
     }
 
     @Override

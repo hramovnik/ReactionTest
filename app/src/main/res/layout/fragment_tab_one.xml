@@ -116,7 +116,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Диаметр кружка (мм)"
+                android:text="Диаметр кружка (пикс)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -199,6 +199,56 @@
                 android:textSize="@dimen/text_view_size"
                 />
         </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="@dimen/space_between_seek_bars"
+                />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:text="Задержка"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:id="@+id/textView6"
+                android:textSize="@dimen/text_view_size"
+                />
+
+            <SeekBar
+                style="@style/CustomSeekBar"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:max="10"
+
+                android:progress="3"
+                android:id="@+id/sbQuantityDelay"
+                android:layout_alignParentTop="true"
+                android:layout_toEndOf="@id/textView5"
+                android:padding="1dip"
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:text="0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/teQuantityDelay"
+                android:elevation="1dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:textSize="@dimen/text_view_size"
+                />
+        </TableRow>
+
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">

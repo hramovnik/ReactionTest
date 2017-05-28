@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.hramovnik.reactiontest.CommandSensomotoric;
 import com.hramovnik.reactiontest.R;
 import com.hramovnik.reactiontest.Session;
 import com.hramovnik.reactiontest.SessionSensomotoric;
@@ -42,6 +43,8 @@ public class TabOneFragment extends TabFragment implements TaskActivityInterface
     private TextView teSizeChooser;
     private SeekBar sbQuantityRep;
     private TextView teQuantityRep;
+    private SeekBar sbQuantityDelay;
+    private TextView teQuantityDelay;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -56,10 +59,14 @@ public class TabOneFragment extends TabFragment implements TaskActivityInterface
         buttonChooseColorTwo.setBackgroundColor(colorTwo);
 
         teSizeChooser = (TextView) getView().findViewById(R.id.teRoundSize);
-        sbSizeChooser = getSb(teSizeChooser, R.id.sbRoundSize, 3, 20, "SMT_Round_SIZE");
+        sbSizeChooser = getSb(teSizeChooser, R.id.sbRoundSize, 1, 30, "SMT_Round_SIZE");
 
         teQuantityRep = (TextView) getView().findViewById(R.id.teQuantityRep);
         sbQuantityRep = getSb(teQuantityRep, R.id.sbQuantityRep, 1,20, "SMT_QUANTITY_REP");
+
+        teQuantityDelay = (TextView) getView().findViewById(R.id.teQuantityDelay);
+        sbQuantityDelay = getSb(teQuantityDelay, R.id.sbQuantityDelay, 1,10, "SMT_QUANTITY_DELAY");
+
 
         dialogChooseColorOne = new ColorChooser();
         dialogChooseColorTwo = new ColorChooser();
@@ -127,6 +134,7 @@ public class TabOneFragment extends TabFragment implements TaskActivityInterface
 
     @Override
     public Session getSession() {
+        CommandSensomotoric.setDelay(sbQuantityDelay.getProgress());
         return new SessionSensomotoric(sbQuantityRep.getProgress(), sbSizeChooser.getProgress(), colorOne, colorTwo);
     }
 }

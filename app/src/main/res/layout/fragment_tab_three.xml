@@ -71,7 +71,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Яркость"
+                android:text="Ступени яркости"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/text_view_size"
@@ -81,9 +81,9 @@
                 style="@style/CustomSeekBar"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:max="12"
+                android:max="6"
 
-                android:progress="8"
+                android:progress="3"
                 android:id="@+id/sbBrightness"
                 android:padding="1dip"
                 android:layout_margin="1dip"

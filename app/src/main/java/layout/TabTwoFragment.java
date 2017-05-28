@@ -64,7 +64,7 @@ public class TabTwoFragment extends TabFragment implements TaskActivityInterface
         buttonChooseColor.setBackgroundColor(color);
 
         teRoundSize = (TextView) getView().findViewById(R.id.teRoundSize);
-        sbRoundSize = getSb(teRoundSize, R.id.sbRoundSize,1,20,roundSizeTag);
+        sbRoundSize = getSb(teRoundSize, R.id.sbRoundSize,1,30,roundSizeTag);
 
         teBrightness = (TextView) getView().findViewById(R.id.teBrightness);
         sbBrightness = getSb(teBrightness, R.id.sbBrightness, 1,12,brightntssTag);

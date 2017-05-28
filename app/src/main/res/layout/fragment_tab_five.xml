@@ -20,97 +20,95 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
             <Space
                 android:layout_width="1dp"
-                android:layout_height="@dimen/space_between_buttons_and_seek_bars"
-                />
+                android:layout_height="@dimen/space_between_buttons_and_seek_bars" />
 
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
-
-            <TextView
-                android:text="Время экспозиции (с)"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_view_size"
-                />
-
-            <SeekBar
-                style="@style/CustomSeekBar"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:max="12"
-
-                android:progress="8"
-                android:id="@+id/sbExpositionTime"
-                android:padding="1dip"
-                android:layout_margin="1dip"
-                android:layout_weight="1"
-                />
-
-            <TextView
-                android:text="0"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/teExpositionTime"
-                android:elevation="1dp"
-                android:textSize="@dimen/text_view_size"
-                />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Время экспозиции (с)"
+                android:textSize="@dimen/text_view_size" />
+
+            <SeekBar
+                android:id="@+id/sbExpositionTime"
+                style="@style/CustomSeekBar"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+
+                android:layout_margin="1dip"
+                android:layout_weight="1"
+                android:max="120"
+                android:padding="1dip"
+                android:progress="8" />
+
+            <TextView
+                android:id="@+id/teExpositionTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="1dp"
+                android:text="0"
+                android:textSize="@dimen/text_view_size" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
             <Space
                 android:layout_width="1dp"
-                android:layout_height="@dimen/space_between_seek_bars"
-                />
+                android:layout_height="@dimen/space_between_seek_bars" />
         </TableRow>
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight=".50"
                 android:text="Левый глаз"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight=".50"
                 android:textAlignment="center"
 
                 />
+
             <TextView
-                android:text="Правый глаз"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
-                android:textAlignment="center"
-                />
+                android:text="Правый глаз"
+                android:textAlignment="center" />
 
         </TableRow>
 
 
         <TableRow
             android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+            android:layout_height="match_parent">
 
             <ImageButton
-                app:srcCompat="@drawable/p01"
+                android:id="@+id/fragmentFiveImageButtonL"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
                 android:background="@android:color/background_light"
-                android:id="@+id/fragmentFiveImageButtonL" />
+                app:srcCompat="@drawable/p01" />
+
             <ImageButton
-                app:srcCompat="@drawable/p01"
+                android:id="@+id/fragmentFiveImageButtonR"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight=".50"
                 android:background="@android:color/background_light"
-                android:id="@+id/fragmentFiveImageButtonR" />
+                app:srcCompat="@drawable/p01" />
         </TableRow>
 
     </TableLayout>

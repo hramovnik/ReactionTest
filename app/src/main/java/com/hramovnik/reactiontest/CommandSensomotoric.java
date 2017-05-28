@@ -40,6 +40,11 @@ public final class CommandSensomotoric extends TaskObject {
 
     @Override
     public int getSleeping(){
-        return 2000;
+        return waitingValue;
     }
+
+    public static void setDelay(int value){
+        waitingValue = value * 1000;
+    }
+    private static int waitingValue = 3000;
 }

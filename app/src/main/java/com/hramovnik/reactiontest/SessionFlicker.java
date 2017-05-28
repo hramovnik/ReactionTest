@@ -52,7 +52,7 @@ public class SessionFlicker extends SessionObject {
         }else{
 
             for (int i = 1; i <= brightness; i++) {
-                int br = (int)((((float)i)/5.)*255.);
+                int br = (int)((((float)i)/6.)*255.);
                 CommandFlicker task = new CommandFlicker(colors[0], realDotSize, br, initialSpeed_Hz, maxSpeed_Hz);
                 tasks.add(task);
                 CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task,br);
@@ -61,7 +61,7 @@ public class SessionFlicker extends SessionObject {
             }
 
             for (int i = 1; i <= brightness; i++) {
-                int br = (int)((((float)i)/5.)*255.);
+                int br = (int)((((float)i)/6.)*255.);
                 CommandFlicker task = new CommandFlicker(colors[1], realDotSize, br, initialSpeed_Hz, maxSpeed_Hz);
                 tasks.add(task);
                 CommandFlickerGetResult tempResult = new CommandFlickerGetResult(task,br);

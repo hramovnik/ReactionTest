@@ -72,7 +72,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Яркость"
+                android:text="Ступени яркости"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView3"
@@ -116,7 +116,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:text="Диаметр (мм)"
+                android:text="Диаметр (пикс)"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/textView4"

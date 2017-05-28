@@ -32,7 +32,6 @@ public class TabThreeFragment extends TabFragment implements TaskActivityInterfa
     }
 
     private DialogFragment dialogChooseColor;
-
     private Button buttonChooseColor;
     public static final int DIALOG_ONE = 1;
 
@@ -51,14 +50,12 @@ public class TabThreeFragment extends TabFragment implements TaskActivityInterfa
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
         buttonChooseColor = (Button) getView().findViewById(R.id.buttonColor);
         buttonChooseColor.setOnClickListener(this);
         buttonChooseColor.setBackgroundColor(color);
 
-
         teBrightness = (TextView) getView().findViewById(R.id.teBrightness);
-        sbBrightness = getSb(teBrightness, R.id.sbBrightness, 1,5,brightntssTag);
+        sbBrightness = getSb(teBrightness, R.id.sbBrightness, 1,6,brightntssTag);
 
         teFrequency = (TextView) getView().findViewById(R.id.teFrequency);
         sbFrequency = getSb(teFrequency, R.id.sbFrequency, 10,75,frequencyTag);
@@ -87,9 +84,7 @@ public class TabThreeFragment extends TabFragment implements TaskActivityInterfa
 
             ed.apply();
 
-        }catch (Exception e){
-
-        }
+        }catch (Exception e){}
     }
 
     @Override
@@ -98,7 +93,6 @@ public class TabThreeFragment extends TabFragment implements TaskActivityInterfa
             dialogChooseColor.setTargetFragment(this, DIALOG_ONE);
             dialogChooseColor.show(getFragmentManager(), "Выберите цвет");
         }
-
     }
 
     @Override
