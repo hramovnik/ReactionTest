@@ -69,8 +69,6 @@ public class SessionFlicker extends SessionObject {
                 tasks.add(tempResult);
             }
         }
-
-
         tasksInSession = tasks.size();
         tasksElapsed = tasksInSession;
     }
@@ -127,8 +125,8 @@ public class SessionFlicker extends SessionObject {
                             savable.add(String.valueOf(realDotSize));
                             savable.add(getColor(colors[k]));
                             savable.add(currentGR.fEnd > 0 ? String.valueOf(currentGR.fEnd) : "-");
-                            savable.add("-");
-                            savable.add("-");
+                            savable.add(currentGR.pulseDataRate > 0 ? String.valueOf(currentGR.pulseDataRate) : "-");
+                            savable.add(currentGR.pulseDataOxSaturation > 0 ? String.valueOf(currentGR.pulseDataOxSaturation) : "-");
                             saver.save(savable);
                         }
                     }
