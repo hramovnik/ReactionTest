@@ -14,8 +14,10 @@ public final class CommandSensomotoric extends TaskObject {
     CommandSensomotoric(int color, int brightness, int dotSize, int serialLen, int maxWaitMs){
         super();
         task[0] = CMD_START_SENSOMOTORIC;
-        task[1] = color;
-        task[2] = color;
+//        task[1] = color;
+//        task[2] = color;
+        task[1] = ParametersActivity.isUsingRightEye() ? color : 0;
+        task[2] = ParametersActivity.isUsingLeftEye() ? color : 0;
         task[3] = ParametersActivity.isUsingRightEye() ? brightness : 0;
         task[4] = ParametersActivity.isUsingLeftEye() ? brightness : 0;
         task[5] = ParametersActivity.getChosenPosition();

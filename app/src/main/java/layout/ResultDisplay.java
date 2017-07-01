@@ -42,6 +42,7 @@ public class ResultDisplay extends DialogFragment  implements View.OnClickListen
 
         try {
             tvFrameResult = ((TextView) getView().findViewById(R.id.tvFrameResult));
+            tvFrameResult.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             tvFrameResult.setText(str);
         }catch (Exception e){
 

@@ -142,8 +142,6 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 xAxis.setDrawGridLines(false);
                 xAxis.setDrawAxisLine(false);
 
-
-
                 mChart[i].getAxisRight().setEnabled(false);
 
                 LinkedList<Pair<Integer, Integer> > inputData = ((i == 0)? dataList.first : dataList.second);
@@ -179,15 +177,6 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
                 LineDataSet set1, set2;
 
-                /*if (mChart[i].getData() != null &&
-                        mChart[i].getData().getDataSetCount() > 0) {
-                    set1 = (LineDataSet) mChart[i].getData().getDataSetByIndex(0);
-                    set2 = (LineDataSet) mChart[i].getData().getDataSetByIndex(1);
-                    set1.setValues(yVals1);
-                    set2.setValues(yVals2);
-                    mChart[i].getData().notifyDataChanged();
-                    mChart[i].notifyDataSetChanged();
-                } else {*/
                 set1 = new LineDataSet(yVals1, "Правая рука");
 
                 set1.setAxisDependency(YAxis.AxisDependency.LEFT);
