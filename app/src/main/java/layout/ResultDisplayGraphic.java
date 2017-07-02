@@ -151,18 +151,35 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
 
                 int scale = 200;
 
+                int avarageRight = 0;
+                int avarageLeft = 0;
+                int counterRight = 0;
+                int counterLeft = 0;
+
                 for (int k = 0; k < inputData.size(); k++){
                     Pair<Integer, Integer> pair = inputData.get(k);
 
-                        float val = (float) ((pair.first >= 0)? pair.first : 1000);
-                        yVals1.add(new Entry(k, val));
-                        scale = (((int)val > scale)?(int)val:scale);
+                    float val = (float) ((pair.first >= 0)? pair.first : 1000);
+                    yVals1.add(new Entry(k, val));
+                    scale = (((int)val > scale)?(int)val:scale);
+                    if (val < 1000){
+                        avarageRight += (int)val;
+                        counterRight++;
+                    }
 
-                        val = (float) ((pair.second >= 0)? pair.second : 1000);
-                        yVals2.add(new Entry(k, val));
-                        scale = (((int)val > scale)?(int)val:scale);
+                    val = (float) ((pair.second >= 0)? pair.second : 1000);
+                    yVals2.add(new Entry(k, val));
+                    scale = (((int)val > scale)?(int)val:scale);
+
+                    if (val < 1000){
+                        avarageLeft += (int)val;
+                        counterLeft++;
+                    }
 
                 }
+                avarageRight /= counterRight;
+                avarageLeft /= counterLeft;
+
                 scale /= 100;
                 scale *= 100;
                 if(scale < 1000) {scale+=100;}
@@ -176,8 +193,10 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 leftAxis.setGranularityEnabled(true);
 
                 LineDataSet set1, set2;
+                String postfixRight = "";
+                if (avarageRight != 0) postfixRight = " (среднее значение = " + String.valueOf(avarageRight) + " мс)";
 
-                set1 = new LineDataSet(yVals1, "Правая рука");
+                set1 = new LineDataSet(yVals1, "Правая рука" + postfixRight);
 
                 set1.setAxisDependency(YAxis.AxisDependency.LEFT);
                 set1.setColor(localColors[0]);
@@ -189,8 +208,10 @@ public class ResultDisplayGraphic extends Activity implements View.OnClickListen
                 set1.setHighLightColor(Color.rgb(244, 117, 117));
                 set1.setDrawCircleHole(false);
 
+                String postfixLeft = "";
+                if (avarageRight != 0) postfixLeft = " (среднее значение = " + String.valueOf(avarageLeft) + " мс)";
 
-                set2 = new LineDataSet(yVals2, "Левая рука");
+                set2 = new LineDataSet(yVals2, "Левая рука" + postfixLeft);
                 set2.setAxisDependency(YAxis.AxisDependency.LEFT);
                 set2.setColor(localColors[1]);
                 set2.setCircleColor(Color.BLACK);
